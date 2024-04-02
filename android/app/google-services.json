@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "199340919612",
+    "project_id": "giddhpetty",
+    "storage_bucket": "giddhpetty.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199340919612:android:eaa9ca9d3526979e6fac39",
+        "android_client_info": {
+          "package_name": "com.giddh.pettycash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199340919612-pa6u39tvo4hcurk22u3omsi6qvhncr3i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giddh.pettycash",
+            "certificate_hash": "ea5371fc99576c53da5a46b9e886fe6e4efe8af2"
+          }
+        },
+        {
+          "client_id": "199340919612-s4ll85tldbukd4eqh4upelbirks7ivri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMvR26PKhNi9tXEDKByhDMcwVyLNTpchE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199340919612-s4ll85tldbukd4eqh4upelbirks7ivri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
