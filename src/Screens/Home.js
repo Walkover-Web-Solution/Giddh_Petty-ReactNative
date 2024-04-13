@@ -146,7 +146,7 @@ const Home = () => {
 
       <SafeAreaView style={styles.safeAreaContainer}>
         <FlatList
-          data={expense[selectedButton]}
+          data={expense?.[selectedButton]}
           keyExtractor={(item) => item?.uniqueName?.toString()}
           renderItem={renderComponent}
           contentContainerStyle={styles.flatListContent}

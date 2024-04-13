@@ -34,7 +34,7 @@ const expenseSlice = createSlice({
       state.selectedExpense = action.payload;
     },
     resetExpenses: (state) => {
-      state.expenses = [];
+      state.expenses = initialState.expenses;
       state.selectedExpense = null;
     }
   },
