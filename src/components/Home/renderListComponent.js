@@ -5,7 +5,7 @@ import Reciept from '../../../assets/images/receipt.svg';
 import { capitalizeFirstLetter } from '../../utils/capitalise';
 
 const RenderListItem = ({ item, onPress }) => {
-  console.log(item)
+  // console.log(item)
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -13,7 +13,7 @@ const RenderListItem = ({ item, onPress }) => {
       key={item?.uniqueName}
       style={styles.card}
     >
-        <View style={{backgroundColor:theme.colors[item.status],height:2.5,width:8}}>
+        <View style={[styles.badgeIndicator,{borderLeftColor:theme.colors[item.status]}]}>
         </View>
       <View style={styles.cardContent}>
         <View style={styles.logoContainer}>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
   logoContainer: {
     width: 48,
@@ -89,6 +89,15 @@ const styles = StyleSheet.create({
     marginTop: 5,
     paddingLeft: 25,
   },
+  badgeIndicator: {
+    position:'absolute',
+    left:0,
+    right:0,
+    width:10,
+    borderLeftWidth:13,
+    borderBottomWidth:13,
+    borderBottomColor:'transparent',
+  }
 });
 
 export default memo(RenderListItem);

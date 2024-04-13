@@ -1,9 +1,10 @@
 // authSaga.js
 
-import { put, takeLatest, call } from 'redux-saga/effects';
+import { put, takeLatest, call, select } from 'redux-saga/effects';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import api from '../../../interceptor'; // Import the axios interceptor instance
+import api, { loginInstance } from '../../../interceptor'; // Import the axios interceptor instance
 import { signInSuccess, signInFailure, signOutSuccess, signOutFailure } from './authSlice';
+import { AsyncStorage } from 'react-native';
 
 function* signInWithGoogle() {
   try {
@@ -11,7 +12,7 @@ function* signInWithGoogle() {
     yield GoogleSignin.signOut();
     const res = yield GoogleSignin.signIn();
     const token = yield GoogleSignin.getTokens();
-    const response = yield call(api.get, 'v2/signup-with-google', {
+    const response = yield call(loginInstance.get, 'v2/signup-with-google', {
       headers: {
         'access-token': token.accessToken,
       },
@@ -24,7 +25,7 @@ function* signInWithGoogle() {
 }
 function* signInWithOtp({ payload}) {
   try {
-    console.log(payload);
+    // console.log(payload);
     const response = yield call(api.post, 'v2/login', {
       headers: {
         'Content-Type': 'application/json',
@@ -41,11 +42,15 @@ function* signInWithOtp({ payload}) {
 
 function* signOut() {
   try {
-    yield GoogleSignin.revokeAccess();
-    yield GoogleSignin.signOut();
-    yield put(signOutSuccess());
+    // yield GoogleSignin.revokeAccess();
+    // yield GoogleSignin.signOut();
+    const usersGmail = yield select((state)=>
+      state?.auth?.user?.user?.uniqueName
+    )
+    yield call(api.delete, `users/${usersGmail}/destroy-session?lang=en`);
   } catch (error) {
-    yield put(signOutFailure(error.message));
+    console.warn(error);
+    // yield put(signOutFailure(error.message));
   }
 }
 

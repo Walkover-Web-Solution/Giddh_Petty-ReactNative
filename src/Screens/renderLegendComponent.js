@@ -7,11 +7,11 @@ import { fonts, theme } from '../theme/theme';
 const RenderChart = () => {
   const expenses = useSelector(state => state?.expenses?.expenses);
   
-  const totalAmount = expenses["AllRequests"]?.reduce((total, expense) => total + expense?.amount, 0);
+  const totalAmount = expenses?.["AllRequests"]?.reduce((total, expense) => total + expense?.amount, 0);
 
-  const pendingPercentage = (expenses["Pending"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
-  const rejectedPercentage = (expenses["Rejected"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
-  const approvedPercentage = (expenses["Approved"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
+  const pendingPercentage = (expenses?.["Pending"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
+  const rejectedPercentage = (expenses?.["Rejected"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
+  const approvedPercentage = (expenses?.["Approved"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
 
   const pieData = [
     { value: pendingPercentage===0&&rejectedPercentage===0&&approvedPercentage===0?100:0, color: theme.colors.black, gradientCenterColor: theme.colors.secondary,},

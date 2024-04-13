@@ -42,6 +42,7 @@ const CustomDrawer = ({setVisible,navigation}) => {
   }
   const handleLogout = async () => {
     try {
+      dispatch({type:'SIGN_OUT'})
     if(photo){
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();

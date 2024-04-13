@@ -9,12 +9,12 @@ const AddTransactionModal = ({ bottomSheetModalRef, navigation, dispatch }) => {
   return (
     <>
     <View style={styles.container}>
-      <View>
+      {/* <View>
         <TouchableOpacity style={styles.button} onPress={() => console.log('Withdraw')}>
           <Feather name="arrow-down-circle" size={25} color={theme.colors.black} />
         </TouchableOpacity>
         <Text style={styles.buttonText}>Withdraw</Text>
-      </View>
+      </View> */}
       <View>
         <TouchableOpacity style={styles.button} onPress={() => {
             bottomSheetModalRef?.current?.dismiss();

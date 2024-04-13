@@ -7,12 +7,16 @@ const api = axios.create({
   baseURL: 'https://api.giddh.com/',
 });
 
+export const loginInstance = axios.create({
+  baseURL: 'https://api.giddh.com/',
+})
+
 api.interceptors.request.use(
   (config) => {
     config.headers['Content-Type'] = 'application/json';
     config.headers['Accept'] = 'application/json';
-    const sessionToken = store.getState().auth?.user?.session?.id;
-    console.log(sessionToken,"s")
+    const sessionToken = store.getState().auth?.user?.session?.id; 
+    // console.log(sessionToken,"s")
     if (sessionToken) {
       config.headers['session-id'] = sessionToken;
     }
@@ -34,5 +38,16 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+loginInstance.interceptors.request.use(
+  (config) => {
+    config.headers['Content-Type'] = 'application/json';
+    config.headers['Accept'] = 'application/json';
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+)
 
 export default api;

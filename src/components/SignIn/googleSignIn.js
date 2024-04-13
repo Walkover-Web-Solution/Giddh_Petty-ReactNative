@@ -29,7 +29,7 @@ const SignInButton = (props) => {
         <OTPVerification 
           onVisible={isModalVisible} 
           onCompletion={(data) => {
-            console.log(data)                       // Get your response of success/failure.
+            // console.log(data)                       // Get your response of success/failure.
             setModalVisible(false)
           }} 
           widgetId={'33696b6b3344363232333039'}     // Get widgetId from MSG91 OTP Widget Configuration

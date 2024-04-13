@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter } from 'react-native';
 import { theme } from '../../theme/theme';
 import { useNavigation } from '@react-navigation/native';
 import { ScreenNames } from '../../constants/NavigationConstants';
@@ -10,18 +10,16 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
   const user = useSelector(state => state?.auth?.user);
   const handleSaveButton = async () => {
     const requestBody = prepareRequestBody();
-    console.log(requestBody);
     try {
       const response = await axios.post(`https://api.giddh.com/company/${companyUniqueName}/pettycash-manager/generate?entryType=${name.toLowerCase()}`, requestBody, {
         headers: {
           'Content-Type': 'application/json',
-          'auth-key': user?.session?.id,
+          'session-id': user?.session?.id,
         },
       });
-
-      console.log('Response:', response.data);
-
-      navigation.navigate(ScreenNames.YOUR_SCREEN_NAME);
+      if(response?.data?.status)
+        DeviceEventEmitter.emit('successResponse');
+      navigation.navigate(ScreenNames.DRAWER);
     } catch (error) {
       console.error('Error:', error);
     }

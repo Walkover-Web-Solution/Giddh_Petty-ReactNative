@@ -37,11 +37,11 @@ const Company: React.FC<{ navigation: any }> = ({ navigation }) => {
         dispatch(resetBranch());
         dispatch(resetExpenses());
         dispatch(setSelectedCompany(item));
-        if (item?.branchCount > 1)
-          dispatch({ type: 'branch/FETCH_BRANCH_LIST', payload: { uniqueName: item?.uniqueName } });
         dispatch({ type: 'payment/FETCH_Payment_LIST', payload: { uniqueName: item?.uniqueName } });
-        if (item?.branchCount > 1)
+        if (item?.branchCount > 1){
+          dispatch({ type: 'branch/FETCH_BRANCH_LIST', payload: { uniqueName: item?.uniqueName } });
           navigation.push('Branch');
+        }
         else navigation.push('Drawer');
       }}
     >

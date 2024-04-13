@@ -8,7 +8,7 @@ import { setSelectedPaymentMode } from '../../redux/paymentmode/paymentSlice';
 const PaymentModeSelector = ({ bottomSheetModalRef}) => {
     const dispatch = useDispatch();
     const paymentModes=useSelector((state)=>state.payment?.paymentMode);
-    console.log("paymentModes",paymentModes);
+    // console.log("paymentModes",paymentModes);
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Select Mode of Payment</Text>

@@ -18,7 +18,7 @@ const RenderButtonList = ({item,handleButtonPress,selectedButton}) => {
       onPress={() => handleButtonPress(item?.label)}
     >
       <ThreeDDot color={item?.color} />
-      <Text style={styles.buttonText}>{item?.label}</Text>
+      <Text style={styles.buttonText}>{item?.name}</Text>
     </TouchableOpacity>
   )
 }

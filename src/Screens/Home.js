@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator, DeviceEventEmitter, RefreshControl } from 'react-native';
 import { fonts, fontSizes, theme } from '../theme/theme';
 import RenderChart from './renderLegendComponent';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,10 +18,10 @@ import AddTransactionModal from '../components/Home/AddTransactionModal';
 import { ScreenNames } from '../constants/NavigationConstants';
 
 const list = [
-  { label: 'AllRequests', color: theme.colors.black },
-  { label: 'Approved', color: theme.colors.secondary },
-  { label: 'Pending', color: theme.colors.purple },
-  { label: 'Rejected', color: theme.colors.gray },
+  { label: 'AllRequests', color: theme.colors.black, name: 'All Requests' },
+  { label: 'Approved', color: theme.colors.secondary, name: 'Approved' },
+  { label: 'Pending', color: theme.colors.purple, name: 'Pending' },
+  { label: 'Rejected', color: theme.colors.gray, name: 'Rejected' },
 ];
 
 const Home = () => {
@@ -49,24 +49,31 @@ const Home = () => {
     const monthAgo = new Date(today.getFullYear(), today.getMonth(), 1);
     return formatDate(monthAgo);
   });
-  
-  console.log(startDate,endDate);
+  const [refreshing, setRefreshing]=useState(false);
+  // console.log(startDate);
   useEffect(() => {
+    DeviceEventEmitter.addListener('successResponse',()=>{
+      setPage(1);
+      setLoading(true);
+      setIsListEnd(false);
+      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: 1 , setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing, setPage:setPage }})
+    })
     setLoading(true);
     setPage(1);
-    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
+    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing } });
+    return () => DeviceEventEmitter.removeAllListeners('successResponse');
   }, []);
 
   useEffect(() => {
     setLoading(true);
-    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
+    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing } });
   }, [page]);
 
   useEffect(() => {
     setPage(1);
     setIsListEnd(false);
     setLoading(true);
-    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
+    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing } });
   }, [startDate]);
 
   const onPress = useCallback((item) => {
@@ -86,7 +93,7 @@ const Home = () => {
 
   const renderComponent = ({ item }) => {
     return (
-      <RenderListItem item={item} onPress={onPress} />
+      <RenderListItem key={item?.uniqueName} item={item} onPress={onPress} />
     );
   };
 
@@ -147,6 +154,11 @@ const Home = () => {
           ListFooterComponent={renderFooter}
           onEndReached={() => { if (!isListEnd && !loading) setPage(page + 1); }}
           onEndReachedThreshold={0.5}
+          refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={()=>{
+            dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: 1, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing, refreshing:true, setPage:setPage } })
+          }}/>
+        }
         />
         <TouchableOpacity onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
           <PlusSVG color={theme.colors.white} />

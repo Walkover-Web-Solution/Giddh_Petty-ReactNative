@@ -59,22 +59,21 @@ const TabSwitcher = () => {
     }
   };
 
-  const pendingOrRejected = expenseList.pendingOrRejected.filter(item => {
+  const pendingOrRejected = expenseList?.pendingOrRejected?.filter(item => {
     const itemDate = item.entryDate;
     const reversedStartDate = itemDate.split('-').reverse().join('-');
     return reversedStartDate >= new Date(startDate)?.toISOString().split('T')[0] && reversedStartDate <= new Date(endDate)?.toISOString().split('T')[0];
   });
-  const approved = expenseList.approved.filter(item => {
+  const approved = expenseList?.approved?.filter(item => {
     const itemDate = item.entryDate;
     const reversedStartDate = itemDate.split('-').reverse().join('-');
     return reversedStartDate >= new Date(startDate)?.toISOString().split('T')[0] && reversedStartDate <= new Date(endDate)?.toISOString().split('T')[0];
   });
-  const allRequests = expenseList.allRequests.filter(item => {
+  const allRequests = expenseList?.allRequests?.filter(item => {
     const itemDate = item.entryDate;
     const reversedStartDate = itemDate.split('-').reverse().join('-');
     return reversedStartDate >= new Date(startDate)?.toISOString().split('T')[0] && reversedStartDate <= new Date(endDate)?.toISOString().split('T')[0];
   });
-  console.log(startDate)
   return (
     <View style={styles.container}>
       <View style={styles.tabs}>

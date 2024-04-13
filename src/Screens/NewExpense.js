@@ -45,7 +45,7 @@ const NewExpense = () => {
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
-  console.log(selectedItems,'selectedItems')
+  // console.log(selectedItems,'selectedItems')
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
@@ -139,7 +139,7 @@ const NewExpense = () => {
     transactions,
     attachedFiles,
     entryType: name,
-    entryDate: selectedDate.toDateString(), 
+    entryDate: selectedDate.toLocaleDateString("es-CL"), 
     chequeNumber: "",
     baseAccount
   };
@@ -162,8 +162,8 @@ const NewExpense = () => {
           <View style={styles.dateRow}>
             <TouchableOpacity style={styles.iconContainer} onPress={showDatePicker}>
               <AntDesign name="calendar" size={22} color={theme.colors.black} />
+              <Text style={{ fontSize: fontSizes.medium, fontFamily: fonts.regular, paddingHorizontal: 5, }}>{selectedDate ? selectedDate.toDateString() : 'Select a date'}</Text>
             </TouchableOpacity>
-            <Text style={{ fontSize: fontSizes.medium, fontFamily: fonts.regular, paddingHorizontal: 5, }}>{selectedDate ? selectedDate.toDateString() : 'Select a date'}</Text>
             <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-end', }}>
               <TouchableOpacity style={styles.dateButton} onPress={isYesterdayFirst ? handleYesterday : handleToday}>
                 <Text style={styles.dateButtonText}>{isYesterdayFirst ? 'Yesterday?' : 'Today?'}</Text>
@@ -388,6 +388,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginRight: 10,
+    flexDirection:'row'
   },
   dateButton: {
     paddingHorizontal: 10,
