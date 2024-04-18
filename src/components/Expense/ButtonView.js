@@ -11,6 +11,7 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
   const user = useSelector(state => state?.auth?.user);
   const [showModal,setShowModal] = useState(false);
   const [isSuccess,setIsSuccess] = useState(false);
+  const [apiResponse,setApiResponse] = useState('');
   const handleSaveButton = async () => {
     const requestBody = prepareRequestBody();
     const entryType = name === 'Income' ? 'Sales' : name;
@@ -23,13 +24,16 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
       });
       setShowModal(true);
       if(response?.data?.status){
+        setApiResponse('Success!');
         setIsSuccess(true);
       }else{
+        setApiResponse(response?.body?.message);
         setIsSuccess(false);
       }
     } catch (error) {
       setShowModal(true);
       setIsSuccess(false);
+      setApiResponse('Something went wrong!');
       console.error('Error:', error);
     }
   };
@@ -68,12 +72,12 @@ const modalClose = ()=>{
               ? <Icon name='file-circle-check' size={100} color='#6CE45C' style={styles.icon}/>
               : <Icon name='file-circle-exclamation' size={100} color='#FF4146' style={styles.icon}/>
               }
-            {isSuccess ? <Text style={styles.buttonText}>Entry added successfully!</Text>
-            : <Text style={styles.buttonText}>Error Occurred!</Text>}
+            {isSuccess ? <Text style={styles.buttonText}>{apiResponse}</Text>
+            : <Text style={styles.buttonText}>{apiResponse}</Text>}
             <Pressable
               style={isSuccess ? styles.doneButton : styles.errorBtn}
               onPress={modalClose}>
-              <Text style={styles.buttonText}>Done</Text>
+              <Text style={[styles.buttonText,{color:isSuccess ?'black' : 'white'}]}>Done</Text>
             </Pressable>
           </View>
         </View>
