@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Header } from '../components/Header/Header';
+import { activeOpacity, fontSize, fonts, lineHeight } from '../theme/theme';
 
 const EditExpenseScreen = () => {
   const [rate, setRate] = useState('');
@@ -78,7 +79,7 @@ const EditExpenseScreen = () => {
             numberOfLines={4}
           />
         </View>
-        <TouchableOpacity style={styles.doneButton}>
+        <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular}>
           <Text style={styles.buttonText}>Done</Text>
         </TouchableOpacity>
       </View>
@@ -102,8 +103,9 @@ const styles = StyleSheet.create({
   },
   inputTitle: {
     marginBottom: 5,
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: fontSize.large.size,
+    fontFamily:fonts.bold,
+    lineHeight: fontSize.large.lineHeight
   },
   inputField: {
     borderWidth: 1,
@@ -125,7 +127,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily:fonts.bold,
+    fontSize:fontSize.regular.size,
+    lineHeight:fontSize.regular.lineHeight
   },
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet ,TextInput} from 'react-native';
-import { fonts, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, spacing, theme } from '../../theme/theme';
 
 const ConfirmationComponent = ({handleLogout,handleClose}) => {
 
@@ -8,10 +8,10 @@ const ConfirmationComponent = ({handleLogout,handleClose}) => {
     <View style={styles.container}>
       <Text style={styles.message}>{'Are you sure?'}</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: theme.colors.LightGray }]} onPress={handleClose}>
+        <TouchableOpacity style={styles.button} activeOpacity={activeOpacity.regular} onPress={handleClose}>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: theme.colors.LightGray }]} onPress={handleLogout}>
+        <TouchableOpacity style={styles.button} activeOpacity={activeOpacity.regular} onPress={handleLogout}>
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
         <TextInput/>
@@ -26,9 +26,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   message: {
-    fontSize: 18,
+    fontSize: fontSize.xLarge.size,
     marginBottom: 10,
-    fontFamily:fonts.medium
+    fontFamily:fonts.medium,
+    lineHeight: fontSize.xLarge.lineHeight
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -38,16 +39,21 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    paddingVertical: 10,
+    // height:40,
+    padding:spacing.small,
+    // paddingVertical: 10,
     marginLeft: 25,
     borderRadius: 5,
     alignItems: 'center',
+    justifyContent:'center',
     elevation:1,
     borderRadius:40,
+    backgroundColor: theme.colors.LightGray
   },
   buttonText: {
     color: theme.colors.black,
-    fontSize: 16,
+    fontSize: fontSize.large.size,
+    lineHeight: fontSize.large.lineHeight,
     fontFamily:fonts.regular
   },
 });

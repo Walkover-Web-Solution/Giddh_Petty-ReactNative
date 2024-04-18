@@ -9,7 +9,7 @@ function* fetchExpenses(action) {
     const currentExpenses = yield select(state => state?.expenses?.expenses);
     if(page!==1){
       if(6*(page-1)===currentExpenses["AllRequests"]?.length){
-
+        // setIsListEnd(true);
     }else{
       setIsListEnd(true);
     }
@@ -25,6 +25,10 @@ function* fetchExpenses(action) {
       to: endDate,
     };
     const response = yield api.post(apiUrl, payload);
+    // if(response?.data?.body?.results?.[0]?.entries.length <= 6){
+    //   setIsListEnd(true);
+    //   // setLoading(false)
+    // }
     if(response?.data?.body?.results===undefined||response?.data?.body?.results[0]?.entries===undefined||response===undefined){
       console.log(page,'p');
       const filteredData = {

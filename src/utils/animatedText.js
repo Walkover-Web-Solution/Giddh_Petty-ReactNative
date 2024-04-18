@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, View, Text } from 'react-native';
-import { fonts, theme } from '../theme/theme';
+import { Animated, View, Text, StyleSheet } from 'react-native';
+import { fontSize, fonts, theme } from '../theme/theme';
 
 const AnimatedTextLines = ({ lines }) => {
   const animatedValues = useRef(lines.map(line => line.split('').map(() => new Animated.Value(0)))).current;
@@ -29,18 +29,13 @@ const AnimatedTextLines = ({ lines }) => {
   }, []);
 
   return (
-    <View style={{marginTop:40,}}>
+    <View style={styles.container}>
       {lines.map((line, lineIndex) => (
         <Animated.View key={lineIndex} style={{ flexDirection: 'row', opacity: animatedValues[lineIndex][0] }}>
           {line.split('').map((letter, index) => (
             <Animated.Text
               key={index}
-              style={{
-                opacity: animatedValues[lineIndex][index],
-                fontFamily: fonts.bold,
-                fontSize: 30,
-                color: index === 0? '#001f8b' : theme.colors.black,
-              }}
+              style={styles.animatedText}
             >
               {letter}
             </Animated.Text>
@@ -51,4 +46,16 @@ const AnimatedTextLines = ({ lines }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container :{
+    marginTop:40
+  },
+  animatedText : {
+    opacity: animatedValues[lineIndex][index],
+    fontFamily: fonts.bold,
+    fontSize: fontSize.max.size,
+    lineHeight:fontSize.max.lineHeight,
+    color: index === 0? '#001f8b' : theme.colors.black,
+  }
+})
 export default AnimatedTextLines;

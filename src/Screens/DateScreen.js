@@ -1,25 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, StatusBar } from 'react-native';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, StatusBar, Dimensions } from 'react-native';
+import { PanGestureHandler, ScrollView, State } from 'react-native-gesture-handler';
 import DateRangePicker from '../components/Date/Custom';
 import PeriodListComponent from '../components/Date/Period';
-import { fonts, fontSizes, theme } from '../theme/theme';
+import { activeOpacity, borderRadius, fonts, fontSize, fontSizes, lineHeight, spacing, theme } from '../theme/theme';
 
+const {height,width} = Dimensions.get('window');
 const Item = ({ item, selectedIndex,setStartDate,setEndDate,bottomSheetModalRef }) => {
-    return (
-        <View style={{ flex: 1 }}>
-            {item === 'Period' && selectedIndex === 0 && <PeriodListComponent bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} />}
-            {item === 'Custom' && selectedIndex === 1 && <DateRangePicker bottomSheetModalRef={bottomSheetModalRef} setEndDate={setEndDate} setStartDate={setStartDate} />}
-        </View>
-    );
+    if(item === 'Period' && selectedIndex === 0) return <View style={{width:width}}><PeriodListComponent bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} /></View>
+    else if(item === 'Custom' && selectedIndex === 1)return <View style={{width:width}}><DateRangePicker bottomSheetModalRef={bottomSheetModalRef} setEndDate={setEndDate} setStartDate={setStartDate} /></View>
 };
 
+const routes = ['Period', 'Custom'];
 
 const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef}) => {
     const [index, setIndex] = useState(0);
     const flatListRef = useRef(null);
-
-    const routes = ['Period', 'Custom'];
 
     const handleTabPress = (i) => {
         setIndex(i);
@@ -54,6 +50,7 @@ const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef}) => {
                     <TouchableOpacity
                         key={route}
                         style={[styles.tab, i === index && styles.selectedTab]}
+                        activeOpacity={activeOpacity.regular}
                         onPress={() => handleTabPress(i)}
                     >
                         <Text style={[styles.tabText, i === index && styles.selectedTabText]}>{route}</Text>
@@ -62,18 +59,29 @@ const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef}) => {
             </View>
             <PanGestureHandler
                 onHandlerStateChange={handleGestureStateChange}
+
             >
-                <View style={styles.sceneContainer}>
+                {/* <ScrollView
+                    horizontal={true} 
+                    style={styles.sceneContainer}
+                    showsHorizontalScrollIndicator={false}
+                >
+                {
+                    routes.map((route,i)=>{
+                        return <Item key={route} bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} item={route} selectedIndex={i} />
+                    })
+                }    
+                </ScrollView> */}
+                
                     <FlatList
                         ref={flatListRef}
                         data={routes}
-                        renderItem={({ item }) => <Item bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} item={item} selectedIndex={index} />}
                         horizontal={true}
+                        renderItem={({ item }) => <Item bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} item={item} selectedIndex={index} />}
                         pagingEnabled
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item) => item}
                     />
-                </View>
             </PanGestureHandler>
         </View>
     );
@@ -83,36 +91,33 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 5,
-        backgroundColor: theme.colors.white,
+        alignItems:'center',
+        backgroundColor: theme.colors.white
     },
     tabBarContainer: {
+        width:'60%',
         flexDirection: 'row',
+        justifyContent:'space-between',
         backgroundColor: theme.colors.white,
-        marginHorizontal: 20,
         marginVertical: 10,
         overflow: 'hidden',
-        paddingBottom:10,
+        padding:5,
     },
     tab: {
-        flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
-        height: 40,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
+        paddingHorizontal:spacing.large,
+        paddingVertical:spacing.small,
+        borderRadius:50,
         borderColor: theme.colors.white,
         backgroundColor: theme.colors.LightGray,
-        marginHorizontal: 10,
         elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
+        shadowColor: '#000',
+        shadowOffset: {
+        width: 0,
+        height: 1,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
     },
     selectedTab: {
         backgroundColor: theme.colors.tertiary,
@@ -120,16 +125,18 @@ const styles = StyleSheet.create({
     },
     tabText: {
         color: 'black',
-        fontSize: fontSizes.large,
-        fontFamily:fonts.medium
+        fontSize: fontSize.large.size,
+        fontFamily:fonts.medium,
+        lineHeight: fontSize.large.lineHeight
     },
     selectedTabText: {
         color: theme.colors.secondary,
-        fontFamily:fonts.regular
+        fontFamily:fonts.regular,
+        lineHeight: lineHeight.large
     },
     sceneContainer: {
         flex: 1,
-        marginTop: 10,
+        borderWidth:2,
     },
 });
 

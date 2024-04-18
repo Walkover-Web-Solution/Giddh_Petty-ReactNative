@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import { useSelector } from 'react-redux';
-import { fonts, theme } from '../theme/theme';
+import { fontSize, fonts, theme } from '../theme/theme';
 
 const RenderChart = () => {
   const expenses = useSelector(state => state?.expenses?.expenses);
@@ -61,12 +61,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   totalAmount: {
-    fontSize: 20,
+    fontSize: fontSize.xLargeV1.size,
+    lineHeight: fontSize.xLargeV1.lineHeight,
     color: theme.colors.black,
     fontFamily:fonts.bold,
   },
   spending: {
-    fontSize: 14,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight,
     color: theme.colors.gray1,
     fontFamily:fonts.bold,
   },

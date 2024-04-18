@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { fonts, fontSizes, theme } from '../../theme/theme';
+import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme';
+import { errorToast } from '../customToast/CustomToast';
 
 const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
@@ -19,7 +20,7 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
 
     const handleStartDateConfirm = (date) => {
         setStartDateLocal(date);
-        setStartDate(formatDate(date));
+        // setStartDate(formatDate(date));
         hideStartDatePickerModal();
     };
 
@@ -33,12 +34,23 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
 
     const handleEndDateConfirm = (date) => {
         setEndDateLocal(date);
-        setEndDate(formatDate(date));
+        // setEndDate(formatDate(date));
         hideEndDatePickerModal();
     };
 
+    const dateValidator = ()=>{
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return start<end;
+    }
     const handleDone = () => {
-        bottomSheetModalRef?.current?.dismiss();
+        if(dateValidator()){
+            setStartDate(formatDate(startDate));
+            setEndDate(formatDate(endDate));
+            bottomSheetModalRef?.current?.dismiss();
+        }else{
+            errorToast("Enter a valid date range!");
+        }
     };
 
     const formatDate = (date) => {
@@ -50,23 +62,13 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
 
     return (
         <View style={styles.container}>
-            <View style={{ marginLeft: 20 }}>
-                <Text style={{ fontSize: fontSizes.large, fontFamily: fonts.regular, color: '#333' }}>
-                    Start Date:
-                </Text>
-            </View>
-            <TouchableOpacity style={styles.dateButton} onPress={showStartDatePickerModal}>
+            <TouchableOpacity style={styles.dateButton} activeOpacity={activeOpacity.regular} onPress={showStartDatePickerModal}>
                 <Text style={styles.buttonText}>{startDate ? startDate.toDateString() : "Select Start Date"}</Text>
             </TouchableOpacity>
-            <View style={{ marginLeft: 20, marginTop: 15 }}>
-                <Text style={{ fontSize: fontSizes.large, fontFamily: fonts.regular, color: '#333' }}>
-                    End Date:
-                </Text>
-            </View>
-            <TouchableOpacity style={styles.dateButton} onPress={showEndDatePickerModal}>
+            <TouchableOpacity style={styles.dateButton} activeOpacity={activeOpacity.regular} onPress={showEndDatePickerModal}>
                 <Text style={styles.buttonText}>{endDate ? endDate.toDateString() : "Select End Date"}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.doneButton} onPress={handleDone}>
+            <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular} onPress={handleDone}>
                 <Text style={styles.doneButtonText}>Done</Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -96,17 +98,17 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         margin: 10,
-        marginLeft: 20,
         elevation: 1,
     },
     doneButton: {
         backgroundColor: theme.colors.black,
         borderRadius: 20,
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        width:100,
+        // paddingHorizontal: 10,
         elevation: 5,
-        marginTop: 20,
-        marginLeft: 230,
+        marginTop: 55,
+        marginLeft: 280,
         marginRight: 20,
         marginBottom: 20,
         justifyContent: 'center',
@@ -114,13 +116,15 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#333',
-        fontSize: fontSizes.medium,
-        fontFamily: fonts.regular
+        fontSize: fontSize.regular.size,
+        fontFamily: fonts.regular,
+        lineHeight: fontSize.regular.lineHeight
     },
     doneButtonText: {
         color: 'white',
-        fontSize: fontSizes.large,
-        fontFamily: fonts.regular
+        fontSize: fontSize.large.size,
+        fontFamily: fonts.regular,
+        lineHeight: fontSize.large.lineHeight
     }
 });
 

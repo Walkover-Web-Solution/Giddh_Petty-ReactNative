@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { fonts } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight } from '../../theme/theme';
 
 const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomSheetModalRef }) => {
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
 
   const handleRateChange = (text) => {
@@ -32,7 +32,7 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
         <Text style={styles.label}>Rate:</Text>
         <TextInput
           style={styles.input}
-          placeholder={selectedProduct[productKey].amount.toString()}
+          placeholder={'Enter Amount'}
           keyboardType="numeric"
           value={rate}
           onChangeText={handleRateChange}
@@ -44,7 +44,7 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
         <Text style={styles.totalAmount}>{rate||selectedProduct[productKey].amount.toString()}.00</Text>
       </View>
 
-      <TouchableOpacity style={styles.doneButton} onPress={handleDonePress}>
+      <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular} onPress={handleDonePress}>
         <Text style={styles.buttonText}>Done</Text>
       </TouchableOpacity>
     </View>
@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 16,
+    fontSize: fontSize.large.size,
     fontFamily: fonts.medium,
+    lineHeight: fontSize.large.lineHeight
   },
   input: {
     flex: 1,
@@ -73,13 +74,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'black',
     paddingHorizontal: 10,
-    paddingVertical: 8,
+    // paddingVertical: 8,
     borderRadius: 5,
     marginBottom: 10,
+    fontFamily:fonts.regular
   },
   totalAmount: {
-    fontSize: 14,
+    fontSize: fontSize.regular.size,
     fontFamily: fonts.medium,
+    lineHeight: fontSize.regular.lineHeight
   },
   doneButton: {
     backgroundColor: 'black',
@@ -93,8 +96,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: fontSize.large.size,
     fontWeight: 'bold',
+    fontFamily:fonts.bold,
+    lineHeight: fontSize.large.lineHeight
   },
 });
 

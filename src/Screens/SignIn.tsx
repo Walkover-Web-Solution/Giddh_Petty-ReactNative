@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, Modal } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { fonts, fontSizes, theme } from '../theme/theme';
+import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import Header from '../components/SignIn/Header';
 import GidhhSvg from '../../assets/images/giddh_icon.svg';
 import SVGMsg from '../../assets/images/msg.svg';
@@ -26,9 +26,9 @@ const SignIn: React.FC = () => {
     dispatch({ type: 'SIGN_IN' });
   };
 
-  useEffect(() => {
-    dispatch({ type: 'SIGN_IN_OTP', payload: data?.message });
-  }, [data, dispatch]);
+  // useEffect(() => {
+  //   // dispatch({ type: 'SIGN_IN_OTP', payload: data?.message });
+  // }, [data, dispatch]);
 
   const handleOtpCompletion = async (data: string) => {
     const response: SignInData = JSON.parse(data);
@@ -45,11 +45,11 @@ const SignIn: React.FC = () => {
       <View style={styles.contentContainer}>
         <Header />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.socialLoginButton} onPress={handleSignIn}>
+          <TouchableOpacity style={styles.socialLoginButton} activeOpacity={activeOpacity.regular} onPress={handleSignIn}>
             <Text style={styles.buttonText}>Login with Google</Text>
             <GoogleIcon width={23} height={23} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.socialLoginButton} onPress={handleOtpSignIn}>
+          <TouchableOpacity style={styles.socialLoginButton} activeOpacity={activeOpacity.regular} onPress={handleOtpSignIn}>
             <Text style={styles.buttonText}>Login with OTP</Text>
             <SVGMsg width={20} height={20} />
           </TouchableOpacity>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingBottom: '25%',
     backgroundColor: theme.colors.black,
     width: '100%',
-    height: '62%',
+    height: '60%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
   },
   buttonContainer: {
-    flex: 1,
-    marginBottom: 60,
-    marginTop: 25,
+    padding:10,
+    alignItems:'center',
+    justifyContent:'space-between'
   },
   socialLoginButton: {
     flexDirection: 'row',
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     color: 'white',
     fontFamily: fonts.medium,
-    fontSize: fontSizes.large,
-    lineHeight: 19,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight,
   },
 });
 

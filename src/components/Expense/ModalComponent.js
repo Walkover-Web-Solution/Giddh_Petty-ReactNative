@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { fonts } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight } from '../../theme/theme';
 import axios from 'axios';
 import {useSelector,useDispatch } from 'react-redux';
 import { setSelectedPaymentMode } from '../../redux/paymentmode/paymentSlice';
@@ -20,7 +20,7 @@ const PaymentModeSelector = ({ bottomSheetModalRef}) => {
             </View>
             <ScrollView contentContainerStyle={styles.optionsContainer}>
                 {paymentModes.map(payment => (
-                    <TouchableOpacity key={payment?.uniqueName} style={styles.option} onPress={()=>{dispatch(setSelectedPaymentMode(payment));bottomSheetModalRef?.current.dismiss()}}>
+                    <TouchableOpacity key={payment?.uniqueName} style={styles.option} activeOpacity={activeOpacity.regular} onPress={()=>{dispatch(setSelectedPaymentMode(payment));bottomSheetModalRef?.current.dismiss()}}>
                         <Text style={styles.optionText}>{payment?.name}</Text>
                     </TouchableOpacity>
                 ))}
@@ -37,9 +37,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     heading: {
-        fontSize: 16,
+        fontSize: fontSize.large.size,
         fontFamily: fonts.bold,
         marginBottom: 10,
+        lineHeight: fontSize.large.lineHeight
     },
     searchContainer: {
         flexDirection: 'row',
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         height: '100%',
+        fontFamily:fonts.regular
     },
     optionsContainer: {
         marginTop: 10,
@@ -75,8 +77,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     optionText: {
-        fontSize: 16,
+        fontSize: fontSize.large.size,
         fontFamily: fonts.medium,
+        lineHeight: fontSize.large.lineHeight
     },
 });
 

@@ -64,6 +64,10 @@
 		<string>PlusJakartaSans-Regular.ttf</string>
 		<string>PlusJakartaSans-SemiBold.ttf</string>
 		<string>PlusJakartaSans-SemiBoldItalic.ttf</string>
+		<string>DancingScript-Bold.ttf</string>
+		<string>DancingScript-Medium.ttf</string>
+		<string>DancingScript-Regular.ttf</string>
+		<string>DancingScript-SemiBold.ttf</string>
 	</array>
 </dict>
 </plist>

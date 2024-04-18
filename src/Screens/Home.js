@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator, DeviceEventEmitter, RefreshControl } from 'react-native';
-import { fonts, fontSizes, theme } from '../theme/theme';
+import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import RenderChart from './renderLegendComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -24,6 +24,10 @@ const list = [
   { label: 'Rejected', color: theme.colors.gray, name: 'Rejected' },
 ];
 
+const modalStyle = {
+  backgroundColor : 'transparent',
+  detached : true
+}
 const Home = () => {
   const formatDate = (date) => {
   const day = date.getDate().toString().padStart(2, '0');
@@ -115,12 +119,12 @@ const Home = () => {
       <StatusBar backgroundColor={theme.colors.black} />
       <View style={styles.header}>
         <View style={styles.userContainer}>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => navigation.openDrawer()}>
             <Image source={user?.photo ? { uri: user?.photo } : require('../../assets/images/user-picture.png')} style={styles.userImage} />
           </TouchableOpacity>
         </View>
         <View style={styles.companyBranch}>
-          <Text style={styles.companyName}>{capitalizeFirstLetter(selectedCompany?.name)}</Text>
+          <Text numberOfLines={1} style={styles.companyName}>{capitalizeFirstLetter(selectedCompany?.name)}</Text>
           {selectedBranch && <View style={styles.branchContainer}><MaterialIcons name="git-merge" size={18} color={theme.colors.gray1} /><Text style={styles.branchName}>{capitalizeFirstLetter(selectedBranch?.alias)}</Text></View>}
         </View>
       </View>
@@ -139,7 +143,7 @@ const Home = () => {
 
       <View style={styles.transactionContainer}>
         <Text style={styles.transactionHeading}>Transaction History</Text>
-        <TouchableOpacity onPress={handleFilterPress}>
+        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleFilterPress}>
           <Feather name="filter" size={25} style={styles.filterIcon} />
         </TouchableOpacity>
       </View>
@@ -150,7 +154,7 @@ const Home = () => {
           keyExtractor={(item) => item?.uniqueName?.toString()}
           renderItem={renderComponent}
           contentContainerStyle={styles.flatListContent}
-          ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>Data Not Found..</Text></View>}
+          ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>No Data ..</Text></View>}
           ListFooterComponent={renderFooter}
           onEndReached={() => { if (!isListEnd && !loading) setPage(page + 1); }}
           onEndReachedThreshold={0.5}
@@ -160,13 +164,14 @@ const Home = () => {
           }}/>
         }
         />
-        <TouchableOpacity onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
+        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
           <PlusSVG color={theme.colors.white} />
         </TouchableOpacity>
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalRef}
           children={<DateScreen setStartDate={setStartDate} setEndDate={setEndDate} bottomSheetModalRef={bottomSheetModalRef}/>}
-          intialSnap='50%'
+          intialSnap='45%'
+          snapArr={['45%']}
         />
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalExpenseRef}
@@ -174,6 +179,7 @@ const Home = () => {
           intialSnap='25%'
           snapArr={['25%']}
           drag={false}
+          modalStyle={modalStyle}
         />
       </SafeAreaView>
     </View>
@@ -214,9 +220,10 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.white,
   },
   companyName: {
-    fontSize: fontSizes.large,
+    fontSize: fontSize.large.size,
     fontFamily: fonts.bold,
     color: theme.colors.white,
+    lineHeight: fontSize.large.lineHeight
   },
   branchContainer: {
     flexDirection: 'row',
@@ -224,7 +231,8 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   branchName: {
-    fontSize: fontSizes.small,
+    fontSize: fontSize.small.size,
+    lineHeight: fontSize.small.lineHeight,
     color: theme.colors.gray1,
     paddingBottom: 5,
     fontFamily: fonts.regular,
@@ -232,7 +240,8 @@ const styles = StyleSheet.create({
     marginTop:3,
   },
   heading: {
-    fontSize: fontSizes.extraLarge,
+    fontSize: fontSize.xLarge.size,
+    lineHeight:fontSize.xLarge.lineHeight,
     fontFamily: fonts.regular,
     marginLeft: 10,
   },
@@ -254,7 +263,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   transactionHeading: {
-    fontSize: fontSizes.large,
+    fontSize: fontSize.large.size,
+    lineHeight: fontSize.large.lineHeight,
     fontFamily: fonts.bold,
     backgroundColor: theme.colors.white,
   },
@@ -273,7 +283,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyListText: {
-    fontSize: fontSizes.extraLarge,
+    fontSize: fontSize.xLarge.size,
+    lineHeight: fontSize.xLarge.lineHeight,
     fontFamily: fonts.medium,
   },
   footer: {

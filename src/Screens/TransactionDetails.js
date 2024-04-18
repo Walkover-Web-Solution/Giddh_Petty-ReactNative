@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar } from 'react-native';
-import { fonts, theme } from '../theme/theme';
+import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
 import { useSelector } from 'react-redux';
 import { capitalizeFirstLetter } from '../utils/capitalise';
 import ReturnButton from '../components/TransactionDetails/ReturnButton';
 import {  UserCard, DetailRow } from '../components/Transaction/TransactionDetailComponents';
 import Header from '../components/Header/Header'
 import Reciept from '../../assets/images/receipt.svg'
+import ImageViewer from '../components/TransactionDetails/ImageViewer'
+import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 const TransactionDetails = () => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
-
+  const bottomSheetModalRef = useRef(null);
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="black" />
@@ -23,7 +25,7 @@ const TransactionDetails = () => {
           <Text style={styles.amount}>{selectedExpense?.amount}.00</Text>
         </View>
         <UserCard user={selectedExpense?.createdBy} />
-        <Text style={styles.transactionDetail}>Transaction Detail</Text>
+        <Text style={styles.transactionDetail}>Transaction Details</Text>
         <DetailRow label="Status" value={capitalizeFirstLetter(selectedExpense?.status)} />
         <DetailRow label="Entry type" value={capitalizeFirstLetter(selectedExpense?.entryType)} />
         <DetailRow label="Entry date" value={selectedExpense?.entryDate} />
@@ -34,11 +36,19 @@ const TransactionDetails = () => {
         <View style={[styles.halfCircle, styles.lowerHalfCircle]} />
         <View style={styles.circle}>
           <View style={[styles.tickContainer, styles.tickContainerShadow]}>
-            <Reciept height={40}/>
+            {selectedExpense?.attachedFiles 
+            ? <TouchableOpacity 
+              style={styles.imageIcon}
+              activeOpacity={activeOpacity.regular}
+              onPress={()=>bottomSheetModalRef?.current?.present()}
+              >
+            </TouchableOpacity> 
+            : <Reciept height={40}/>}
           </View>
         </View>
       </View>
-      <ReturnButton text={'Edit'} color={theme.colors.black}/>
+      {/* <ReturnButton text={'Edit'} color={theme.colors.black}/> */}
+      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<ImageViewer bottomSheetModalRef={bottomSheetModalRef} />} />
     </View>
   );
 };
@@ -67,9 +77,11 @@ const styles = StyleSheet.create({
   },
   transactionID: {
     marginBottom: 15,
-    fontSize: 16,
+    fontSize: fontSize.large.size,
+    lineHeight:fontSize.large.lineHeight,
     color: theme.colors.gray,
     textAlign: 'center',
+    fontFamily:fonts.regular
   },
   amountContainer: {
     flexDirection: 'row',
@@ -77,12 +89,14 @@ const styles = StyleSheet.create({
   },
   currency: {
     fontFamily:fonts.bold,
-    fontSize: 22,
+    fontSize: fontSize.xxLarge.size,
+    lineHeight:fontSize.xxLarge.lineHeight,
     paddingTop: 3,
     paddingRight: 3,
   },
   amount: {
-    fontSize: 30,
+    fontSize: fontSize.max.size,
+    lineHeight:fontSize.max.lineHeight,
     fontFamily:fonts.medium,
   },
   card: {
@@ -116,8 +130,9 @@ const styles = StyleSheet.create({
   transactionDetail: {
     paddingLeft: 20,
     marginTop: 18,
-    fontSize: 17,
-    fontFamily:fonts.bold,
+    fontSize: fontSize.large.size,
+    lineHeight:fontSize.large.lineHeight,
+    fontFamily:fonts.bold
   },
   detailRow: {
     flexDirection: 'row',
@@ -191,6 +206,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: theme.colors.secondary,
   },
+  imageIcon: {
+    borderWidth:2,
+    width:'100%',
+    height:'100%',
+    borderRadius:50
+  }
 });
 
 export default TransactionDetails;

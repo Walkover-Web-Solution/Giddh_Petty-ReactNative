@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { fonts, fontSizes } from '../../theme/theme';
+import { activeOpacity, fonts, fontSize, fontSizes, lineHeight } from '../../theme/theme';
 
 const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef }) => {
   const today = new Date();
@@ -85,6 +85,7 @@ const calculateFinancialYearEndDate = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.item}
+      activeOpacity={activeOpacity.regular}
       onPress={() => handlePeriodSelection(item.startDate, item.endDate)}
     >
       <Text style={styles.itemText}>{item.name}</Text>
@@ -113,9 +114,10 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   itemText: {
-    fontSize: fontSizes.medium,
+    fontSize: fontSize.regular.size,
     color: 'black',
     fontFamily: fonts.regular,
+    lineHeight: fontSize.regular.lineHeight
   },
 });
 

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { fonts, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import Reciept from '../../../assets/images/receipt.svg';
 import { capitalizeFirstLetter } from '../../utils/capitalise';
 
@@ -8,7 +8,7 @@ const RenderListItem = ({ item, onPress }) => {
   // console.log(item)
   return (
     <TouchableOpacity
-      activeOpacity={0.9}
+      activeOpacity={activeOpacity.regular}
       onPress={() => onPress(item)}
       key={item?.uniqueName}
       style={styles.card}
@@ -71,23 +71,30 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   cardSubtitle: {
-    fontSize: 12,
+    fontSize: fontSize.small.size,
     color: theme.colors.gray1,
     fontFamily: fonts.regular,
+    lineHeight: fontSize.small.lineHeight
   },
   cardTitle: {
     fontFamily: fonts.bold,
     marginTop: 3,
+    fontSize:fontSize.regular.size,
+    lineHeight:fontSize.regular.lineHeight
   },
   cardAmount: {
     fontFamily: fonts.bold,
     textAlign: 'right',
+    fontSize: fontSize.regular.size,
+    lineHeight:fontSize.regular.lineHeight
   },
   cardDate: {
-    fontSize: 12,
+    fontSize: fontSize.small.size,
     color: theme.colors.gray1,
     marginTop: 5,
     paddingLeft: 25,
+    fontFamily:fonts.regular,
+    lineHeight: fontSize.small.lineHeight
   },
   badgeIndicator: {
     position:'absolute',

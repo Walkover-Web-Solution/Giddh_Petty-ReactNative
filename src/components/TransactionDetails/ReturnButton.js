@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { fonts, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, spacing, theme } from '../../theme/theme';
 const ReturnButton = ({text,color}) => {
     const navigation=useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={()=>navigation.goBack()} style={[styles.button,{backgroundColor:color}]}>
+      <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>navigation.goBack()} style={[styles.button,{backgroundColor:color}]}>
         <Text style={[styles.buttonText,{color:text==='Edit'?theme.colors.white:theme.colors.black}]}>{text}</Text>
       </TouchableOpacity>
     </View>
@@ -23,11 +23,12 @@ const styles = StyleSheet.create({
     borderRadius: 100, 
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 15,
+    paddingVertical: spacing.medium,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: fontSize.large.size,
     fontFamily: fonts.bold,
+    lineHeight: fontSize.large.lineHeight
   },
 });
 

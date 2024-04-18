@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity ,View} from 'react-native'
 import React,{memo} from 'react'
-import { fonts, fontSizes, theme } from '../../theme/theme'
+import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme'
 
 const ThreeDDot = ({ color }) => {
   return (
@@ -15,6 +15,7 @@ const RenderButtonList = ({item,handleButtonPress,selectedButton}) => {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: selectedButton? theme.colors.tertiary : theme.colors.LightGray }]}
+      activeOpacity={activeOpacity.regular}
       onPress={() => handleButtonPress(item?.label)}
     >
       <ThreeDDot color={item?.color} />
@@ -51,7 +52,8 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
     fontFamily: fonts.bold,
     lineHeight:19,
-    fontSize:fontSizes.medium,
+    fontSize:fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight
   },
   dot: {
     width: 7,

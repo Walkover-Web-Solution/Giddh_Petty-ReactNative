@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { fonts, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import ArrBack from '../../../assets/images/back-arrow-navigation-svgrepo-com.svg';
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,7 +10,7 @@ export const Header = ({ title }) => {
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => navigation.goBack()}>
         <ArrBack height={25} width={30} />
       </TouchableOpacity>
       <Text style={styles.headerText}>{title}</Text>
@@ -48,10 +48,11 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: theme.colors.white,
-    fontSize: 17,
+    fontSize: fontSize.large.size,
     fontFamily:fonts.bold,
     textAlign: 'center',
     marginLeft: 76,
+    lineHeight: fontSize.large.lineHeight
   },
   card: {
     flexDirection: 'row',
@@ -73,13 +74,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: fontSize.large.size,
     fontFamily:fonts.bold,
+    lineHeight: fontSize.large.lineHeight
   },
   cardSubtitle: {
-    fontSize: 14,
+    fontSize: fontSize.regular.size,
     fontFamily:fonts.regular,
     color: 'gray',
+    lineHeight: fontSize.regular.lineHeight
   },
   detailRow: {
     flexDirection: 'row',
@@ -89,10 +92,14 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     color: theme.colors.gray,
-    fontFamily:fonts.regular
+    fontFamily:fonts.regular,
+    fontSize:fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight
   },
   detailValue: {
     fontFamily:fonts.bold,
+    fontSize:fontSize.regular.size,
+    lineHeight:fontSize.regular.lineHeight
   },
 });
 
