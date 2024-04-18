@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
   doneBtn : {
     paddingVertical:15,
     width:'80%',
+    height:50,
     backgroundColor:theme.colors.black,
     justifyContent:'center',
     alignItems:'center',

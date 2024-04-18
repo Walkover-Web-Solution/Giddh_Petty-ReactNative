@@ -36,10 +36,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems:'center',
     width: '100%',
+    padding:3
   },
   button: {
     flex: 1,
-    // height:40,
+    height:50,
     padding:spacing.small,
     // paddingVertical: 10,
     marginLeft: 25,

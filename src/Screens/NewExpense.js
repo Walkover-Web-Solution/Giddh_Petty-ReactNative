@@ -229,8 +229,8 @@ image?.uploading ? (
         </View>
         <View style={styles.header}>
         {/* <FontAwesome5 name="box-open" size={20} color="black" style={styles.icon} /> */}
-        <Text style={styles.title}>Selected Product/Services</Text>
-        <Text style={[styles.title, { textAlign: 'right', flex: 1 }]}>INR</Text>
+        <Text style={styles.text}>Selected Product/Services</Text>
+        <Text style={[styles.text, { textAlign: 'right', flex: 1 }]}>INR</Text>
         </View>
         <ScrollView style={styles.productView} nestedScrollEnabled={true}>
           <ProductServicesList setSelectedProduct={setSelectedProduct} setSelectedItems={setSelectedItems} selectedItems={selectedItems} bottomSheetModalRefExpense={bottomSheetModalRefExpense}/>
@@ -513,30 +513,35 @@ const styles = StyleSheet.create({
   inputContainer : { 
     paddingHorizontal: 20 
   },
-  inputContainerStyle: { 
+  inputContainerStyle: {
     backgroundColor: theme.colors.LightGray, 
     borderRadius: 5,
-    paddingVertical:10,
-    paddingHorizontal:10, 
+    paddingHorizontal:10,
+    justifyContent:'center',
+    height:45, 
     marginTop: 5 
   },
   inputText :{
-    fontFamily:fonts.regular,
-    fontSize:fontSize.small.size,
-    lineHeight:fontSize.small.lineHeight
+    fontFamily : fonts.regular,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight
   },
   inputField :{ 
     backgroundColor: theme.colors.LightGray, 
     borderRadius: 5, 
-    padding: 10, 
+    paddingHorizontal: 10,
+    // paddingVertical:5, 
+    justifyContent:'center',
+    height:45, 
     marginTop: 5,
     fontFamily : fonts.regular,
     fontSize: fontSize.regular.size,
     lineHeight: fontSize.regular.lineHeight
   },
   productView : {
-    height:150,
-    marginVertical:5
+    height:160,
+    marginVertical:5,
+    paddingHorizontal:10
   },
   amountView: {
     flexDirection:'row',

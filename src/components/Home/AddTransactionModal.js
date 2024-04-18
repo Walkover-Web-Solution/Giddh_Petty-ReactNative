@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'white',
   },
   buttonText: {
-    color: theme.colors.white,
+    color: theme.colors.black,
     fontFamily: fonts.bold,
     textAlign: 'center',
     fontSize:fontSize.large.size,

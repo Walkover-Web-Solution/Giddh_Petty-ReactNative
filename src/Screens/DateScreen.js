@@ -95,18 +95,21 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.white
     },
     tabBarContainer: {
-        width:'60%',
+        flex:1,
         flexDirection: 'row',
         justifyContent:'space-between',
         backgroundColor: theme.colors.white,
         marginVertical: 10,
         overflow: 'hidden',
-        padding:5,
+        paddingHorizontal:20,
+        paddingVertical:3
     },
     tab: {
+        flex:1,
         justifyContent: 'center',
-        paddingHorizontal:spacing.large,
-        paddingVertical:spacing.small,
+        alignItems:'center',
+        marginHorizontal:10,
+        height:50,
         borderRadius:50,
         borderColor: theme.colors.white,
         backgroundColor: theme.colors.LightGray,

@@ -179,7 +179,7 @@ const Home = () => {
           intialSnap='25%'
           snapArr={['25%']}
           drag={false}
-          modalStyle={modalStyle}
+          // modalStyle={modalStyle}
         />
       </SafeAreaView>
     </View>
