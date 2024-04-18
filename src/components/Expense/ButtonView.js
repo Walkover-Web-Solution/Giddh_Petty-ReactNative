@@ -77,7 +77,7 @@ const modalClose = ()=>{
             <Pressable
               style={isSuccess ? styles.doneButton : styles.errorBtn}
               onPress={modalClose}>
-              <Text style={[styles.buttonText,{color:isSuccess ?'black' : 'white'}]}>Done</Text>
+              <Text style={[styles.buttonText,{color:'white'}]}>Done</Text>
             </Pressable>
           </View>
         </View>
