@@ -176,8 +176,8 @@ const Home = () => {
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalExpenseRef}
           children={<AddTransactionModal bottomSheetModalRef={bottomSheetModalExpenseRef} navigation={navigation} dispatch={dispatch} />}
-          intialSnap='25%'
-          snapArr={['25%']}
+          intialSnap='19%'
+          snapArr={['19%']}
           drag={false}
           // modalStyle={modalStyle}
         />

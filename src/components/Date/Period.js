@@ -6,6 +6,11 @@ const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef }) =
   const today = new Date();
   const currentMonth = today.getMonth() + 1;
   
+  const reverseDateFormat = (dateStr) =>{
+    const parts = dateStr.split('-');
+    const reversedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    return reversedDate;
+  }
   const calculateQuarterStartDate = () => {
   const quarterStartMonth = Math.floor((currentMonth - 1) / 3)-1;
   const startDate = new Date(today.getFullYear(), quarterStartMonth, 1);
@@ -44,7 +49,9 @@ const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef }) =
 
 const calculateLastQuarterEndDate = () => {
   const lastQuarterStartDate = calculateLastQuarterStartDate();
-  const endDate = new Date(lastQuarterStartDate);
+  // const endDate = new Date(lastQuarterStartDate);
+  const reverseDate = reverseDateFormat(lastQuarterStartDate)
+  const endDate = new Date(reverseDate);
   endDate.setMonth(endDate.getMonth() + 3);
   endDate.setDate(endDate.getDate() - 1);
   return formatDate(endDate);

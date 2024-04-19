@@ -1,5 +1,5 @@
 import React, { useState, useRef, } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, TextInput, StatusBar,ActivityIndicator, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, TextInput, StatusBar,ActivityIndicator, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'; // Import DateTimePickerModal
@@ -155,6 +155,7 @@ console.log("images",selectedImages);
   return (
     // <View style={styles.container}>
     <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView>
       <ScrollView>
       <StatusBar backgroundColor={theme.colors.black} />
       <Header title={'New '+name+' Claim'} />
@@ -244,7 +245,7 @@ image?.uploading ? (
         <RowWithButtons companyUniqueName={selectedCompany?.uniqueName} name={name} selectedItem={selectedItems} getBack={getBack} prepareRequestBody={prepareRequestBody}/>
       </View>
       <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<PaymentModeSelector bottomSheetModalRef={bottomSheetModalRef} />} />
-      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRefExpense} intialSnap={'25%'} snapArr={['35%']} children={<EditExpense selectedProduct={selectedProduct} bottomSheetModalRef={bottomSheetModalRefExpense} setSelectedItems={setSelectedItems} selectedItems={selectedItems} />} />
+      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRefExpense} intialSnap={'37%'} snapArr={['37%']} children={<EditExpense selectedProduct={selectedProduct} bottomSheetModalRef={bottomSheetModalRefExpense} setSelectedItems={setSelectedItems} selectedItems={selectedItems} />} />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
@@ -252,6 +253,7 @@ image?.uploading ? (
         onCancel={hideDatePicker}
         />
           </ScrollView>
+        </KeyboardAvoidingView>
         </SafeAreaView>
           // </View>
   );

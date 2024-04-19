@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { activeOpacity, fontSize, fonts, lineHeight } from '../../theme/theme';
 
 const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomSheetModalRef }) => {
@@ -27,6 +27,7 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
   };
 
   return (
+    <KeyboardAvoidingView>
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.label}>Rate:</Text>
@@ -48,6 +49,7 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
         <Text style={styles.buttonText}>Done</Text>
       </TouchableOpacity>
     </View>
+    </KeyboardAvoidingView>
   );
 };
 
