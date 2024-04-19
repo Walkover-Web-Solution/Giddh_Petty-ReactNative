@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.LightGray,
         height:50,
         justifyContent:'center',
-        borderRadius: 20,
+        borderRadius: 50,
         paddingVertical: 10,
         paddingHorizontal: 20,
         marginVertical: 10,

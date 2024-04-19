@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, Modal } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import Header from '../components/SignIn/Header';
 import GidhhSvg from '../../assets/images/giddh_icon.svg';
@@ -8,6 +8,7 @@ import SVGMsg from '../../assets/images/msg.svg';
 import GoogleIcon from '../../assets/images/icons8-google-20.svg';
 import { OTPVerification } from '@msg91comm/react-native-sendotp';
 import { environment } from '../environments/environment.prod';
+import LoaderKit from 'react-native-loader-kit'
 
 interface SignInData {
   message: string;
@@ -16,23 +17,25 @@ interface SignInData {
 const SignIn: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
-  const [data, setData] = useState<SignInData | null>(null);
-
+  // const isAuthenticated = useSelector((state:any)=>state.auth.isAuthenticated);
+  const isLoading = useSelector((state:any)=>state?.auth?.loading);
+  console.log(isLoading);
+  
+  // const [data, setData] = useState<SignInData | null>(null);
+  // const [loading,setLoading] = useState(false);
   const handleOtpSignIn = () => {
     setModalVisible(true);
   };
-
+  // useEffect(()=>{},[isLoading])
   const handleSignIn = () => {
-    dispatch({ type: 'SIGN_IN' });
+    dispatch({ type: 'SIGN_START' });
+    // setLoading(true);
   };
-
-  // useEffect(() => {
-  //   // dispatch({ type: 'SIGN_IN_OTP', payload: data?.message });
-  // }, [data, dispatch]);
 
   const handleOtpCompletion = async (data: string) => {
     const response: SignInData = JSON.parse(data);
-    setData(response);
+    dispatch({type:'SIGN_IN_OTP',payload:response});
+    // setLoading(true);
     setModalVisible(false);
   };
 
@@ -55,6 +58,13 @@ const SignIn: React.FC = () => {
           </TouchableOpacity>
         </View>
       </View>
+      {isLoading!==undefined && isLoading && <View style={styles.loaderView}>
+        <LoaderKit 
+          style={styles.loadKit}
+          name={'CubeTransition'}
+          color={'white'}
+        />
+      </View>}
       <Modal visible={isModalVisible}>
         <OTPVerification
           onVisible={isModalVisible}
@@ -68,6 +78,16 @@ const SignIn: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  loaderView: {
+    position:'absolute',
+    top:'50%',
+    left:'50%',
+    transform:[{ translateX: -25 }, { translateY: -25 }]
+  },
+  loadKit : { 
+    width: 50, 
+    height: 50
+  },
   container: {
     flex: 1,
     backgroundColor: theme.colors.black,

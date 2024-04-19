@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native';
+import React, { useState,useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList, Keyboard } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../theme/theme';
@@ -16,7 +16,8 @@ const AddExpenseScreen = () => {
   const {selectedItem,getBack,name}=route.params;
   const [selectedItems, setSelectedItems] = useState(selectedItem);
   const selectedCompany = useSelector((state) => state?.company?.selectedCompany?.uniqueName);
-  const addExpense = useSelector((state) => state?.addExpense?.data);
+  const addExpenseData = useSelector((state) => state?.addExpense?.data)
+  const [addExpense,setAddExpense] = useState(addExpenseData);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type:'ADD_EXPENSE',uniqueName:selectedCompany,groups:environment[name]});
@@ -24,6 +25,11 @@ const AddExpenseScreen = () => {
   const handleSearchExpand = () => {
     setSearchExpanded(!isSearchExpanded);
   };
+  const filterSearch = (text) => {
+    let filterData = addExpenseData.filter((item)=>item?.name?.toLowerCase().includes(text.toLowerCase()));
+    if(filterData.length == 0) setAddExpense(addExpenseData);
+    else setAddExpense(filterData);
+  }
 
   const renderItem = ({ item }) => {
   const handleSelectButton = () => {
@@ -78,6 +84,8 @@ const AddExpenseScreen = () => {
               style={styles.searchInput}
               placeholder="Search Product"
               placeholderTextColor={theme.colors.black}
+              onChangeText={(text)=>filterSearch(text)}
+              autoFocus={true}
             />
             <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleSearchExpand}>
               <AntDesign name="close" size={20} color={theme.colors.black} />
@@ -149,10 +157,10 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: fontSize.large.size,
     fontFamily: fonts.regular,
     color: theme.colors.black,
-    lineHeight: lineHeight.large
+    lineHeight: fontSize.large.lineHeight
   },
   listItem: {
     flexDirection:'row',

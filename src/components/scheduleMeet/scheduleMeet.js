@@ -38,7 +38,7 @@ const ScheduleMeet = ({isModalVisible,setModalVisible,navigation}) => {
         scrollEnabled={false}
         startInLoadingState={true}
         renderLoading={() => 
-        <View>
+        <View style={styles.container}>
           <LoaderKit
           style={styles.loadKit}
           name={'BallPulse'}
@@ -61,10 +61,14 @@ const ScheduleMeet = ({isModalVisible,setModalVisible,navigation}) => {
 export default ScheduleMeet
 
 const styles = StyleSheet.create({
+  container: {
+    position:'absolute',
+    top:'50%',
+    left:'50%',
+    transform:[{ translateX: -25 }, { translateY: -25 }]
+  },
   loadKit : { 
     width: 50, 
-    height: 50,
-    alignSelf:'center',
-    borderWidth:2
+    height: 50
   }
 })

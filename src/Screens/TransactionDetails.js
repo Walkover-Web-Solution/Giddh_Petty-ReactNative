@@ -1,20 +1,31 @@
 import React, { useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar, ScrollView } from 'react-native';
 import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
 import { useSelector } from 'react-redux';
 import { capitalizeFirstLetter } from '../utils/capitalise';
+import AnimatedLoader from "react-native-animated-loader";
 import ReturnButton from '../components/TransactionDetails/ReturnButton';
 import {  UserCard, DetailRow } from '../components/Transaction/TransactionDetailComponents';
 import Header from '../components/Header/Header'
 import Reciept from '../../assets/images/receipt.svg'
 import ImageViewer from '../components/TransactionDetails/ImageViewer'
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
+import { ProgressBar } from 'react-native-paper';
 const TransactionDetails = () => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
   const bottomSheetModalRef = useRef(null);
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="black" />
+      {/* <AnimatedLoader
+        visible={true}
+        overlayColor="rgba(255,255,255)"
+        source={require("./progessBar.json")}
+        animationStyle={styles.lottie}
+        speed={1}>
+      
+      </AnimatedLoader> */}
+      {/* <ProgressBar indeterminate visible={true} color={theme.colors.primary}/> */}
       <View style={styles.blackBackground}>
         <Header title='Transaction Details'/>
       </View>
@@ -211,7 +222,11 @@ const styles = StyleSheet.create({
     width:'100%',
     height:'100%',
     borderRadius:50
-  }
+  },
+  // lottie: {
+  //   width: 100,
+  //   height: 100
+  // }
 });
 
 export default TransactionDetails;

@@ -513,14 +513,14 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   inputContainer : { 
-    paddingHorizontal: 20 
+    paddingHorizontal: 20
   },
   inputContainerStyle: {
     backgroundColor: theme.colors.LightGray, 
     borderRadius: 5,
     paddingHorizontal:10,
     justifyContent:'center',
-    height:45, 
+    height:50, 
     marginTop: 5 
   },
   inputText :{
@@ -528,13 +528,13 @@ const styles = StyleSheet.create({
     fontSize: fontSize.regular.size,
     lineHeight: fontSize.regular.lineHeight
   },
-  inputField :{ 
+  inputField :{
     backgroundColor: theme.colors.LightGray, 
     borderRadius: 5, 
     paddingHorizontal: 10,
     // paddingVertical:5, 
     justifyContent:'center',
-    height:45, 
+    maxHeight:85,
     marginTop: 5,
     fontFamily : fonts.regular,
     fontSize: fontSize.regular.size,

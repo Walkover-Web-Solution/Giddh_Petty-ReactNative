@@ -69,8 +69,8 @@ const modalClose = ()=>{
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {isSuccess 
-              ? <Icon name='file-circle-check' size={100} color='#6CE45C' style={styles.icon}/>
-              : <Icon name='file-circle-exclamation' size={100} color='#FF4146' style={styles.icon}/>
+              ? <Icon name='file-circle-check' size={100} color={theme.colors.black} style={styles.icon}/>
+              : <Icon name='file-circle-exclamation' size={100} color={theme.colors.black} style={styles.icon}/>
               }
             {isSuccess ? <Text style={styles.buttonText}>{apiResponse}</Text>
             : <Text style={styles.buttonText}>{apiResponse}</Text>}
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     borderRadius: 60,
-    backgroundColor: '#6CE45C',
+    backgroundColor: theme.colors.black,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     borderRadius: 60,
-    backgroundColor: '#FF4146',
+    backgroundColor: theme.colors.black,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,

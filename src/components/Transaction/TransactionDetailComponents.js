@@ -32,9 +32,16 @@ export const UserCard = ({ user }) => {
 
 export const DetailRow = ({ label, value }) => {
   return (
-    <View style={styles.detailRow}>
-      <Text style={styles.detailLabel}>{label}</Text>
-      <Text style={styles.detailValue}>{value}</Text>
+    <View>
+      {(value !== 'N/A' && label === 'Description') 
+      ? <View style={[styles.detailRow,{flexDirection:'column'}]}>
+          <Text style={styles.detailLabel}>{label}:</Text>
+          <Text numberOfLines={3} style={[styles.detailValue,{marginVertical:5}]}>{value}</Text>
+        </View>
+        : <View style={styles.detailRow}>
+        <Text style={styles.detailLabel}>{label}</Text>
+        <Text style={styles.detailValue}>{value}</Text>
+      </View>}
     </View>
   );
 };

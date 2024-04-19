@@ -3,7 +3,7 @@
 import { put, takeLatest, call, select } from 'redux-saga/effects';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import api, { loginInstance } from '../../../interceptor'; // Import the axios interceptor instance
-import { signInSuccess, signInFailure, signOutSuccess, signOutFailure } from './authSlice';
+import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInStart } from './authSlice';
 import { Alert, AsyncStorage } from 'react-native';
 
 function* signInWithGoogle() {
@@ -22,23 +22,28 @@ function* signInWithGoogle() {
     yield put(signInSuccess({ user: response.data.body, photo: res.user.photo }));
   } catch (error) {
     Alert.alert(error.toString());
-    // yield put(signInFailure(error.message));
+    yield put(signInFailure(error.message));
+  }
+  finally{
+    yield put(signInStart({loading:false}));
   }
 }
-function* signInWithOtp({ payload}) {
+function* signInWithOtp({ payload }) {
   try {
-    // console.log(payload);
     const response = yield call(api.post, 'v2/login', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      accessToken: payload,
+      accessToken: payload?.message,
     });
     yield put(signInSuccess({ user: response.data.body, photo:null}));
   } catch (error) {
     console.log(error);
     yield put(signInFailure(error.message));
+  }
+  finally{
+    yield put(signInStart({loading:false}));
   }
 }
 
@@ -47,22 +52,30 @@ function* signOut() {
     // yield GoogleSignin.revokeAccess();
     // yield GoogleSignin.signOut();
     const usersGmail = yield select((state)=>
-      state?.auth?.user?.user?.uniqueName
-    )
-    yield call(api.delete, `users/${usersGmail}/destroy-session?lang=en`);
+    state?.auth?.user?.user?.uniqueName
+  )
+  yield call(api.delete, `users/${usersGmail}/destroy-session?lang=en`);
   } catch (error) {
     console.warn(error);
     // yield put(signOutFailure(error.message));
   }
+finally{
+    yield put(signInStart({loading:false}));
+  }
+}
+
+function* signStart(){
+  try {
+    yield put(signInStart({loading:true}));
+    yield call(signInWithGoogle);
+  } catch (error) {
+    yield put(signInStart({loading:false}));
+    console.warn(error);
+  }
 }
 
 export function* authSaga() {
-  try{
-    yield takeLatest('SIGN_IN', signInWithGoogle);
-  }
-  catch(error){
-    Alert.alert("error",error);
-  }
+  yield takeLatest('SIGN_START',signStart);
   yield takeLatest('SIGN_OUT', signOut);
   yield takeLatest('SIGN_IN_OTP', signInWithOtp);
 }

@@ -16,6 +16,7 @@ import RenderButtonList from '../components/Home/renderButtonList';
 import EmptySVG from '../../assets/images/empty_list.svg';
 import AddTransactionModal from '../components/Home/AddTransactionModal';
 import { ScreenNames } from '../constants/NavigationConstants';
+import { ProgressBar } from 'react-native-paper';
 
 const list = [
   { label: 'AllRequests', color: theme.colors.black, name: 'All Requests' },
@@ -117,6 +118,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={theme.colors.black} />
+      <View style={styles.headerContainer}>
       <View style={styles.header}>
         <View style={styles.userContainer}>
           <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => navigation.openDrawer()}>
@@ -128,7 +130,10 @@ const Home = () => {
           {selectedBranch && <View style={styles.branchContainer}><MaterialIcons name="git-merge" size={18} color={theme.colors.gray1} /><Text style={styles.branchName}>{capitalizeFirstLetter(selectedBranch?.alias)}</Text></View>}
         </View>
       </View>
-
+      <View>
+        {loading && <ProgressBar indeterminate visible={true} color={theme.colors.primary} />}
+      </View>
+      </View>
       <RenderChart />
 
       <View style={styles.buttonScroll}>
@@ -171,13 +176,13 @@ const Home = () => {
           bottomSheetModalRef={bottomSheetModalRef}
           children={<DateScreen setStartDate={setStartDate} setEndDate={setEndDate} bottomSheetModalRef={bottomSheetModalRef}/>}
           intialSnap='45%'
-          snapArr={['45%']}
+          snapArr={['45%','55%']}
         />
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalExpenseRef}
           children={<AddTransactionModal bottomSheetModalRef={bottomSheetModalExpenseRef} navigation={navigation} dispatch={dispatch} />}
-          intialSnap='19%'
-          snapArr={['19%']}
+          intialSnap='20%'
+          snapArr={['20%']}
           drag={false}
           // modalStyle={modalStyle}
         />
@@ -190,6 +195,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.white,
+  },
+  headerContainer :{
+    height:70
   },
   header: {
     paddingHorizontal: 12,
