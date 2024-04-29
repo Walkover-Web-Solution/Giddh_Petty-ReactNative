@@ -9,7 +9,7 @@ import { environment } from './src/environments/environment.prod';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import { store,persistor } from './src/redux/index';
 import Toast,{BaseToast} from 'react-native-toast-message';
-import {View,Text, StatusBar, StyleSheet} from 'react-native';
+import {View,Text, StatusBar, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import { fontSize, fonts, theme } from './src/theme/theme';
 
 const toastConfig = {
@@ -21,7 +21,8 @@ const toastConfig = {
 const App = () => {
   useEffect(() => {
     SplashScreen.hide();
-    StatusBar.setBackgroundColor(theme.colors.black);
+    Platform.OS === 'android' ? StatusBar.setBackgroundColor(theme.colors.black):null;
+    StatusBar.setBarStyle('light-content');
     GoogleSignin.configure({
       webClientId: environment.google_client_id,
     });

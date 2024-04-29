@@ -23,7 +23,12 @@ const expenseSlice = createSlice({
     },
     fetchExpensesSuccess: (state, action) => {
       state.loading = false;
-      state.expenses = action.payload;
+      // state.expenses.Pending = [...state?.expenses?.Pending, ...action?.payload?.["Pending"]]
+      // state.expenses.Approved = [...state?.expenses?.Approved, ...action?.payload?.["Approved"]]
+      // state.expenses.AllRequests = [...state?.expenses?.AllRequests, ...action?.payload?.["AllRequests"]]
+      // state.expenses.Rejected = [...state?.expenses?.Rejected, ...action?.payload?.["Rejected"]]
+
+      state.expenses = action?.payload
     },
 
     fetchExpensesFailure: (state, action) => {

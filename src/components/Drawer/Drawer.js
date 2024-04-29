@@ -1,5 +1,5 @@
 import React,{useState,useRef} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet ,Linking,DeviceEventEmitter} from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet ,Linking,DeviceEventEmitter, SafeAreaView} from 'react-native';
 import LogOutIcon from '../../../assets/images/power.svg';
 import {useSelector,useDispatch} from 'react-redux';
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
@@ -57,7 +57,8 @@ const CustomDrawer = ({setVisible,navigation}) => {
   }
   };
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
       <View style={styles.drawerHeader}>
         <View>
           <Image source={photo?{uri:photo}:require('../../../assets/images/user-picture.png')} style={styles.drawerImage} />
@@ -101,11 +102,20 @@ const CustomDrawer = ({setVisible,navigation}) => {
       </TouchableOpacity>
       <MyBottomSheetModal snapArr={['20%']} bottomSheetModalRef={bottomSheetModalRef} intialSnap={'17%'} children={<ConfirmationComponent handleClose={handleClose} handleLogout={handleLogout}/>}/>
       </View>
-    </>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container : {
+    flex:1,
+    backgroundColor:theme.colors.black
+  },
+  subContainer:{
+    flex:1,
+    backgroundColor:'white'
+  },
   drawerHeader: {
     alignItems: 'start',
     padding: 16,
@@ -169,7 +179,8 @@ const styles = StyleSheet.create({
   },
   contactDetail : {
     flexDirection:'row',
-    paddingBottom:5
+    marginBottom:7,
+    alignItems:'center'
   },
   mailText : {
     fontSize:fontSize.regular.size,

@@ -1,5 +1,5 @@
-import React, { useState,useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList, Keyboard } from 'react-native';
+import React, { useState,useEffect, useRef, useCallback } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList, Keyboard, SafeAreaView } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../theme/theme';
@@ -22,12 +22,24 @@ const AddExpenseScreen = () => {
   useEffect(() => {
     dispatch({type:'ADD_EXPENSE',uniqueName:selectedCompany,groups:environment[name]});
   }, []);
+
+  useEffect(() => {
+    setAddExpense(addExpenseData);
+  }, [addExpenseData]);
+
+  const handleOnClose = ()=>{
+    setAddExpense(addExpenseData);
+    setSearchExpanded(!isSearchExpanded);
+  }
   const handleSearchExpand = () => {
     setSearchExpanded(!isSearchExpanded);
+    // if(!isSearchExpanded){
+    //   setAddExpense(addExpenseData);
+    // }
   };
   const filterSearch = (text) => {
     let filterData = addExpenseData.filter((item)=>item?.name?.toLowerCase().includes(text.toLowerCase()));
-    if(filterData.length == 0) setAddExpense(addExpenseData);
+    if(filterData.length == 0) setAddExpense([]);
     else setAddExpense(filterData);
   }
 
@@ -75,6 +87,8 @@ const AddExpenseScreen = () => {
 
 
   return (
+    <SafeAreaView style={styles.super}>
+      {/* <View style={{flex:1,backgroundColor:theme.colors.LightGray}}></View> */}
     <View style={styles.container}>
       {isSearchExpanded ? (
         <View style={styles.header}>
@@ -87,7 +101,7 @@ const AddExpenseScreen = () => {
               onChangeText={(text)=>filterSearch(text)}
               autoFocus={true}
             />
-            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleSearchExpand}>
+            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleOnClose}>
               <AntDesign name="close" size={20} color={theme.colors.black} />
             </TouchableOpacity>
           </View>
@@ -116,10 +130,15 @@ const AddExpenseScreen = () => {
         <Text style={[styles.text,{color:theme.colors.white}]}>Done</Text>
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  super:{
+    flex:1,
+    backgroundColor:theme.colors.black
+  },
   container: {
     flex: 1,
     backgroundColor: theme.colors.white,
@@ -157,6 +176,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
+    height:40,
     fontSize: fontSize.large.size,
     fontFamily: fonts.regular,
     color: theme.colors.black,

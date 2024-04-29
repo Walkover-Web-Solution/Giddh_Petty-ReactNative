@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet ,TextInput} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet ,TextInput, Platform} from 'react-native';
 import { activeOpacity, fontSize, fonts, lineHeight, spacing, theme } from '../../theme/theme';
 
 const ConfirmationComponent = ({handleLogout,handleClose}) => {
@@ -14,7 +14,6 @@ const ConfirmationComponent = ({handleLogout,handleClose}) => {
         <TouchableOpacity style={styles.button} activeOpacity={activeOpacity.regular} onPress={handleLogout}>
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
-        <TextInput/>
       </View>
     </View>
   );
@@ -24,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.white,
     alignItems: 'center',
+    flexDirection:'column'
   },
   message: {
     fontSize: fontSize.xLarge.size,
@@ -33,25 +33,33 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems:'center',
-    width: '100%',
+    justifyContent:'center',
+    width: '80%',
     padding:3
   },
   button: {
-    flex: 1,
+    flex:1,
+    marginHorizontal:7,
+    // width:'50%',
     height:50,
     padding:spacing.small,
     // paddingVertical: 10,
-    marginLeft: 25,
-    borderRadius: 5,
+    // marginLeft: 25,
     alignItems: 'center',
     justifyContent:'center',
     elevation:1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
     borderRadius:40,
     backgroundColor: theme.colors.LightGray
   },
   buttonText: {
+    // borderWidth:3,
     color: theme.colors.black,
     fontSize: fontSize.large.size,
     lineHeight: fontSize.large.lineHeight,

@@ -7,6 +7,7 @@ import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInSta
 import { Alert, AsyncStorage } from 'react-native';
 
 function* signInWithGoogle() {
+  console.log("inside google");
   try {
     yield GoogleSignin.hasPlayServices();
     yield GoogleSignin.signOut();
@@ -21,7 +22,9 @@ function* signInWithGoogle() {
     console.log("res",response);
     yield put(signInSuccess({ user: response.data.body, photo: res.user.photo }));
   } catch (error) {
-    Alert.alert(error.toString());
+    console.log("error",error);
+    Alert.alert("Fail to login");
+    yield put(signInStart({loading:false}));
     yield put(signInFailure(error.message));
   }
   finally{
@@ -41,6 +44,7 @@ function* signInWithOtp({ payload }) {
   } catch (error) {
     console.log(error);
     yield put(signInFailure(error.message));
+    yield put(signInStart({loading:false}));
   }
   finally{
     yield put(signInStart({loading:false}));
@@ -55,19 +59,23 @@ function* signOut() {
     state?.auth?.user?.user?.uniqueName
   )
   yield call(api.delete, `users/${usersGmail}/destroy-session?lang=en`);
+  yield put(signInStart({loading:false}));
   } catch (error) {
     console.warn(error);
+    yield put(signInStart({loading:false}));
     // yield put(signOutFailure(error.message));
   }
-finally{
+  finally{
     yield put(signInStart({loading:false}));
   }
 }
 
-function* signStart(){
+function* signStart({payload}){
   try {
+    console.log("called");
     yield put(signInStart({loading:true}));
-    yield call(signInWithGoogle);
+    if(payload?.type === 'SIGN_IN_GOOGLE')
+      yield call(signInWithGoogle);
   } catch (error) {
     yield put(signInStart({loading:false}));
     console.warn(error);

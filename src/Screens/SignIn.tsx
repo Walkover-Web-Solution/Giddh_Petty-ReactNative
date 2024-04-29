@@ -19,16 +19,17 @@ const SignIn: React.FC = () => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   // const isAuthenticated = useSelector((state:any)=>state.auth.isAuthenticated);
   const isLoading = useSelector((state:any)=>state?.auth?.loading);
-  console.log(isLoading);
+  console.log("loading status",isLoading);
   
   // const [data, setData] = useState<SignInData | null>(null);
   // const [loading,setLoading] = useState(false);
   const handleOtpSignIn = () => {
+    dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_OTP' } });
     setModalVisible(true);
   };
   // useEffect(()=>{},[isLoading])
   const handleSignIn = () => {
-    dispatch({ type: 'SIGN_START' });
+    dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_GOOGLE' } });
     // setLoading(true);
   };
 

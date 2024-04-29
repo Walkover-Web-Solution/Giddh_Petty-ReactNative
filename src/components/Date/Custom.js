@@ -39,6 +39,7 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
     };
 
     const dateValidator = ()=>{
+        if(startDate == null || endDate == null)return false;
         const start = new Date(startDate);
         const end = new Date(endDate);
         return start<end;

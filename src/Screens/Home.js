@@ -4,7 +4,7 @@ import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme
 import RenderChart from './renderLegendComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { setSelectedExpense } from '../redux/expense/ExpenseSlice';
+import { resetExpenses, setSelectedExpense } from '../redux/expense/ExpenseSlice';
 import PlusSVG from '../../assets/images/plus.svg';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import { capitalizeFirstLetter } from '../utils/capitalise';
@@ -61,24 +61,24 @@ const Home = () => {
       setPage(1);
       setLoading(true);
       setIsListEnd(false);
-      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: 1 , setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing, setPage:setPage }})
+      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: 1 , setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate }})
     })
     setLoading(true);
     setPage(1);
-    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing } });
+    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
     return () => DeviceEventEmitter.removeAllListeners('successResponse');
   }, []);
 
   useEffect(() => {
     setLoading(true);
-    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing } });
+    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
   }, [page]);
 
   useEffect(() => {
     setPage(1);
     setIsListEnd(false);
     setLoading(true);
-    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing } });
+    dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
   }, [startDate]);
 
   const onPress = useCallback((item) => {
@@ -116,7 +116,8 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
       <StatusBar backgroundColor={theme.colors.black} />
       <View style={styles.headerContainer}>
       <View style={styles.header}>
@@ -165,7 +166,10 @@ const Home = () => {
           onEndReachedThreshold={0.5}
           refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={()=>{
-            dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: 1, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate, setRefreshing:setRefreshing, refreshing:true, setPage:setPage } })
+            dispatch(resetExpenses())
+            setPage(1);
+            // setIsListEnd(false),
+            // setLoading(true);
           }}/>
         }
         />
@@ -181,20 +185,26 @@ const Home = () => {
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalExpenseRef}
           children={<AddTransactionModal bottomSheetModalRef={bottomSheetModalExpenseRef} navigation={navigation} dispatch={dispatch} />}
-          intialSnap='20%'
-          snapArr={['20%']}
+          intialSnap='21%'
+          snapArr={['21%']}
           drag={false}
           // modalStyle={modalStyle}
         />
       </SafeAreaView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.white,
+    // backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.black,
+  },
+  subContainer: {
+    backgroundColor:'white',
+    flex:1
   },
   headerContainer :{
     height:70
@@ -236,16 +246,15 @@ const styles = StyleSheet.create({
   branchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'center',
   },
   branchName: {
     fontSize: fontSize.small.size,
     lineHeight: fontSize.small.lineHeight,
     color: theme.colors.gray1,
-    paddingBottom: 5,
+    // paddingBottom: 5,
     fontFamily: fonts.regular,
-    paddingLeft: 3,
-    marginTop:3,
+    marginLeft: 5,
+    // marginTop:3,
   },
   heading: {
     fontSize: fontSize.xLarge.size,
@@ -318,6 +327,10 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 20,
   },
+  companyBranch:{
+    flexDirection:'column',
+    padding:2
+  }
 });
 
 export default Home;

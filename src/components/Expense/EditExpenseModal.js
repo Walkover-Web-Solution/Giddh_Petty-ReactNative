@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { activeOpacity, fontSize, fonts, lineHeight } from '../../theme/theme';
+import { BottomSheetScrollView, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
+import { ScrollView } from 'react-native';
 
 const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomSheetModalRef }) => {
   const [rate, setRate] = useState('');
@@ -27,10 +29,17 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
   };
 
   return (
-    <KeyboardAvoidingView>
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.label}>Rate:</Text>
+        {Platform.OS === 'ios' ? <BottomSheetTextInput 
+          style={styles.input}
+          placeholder={'Enter Amount'}
+          keyboardType="numeric"
+          value={rate}
+          onChangeText={handleRateChange}
+        /> 
+        : 
         <TextInput
           style={styles.input}
           placeholder={'Enter Amount'}
@@ -38,18 +47,18 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
           value={rate}
           onChangeText={handleRateChange}
         />
+        }
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.totalAmount}>Total Amount</Text>
-        <Text style={styles.totalAmount}>{rate||selectedProduct[productKey].amount.toString()}.00</Text>
+        <Text style={styles.totalAmount}>Total Amount: </Text>
+        <Text style={styles.totalAmount}>&#8377;{rate||selectedProduct[productKey].amount.toString()}.00</Text>
       </View>
 
       <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular} onPress={handleDonePress}>
         <Text style={styles.buttonText}>Done</Text>
       </TouchableOpacity>
     </View>
-    </KeyboardAvoidingView>
   );
 };
 
@@ -61,9 +70,9 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    padding:7,
+    marginBottom: 20
   },
   label: {
     fontSize: fontSize.large.size,
@@ -76,10 +85,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'black',
     paddingHorizontal: 10,
-    // paddingVertical: 8,
+    paddingVertical: 8,
     borderRadius: 5,
-    marginBottom: 10,
-    fontFamily:fonts.regular
+    fontFamily:fonts.regular,
+    fontSize:fontSize.regular.size,
+    lineHeight:fontSize.regular.lineHeight
   },
   totalAmount: {
     fontSize: fontSize.regular.size,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { fontSize, fontSizes, fonts, lineHeight, styleFonts, theme } from '../../theme/theme';
-import GidhhLogo from '../../../assets/images/Giddh-Bluesvg.png';
+import GidhhLogo from '../../../assets/images/Giddh-Bluesvg(1).png';
 
 const Header: React.FC = () => {
   return (

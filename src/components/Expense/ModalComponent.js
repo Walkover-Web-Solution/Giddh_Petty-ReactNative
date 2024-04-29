@@ -5,6 +5,7 @@ import { activeOpacity, fontSize, fonts, lineHeight } from '../../theme/theme';
 import axios from 'axios';
 import {useSelector,useDispatch } from 'react-redux';
 import { setSelectedPaymentMode } from '../../redux/paymentmode/paymentSlice';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 const PaymentModeSelector = ({ bottomSheetModalRef}) => {
     const dispatch = useDispatch();
     const paymentModes=useSelector((state)=>state.payment?.paymentMode);
@@ -15,7 +16,8 @@ const PaymentModeSelector = ({ bottomSheetModalRef}) => {
             <View style={styles.searchContainer}>
                 <View style={styles.searchField}>
                     <AntDesign name="search1" size={20} color="black" style={styles.searchIcon} />
-                    <TextInput placeholder="Search..." style={styles.input} />
+                    {/* <TextInput placeholder="Search..." style={styles.input} /> */}
+                    <BottomSheetTextInput placeholder='Search...' style={styles.input} />
                 </View>
             </View>
             <ScrollView contentContainerStyle={styles.optionsContainer}>
@@ -44,6 +46,7 @@ const styles = StyleSheet.create({
     },
     searchContainer: {
         flexDirection: 'row',
+        height:45,
         alignItems: 'center',
         marginBottom: 10,
     },
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
         borderColor: '#CCCCCC',
         borderRadius: 20,
         paddingLeft: 10,
+        height:'100%'
     },
     input: {
         flex: 1,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../theme/theme';
 import { setSelectedBranch } from '../redux/company/BranchSlice';
@@ -29,23 +29,33 @@ const Branch: React.FC = React.memo(() => {
   );
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
       <StatusBar backgroundColor={theme.colors.black} />
       <Header title={"Select a Branch"} />
-      <View style={styles.container}>
+      <View style={styles.listView}>
         <FlatList
           data={branches}
           keyExtractor={(item) => item.alias}
           renderItem={renderBranchItem}
         />
       </View>
-    </>
+      </View>
+    </SafeAreaView>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex:1,
+    backgroundColor:theme.colors.black
+  },
+  subContainer: {
+    flex:1,
+    backgroundColor:theme.colors.LightGray
+  },
+  listView:{
+    flex:1
   },
   branchItem: {
     backgroundColor: theme.colors.white,

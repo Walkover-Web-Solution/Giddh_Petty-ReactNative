@@ -21,7 +21,7 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
       </TouchableOpacity>
     );
   };
-
+  console.log("selected",selectedItems);
   return (
     // <ScrollView style={styles.container} nestedScrollEnabled={true}>
     <View>
@@ -32,7 +32,7 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
             activeOpacity={activeOpacity.regular}
             onPress={() => { setSelectedProduct({ [key]: value }); bottomSheetModalRefExpense?.current.present() }}
           >
-            <Text style={styles.itemTitle}>{key}</Text>
+            <Text style={styles.itemTitle}>{selectedItems?.[key]?.name}</Text>
             <Text style={styles.itemSubtitle}>1 &#215; &#8377;{value.amount}</Text>
           </TouchableOpacity>
         </Swipeable>

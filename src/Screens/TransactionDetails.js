@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar, ScrollView,SafeAreaView } from 'react-native';
 import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
 import { useSelector } from 'react-redux';
 import { capitalizeFirstLetter } from '../utils/capitalise';
@@ -11,11 +11,13 @@ import Reciept from '../../assets/images/receipt.svg'
 import ImageViewer from '../components/TransactionDetails/ImageViewer'
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import { ProgressBar } from 'react-native-paper';
+import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 const TransactionDetails = () => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
   const bottomSheetModalRef = useRef(null);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
       <StatusBar backgroundColor="black" />
       {/* <AnimatedLoader
         visible={true}
@@ -42,41 +44,49 @@ const TransactionDetails = () => {
         <DetailRow label="Entry date" value={selectedExpense?.entryDate} />
         <DetailRow label="Description" value={selectedExpense?.description || 'N/A'} />
       </View>
-      <View style={styles.circleContainer1}>
-        <View style={[styles.halfCircle, styles.upperHalfCircle]} />
-        <View style={[styles.halfCircle, styles.lowerHalfCircle]} />
-        <View style={styles.circle}>
-          <View style={[styles.tickContainer, styles.tickContainerShadow]}>
-            {selectedExpense?.attachedFiles 
-            ? <TouchableOpacity 
-              style={styles.imageIcon}
-              activeOpacity={activeOpacity.regular}
-              onPress={()=>bottomSheetModalRef?.current?.present()}
-              >
-            </TouchableOpacity> 
-            : <Reciept height={40}/>}
+      <View style={styles.circleContainer}>
+        <View style={styles.circleContainer1}>
+          <View style={[styles.halfCircle, styles.upperHalfCircle]} />
+          <View style={[styles.halfCircle, styles.lowerHalfCircle]} />
+          <View style={styles.circle}>
+            <View style={[styles.tickContainer, styles.tickContainerShadow]}>
+              {selectedExpense?.attachedFiles 
+              ? <TouchableOpacity 
+                style={styles.imageIcon}
+                activeOpacity={activeOpacity.regular}
+                onPress={()=>bottomSheetModalRef?.current?.present()}
+                >
+              </TouchableOpacity> 
+              : <Reciept height={40}/>}
+            </View>
           </View>
         </View>
       </View>
       {/* <ReturnButton text={'Edit'} color={theme.colors.black}/> */}
       <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<ImageViewer bottomSheetModalRef={bottomSheetModalRef} />} />
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:theme.colors.black
+  },
+  subContainer: {
+    flex:1,
+    backgroundColor:'white'
   },
   blackBackground: {
     backgroundColor: theme.colors.black,
-    height: '85%',
+    height: '91%',
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
   },
   whiteSheet: {
     backgroundColor: theme.colors.white,
-    height: '61%',
+    height: '67%',
     width: '90%',
     position: 'absolute',
     top: '20%',
@@ -157,17 +167,15 @@ const styles = StyleSheet.create({
   detailValue: {
     fontFamily:fonts.bold,
   },
-  circleContainer1: {
-    width: 90,
-    height: 90,
-    borderRadius: 90,
+  circleContainer:{
     position: 'absolute',
     top: '14.45%',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    elevation: 15,
+    left:'50%',
+    transform : [{ translateX: -47 }, { translateY: 0 }],
+    width:94,
+    height:94,
+    borderRadius:50,
+    elevation:2,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -175,6 +183,16 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 1,
+
+  },
+  circleContainer1: {
+    width: 90,
+    height: 90,
+    borderRadius: 90,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
   },
   halfCircle: {
     width: '100%',
@@ -212,6 +230,13 @@ const styles = StyleSheet.create({
   },
   tickContainerShadow: {
     elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
   },
   tickIcon: {
     fontSize: 22,

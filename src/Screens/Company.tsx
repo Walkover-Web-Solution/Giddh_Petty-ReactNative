@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import  Header  from '../components/Header/Header';
 import { resetBranch } from '../redux/company/BranchSlice';
@@ -53,23 +53,33 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   );
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
       <StatusBar backgroundColor={theme.colors.black} />
       <Header title={"Select a Company"} />
-      <View style={styles.container}>
+      <View style={styles.listView}>
         <FlatList
           data={companies}
           keyExtractor={(item) => item.name}
           renderItem={renderCompanyItem}
         />
       </View>
-    </>
+      </View>
+    </SafeAreaView>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex:1,
+    backgroundColor:theme.colors.black
+  },
+  subContainer: {
+    flex:1,
+    backgroundColor:theme.colors.LightGray
+  },
+  listView:{
+    flex:1
   },
   companyItem: {
     backgroundColor: theme.colors.white,

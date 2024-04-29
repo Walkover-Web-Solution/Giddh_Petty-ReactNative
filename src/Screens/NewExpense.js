@@ -2,6 +2,7 @@ import React, { useState, useRef, } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, TextInput, StatusBar,ActivityIndicator, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'; // Import DateTimePickerModal
 import { useNavigation } from '@react-navigation/native';
 import  Header  from '../components/Header/Header';
@@ -195,9 +196,10 @@ image?.uploading ? (
   <View key={index} style={styles.imageContainer}>
     <Image source={{ uri: image.uri }} style={styles.image} />
     <TouchableOpacity style={styles.closeButton} activeOpacity={activeOpacity.regular} onPress={() => removeImage(index)}>
-      <View style={styles.closeBtnIcon}>
+      {/* <View style={styles.closeBtnIcon}>
       </View>
-        <Text style={styles.closeButtonText}>X</Text>
+        <Text style={styles.closeButtonText}>X</Text> */}
+        <Feather name="x" size={15}/>
     </TouchableOpacity>
   </View>
 )
@@ -244,8 +246,8 @@ image?.uploading ? (
       <View style={styles.btnView}>
         <RowWithButtons companyUniqueName={selectedCompany?.uniqueName} name={name} selectedItem={selectedItems} getBack={getBack} prepareRequestBody={prepareRequestBody}/>
       </View>
-      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<PaymentModeSelector bottomSheetModalRef={bottomSheetModalRef} />} />
-      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRefExpense} intialSnap={'37%'} snapArr={['37%']} children={<EditExpense selectedProduct={selectedProduct} bottomSheetModalRef={bottomSheetModalRefExpense} setSelectedItems={setSelectedItems} selectedItems={selectedItems} />} />
+      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} snapArr={['60%','80%']} children={<PaymentModeSelector bottomSheetModalRef={bottomSheetModalRef} />} />
+      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRefExpense} intialSnap={'37%'} snapArr={['40%','70%']} children={<EditExpense selectedProduct={selectedProduct} bottomSheetModalRef={bottomSheetModalRefExpense} setSelectedItems={setSelectedItems} selectedItems={selectedItems} />} />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
@@ -384,17 +386,20 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    top: -10,
-    right: 3,
+    top: -7,
+    right: -7,
     backgroundColor: 'transparent',
-    borderRadius: 10,
-    width: 30,
-    height: 30,
+    borderRadius: 20,
+    width: 20,
+    height: 20,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:theme.colors.LightGray
   },
   closeButtonText: {
-    position: 'absolute',
-    right: -4.5,
-    top:2,
+    // position: 'absolute',
+    // right: -4.5,
+    // top:2,
     color: theme.colors.black,
     fontFamily: fonts.bold,
     fontSize: fontSize.xSmall.size,
@@ -498,9 +503,9 @@ const styles = StyleSheet.create({
   closeBtnIcon : {
     backgroundColor:theme.colors.gray2,
     flex:1,
-    position: 'absolute',
-    top: 3.5,
-    right: -8.5,
+    // position: 'absolute',
+    // top: 3.5,
+    // right: -8.5,
     borderRadius: 10,
     width: 15,
     height: 15
@@ -529,6 +534,7 @@ const styles = StyleSheet.create({
     lineHeight: fontSize.regular.lineHeight
   },
   inputField :{
+    minHeight:45,
     backgroundColor: theme.colors.LightGray, 
     borderRadius: 5, 
     paddingHorizontal: 10,
