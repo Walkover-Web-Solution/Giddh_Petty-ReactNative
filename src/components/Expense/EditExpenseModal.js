@@ -37,14 +37,16 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
           placeholder={'Enter Amount'}
           keyboardType="numeric"
           value={rate}
+          autoFocus={true}
           onChangeText={handleRateChange}
-        /> 
-        : 
-        <TextInput
+          /> 
+          : 
+          <TextInput
           style={styles.input}
           placeholder={'Enter Amount'}
           keyboardType="numeric"
           value={rate}
+          autoFocus={true}
           onChangeText={handleRateChange}
         />
         }
