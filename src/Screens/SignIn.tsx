@@ -19,7 +19,6 @@ const SignIn: React.FC = () => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   // const isAuthenticated = useSelector((state:any)=>state.auth.isAuthenticated);
   const isLoading = useSelector((state:any)=>state?.auth?.loading);
-  console.log("loading status",isLoading);
   
   // const [data, setData] = useState<SignInData | null>(null);
   // const [loading,setLoading] = useState(false);

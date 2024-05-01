@@ -21,7 +21,6 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
       </TouchableOpacity>
     );
   };
-  console.log("selected",selectedItems);
   return (
     // <ScrollView style={styles.container} nestedScrollEnabled={true}>
     <View>

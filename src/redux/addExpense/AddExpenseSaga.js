@@ -9,7 +9,7 @@ function* fetchDataSaga({uniqueName,groups}) {
     const response = yield api.get(`company/${uniqueName}/v3/account-search?group=${groups}`,);
     yield put(fetchDataSuccess(response.data.body.results)); 
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     yield put(fetchDataFailure(error.message));
   }
 }

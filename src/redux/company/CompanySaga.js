@@ -9,7 +9,7 @@ function* fetchCompanyList(actions) {
     // console.log(data);
     yield put(fetchCompanyListSuccess(data));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     yield put(fetchCompanyListFailure(error.message));
   }
 }

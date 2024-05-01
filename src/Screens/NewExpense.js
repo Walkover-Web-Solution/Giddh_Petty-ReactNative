@@ -114,7 +114,6 @@ const NewExpense = () => {
     }
   });
 };
-console.log("images",selectedImages);
 
 
   const [selectedProduct,setSelectedProduct]=useState({});

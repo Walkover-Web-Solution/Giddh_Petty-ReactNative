@@ -7,22 +7,19 @@ import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInSta
 import { Alert, AsyncStorage } from 'react-native';
 
 function* signInWithGoogle() {
-  console.log("inside google");
   try {
     yield GoogleSignin.hasPlayServices();
     yield GoogleSignin.signOut();
     const res = yield GoogleSignin.signIn();
     const token = yield GoogleSignin.getTokens();
-    console.log("tjpl",token);
     const response = yield call(loginInstance.get, 'v2/signup-with-google', {
       headers: {
         'access-token': token.accessToken,
       },
     });
-    console.log("res",response);
     yield put(signInSuccess({ user: response.data.body, photo: res.user.photo }));
   } catch (error) {
-    console.log("error",error);
+    // console.log("error",error);
     Alert.alert("Fail to login");
     yield put(signInStart({loading:false}));
     yield put(signInFailure(error.message));
@@ -42,7 +39,7 @@ function* signInWithOtp({ payload }) {
     });
     yield put(signInSuccess({ user: response.data.body, photo:null}));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     yield put(signInFailure(error.message));
     yield put(signInStart({loading:false}));
   }
@@ -72,7 +69,6 @@ function* signOut() {
 
 function* signStart({payload}){
   try {
-    console.log("called");
     yield put(signInStart({loading:true}));
     if(payload?.type === 'SIGN_IN_GOOGLE')
       yield call(signInWithGoogle);

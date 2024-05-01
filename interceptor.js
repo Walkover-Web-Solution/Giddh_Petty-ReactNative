@@ -35,7 +35,7 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error?.response && (error?.response?.status === 401 || error?.response?.status === 400)) {
-      console.log("error",error?.response);
+      // console.log("error",error?.response);
       errorToast('Encountered error');
       AsyncStorage.clear();
       store.dispatch(signOut(null));
