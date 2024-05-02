@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, Modal } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { fonts, fontSizes, theme } from '../theme/theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import Header from '../components/SignIn/Header';
 import GidhhSvg from '../../assets/images/giddh_icon.svg';
 import SVGMsg from '../../assets/images/msg.svg';
 import GoogleIcon from '../../assets/images/icons8-google-20.svg';
 import { OTPVerification } from '@msg91comm/react-native-sendotp';
 import { environment } from '../environments/environment.prod';
+import LoaderKit from 'react-native-loader-kit'
 
 interface SignInData {
   message: string;
@@ -16,23 +17,25 @@ interface SignInData {
 const SignIn: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
-  const [data, setData] = useState<SignInData | null>(null);
-
+  // const isAuthenticated = useSelector((state:any)=>state.auth.isAuthenticated);
+  const isLoading = useSelector((state:any)=>state?.auth?.loading);
+  
+  // const [data, setData] = useState<SignInData | null>(null);
+  // const [loading,setLoading] = useState(false);
   const handleOtpSignIn = () => {
+    dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_OTP' } });
     setModalVisible(true);
   };
-
+  // useEffect(()=>{},[isLoading])
   const handleSignIn = () => {
-    dispatch({ type: 'SIGN_IN' });
+    dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_GOOGLE' } });
+    // setLoading(true);
   };
-
-  useEffect(() => {
-    dispatch({ type: 'SIGN_IN_OTP', payload: data?.message });
-  }, [data, dispatch]);
 
   const handleOtpCompletion = async (data: string) => {
     const response: SignInData = JSON.parse(data);
-    setData(response);
+    dispatch({type:'SIGN_IN_OTP',payload:response});
+    // setLoading(true);
     setModalVisible(false);
   };
 
@@ -45,16 +48,23 @@ const SignIn: React.FC = () => {
       <View style={styles.contentContainer}>
         <Header />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.socialLoginButton} onPress={handleSignIn}>
+          <TouchableOpacity style={styles.socialLoginButton} activeOpacity={activeOpacity.regular} onPress={handleSignIn}>
             <Text style={styles.buttonText}>Login with Google</Text>
             <GoogleIcon width={23} height={23} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.socialLoginButton} onPress={handleOtpSignIn}>
+          <TouchableOpacity style={styles.socialLoginButton} activeOpacity={activeOpacity.regular} onPress={handleOtpSignIn}>
             <Text style={styles.buttonText}>Login with OTP</Text>
             <SVGMsg width={20} height={20} />
           </TouchableOpacity>
         </View>
       </View>
+      {isLoading!==undefined && isLoading && <View style={styles.loaderView}>
+        <LoaderKit 
+          style={styles.loadKit}
+          name={'CubeTransition'}
+          color={'white'}
+        />
+      </View>}
       <Modal visible={isModalVisible}>
         <OTPVerification
           onVisible={isModalVisible}
@@ -68,6 +78,16 @@ const SignIn: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  loaderView: {
+    position:'absolute',
+    top:'50%',
+    left:'50%',
+    transform:[{ translateX: -25 }, { translateY: -25 }]
+  },
+  loadKit : { 
+    width: 50, 
+    height: 50
+  },
   container: {
     flex: 1,
     backgroundColor: theme.colors.black,
@@ -77,7 +97,7 @@ const styles = StyleSheet.create({
     paddingBottom: '25%',
     backgroundColor: theme.colors.black,
     width: '100%',
-    height: '62%',
+    height: '60%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -89,9 +109,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
   },
   buttonContainer: {
-    flex: 1,
-    marginBottom: 60,
-    marginTop: 25,
+    padding:10,
+    alignItems:'center',
+    justifyContent:'space-between'
   },
   socialLoginButton: {
     flexDirection: 'row',
@@ -109,8 +129,8 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     color: 'white',
     fontFamily: fonts.medium,
-    fontSize: fontSizes.large,
-    lineHeight: 19,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight,
   },
 });
 

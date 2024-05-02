@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator } from 'react-native';
-import { fonts, fontSizes, theme } from '../theme/theme';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator, DeviceEventEmitter, RefreshControl } from 'react-native';
+import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import RenderChart from './renderLegendComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { setSelectedExpense } from '../redux/expense/ExpenseSlice';
+import { resetExpenses, setSelectedExpense } from '../redux/expense/ExpenseSlice';
 import PlusSVG from '../../assets/images/plus.svg';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import { capitalizeFirstLetter } from '../utils/capitalise';
@@ -16,14 +16,19 @@ import RenderButtonList from '../components/Home/renderButtonList';
 import EmptySVG from '../../assets/images/empty_list.svg';
 import AddTransactionModal from '../components/Home/AddTransactionModal';
 import { ScreenNames } from '../constants/NavigationConstants';
+import { ProgressBar } from 'react-native-paper';
 
 const list = [
-  { label: 'AllRequests', color: theme.colors.black },
-  { label: 'Approved', color: theme.colors.secondary },
-  { label: 'Pending', color: theme.colors.purple },
-  { label: 'Rejected', color: theme.colors.gray },
+  { label: 'AllRequests', color: theme.colors.black, name: 'All Requests' },
+  { label: 'Approved', color: theme.colors.secondary, name: 'Approved' },
+  { label: 'Pending', color: theme.colors.purple, name: 'Pending' },
+  { label: 'Rejected', color: theme.colors.gray, name: 'Rejected' },
 ];
 
+const modalStyle = {
+  backgroundColor : 'transparent',
+  detached : true
+}
 const Home = () => {
   const formatDate = (date) => {
   const day = date.getDate().toString().padStart(2, '0');
@@ -49,12 +54,19 @@ const Home = () => {
     const monthAgo = new Date(today.getFullYear(), today.getMonth(), 1);
     return formatDate(monthAgo);
   });
-  
-  console.log(startDate,endDate);
+  const [refreshing, setRefreshing]=useState(false);
+  // console.log(startDate);
   useEffect(() => {
+    DeviceEventEmitter.addListener('successResponse',()=>{
+      setPage(1);
+      setLoading(true);
+      setIsListEnd(false);
+      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: 1 , setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate }})
+    })
     setLoading(true);
     setPage(1);
     dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
+    return () => DeviceEventEmitter.removeAllListeners('successResponse');
   }, []);
 
   useEffect(() => {
@@ -86,7 +98,7 @@ const Home = () => {
 
   const renderComponent = ({ item }) => {
     return (
-      <RenderListItem item={item} onPress={onPress} />
+      <RenderListItem key={item?.uniqueName} item={item} onPress={onPress} />
     );
   };
 
@@ -104,20 +116,25 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
       <StatusBar backgroundColor={theme.colors.black} />
+      <View style={styles.headerContainer}>
       <View style={styles.header}>
         <View style={styles.userContainer}>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => navigation.openDrawer()}>
             <Image source={user?.photo ? { uri: user?.photo } : require('../../assets/images/user-picture.png')} style={styles.userImage} />
           </TouchableOpacity>
         </View>
         <View style={styles.companyBranch}>
-          <Text style={styles.companyName}>{capitalizeFirstLetter(selectedCompany?.name)}</Text>
+          <Text numberOfLines={1} style={styles.companyName}>{capitalizeFirstLetter(selectedCompany?.name)}</Text>
           {selectedBranch && <View style={styles.branchContainer}><MaterialIcons name="git-merge" size={18} color={theme.colors.gray1} /><Text style={styles.branchName}>{capitalizeFirstLetter(selectedBranch?.alias)}</Text></View>}
         </View>
       </View>
-
+      <View>
+        {loading && <ProgressBar indeterminate visible={true} color={theme.colors.primary} />}
+      </View>
+      </View>
       <RenderChart />
 
       <View style={styles.buttonScroll}>
@@ -132,46 +149,65 @@ const Home = () => {
 
       <View style={styles.transactionContainer}>
         <Text style={styles.transactionHeading}>Transaction History</Text>
-        <TouchableOpacity onPress={handleFilterPress}>
+        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleFilterPress}>
           <Feather name="filter" size={25} style={styles.filterIcon} />
         </TouchableOpacity>
       </View>
 
       <SafeAreaView style={styles.safeAreaContainer}>
         <FlatList
-          data={expense[selectedButton]}
+          data={expense?.[selectedButton]}
           keyExtractor={(item) => item?.uniqueName?.toString()}
           renderItem={renderComponent}
           contentContainerStyle={styles.flatListContent}
-          ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>Data Not Found..</Text></View>}
+          ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>No Data ..</Text></View>}
           ListFooterComponent={renderFooter}
           onEndReached={() => { if (!isListEnd && !loading) setPage(page + 1); }}
           onEndReachedThreshold={0.5}
+          refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={()=>{
+            dispatch(resetExpenses())
+            setPage(1);
+            // setIsListEnd(false),
+            // setLoading(true);
+          }}/>
+        }
         />
-        <TouchableOpacity onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
+        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
           <PlusSVG color={theme.colors.white} />
         </TouchableOpacity>
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalRef}
           children={<DateScreen setStartDate={setStartDate} setEndDate={setEndDate} bottomSheetModalRef={bottomSheetModalRef}/>}
-          intialSnap='50%'
+          intialSnap='45%'
+          snapArr={['45%','55%']}
         />
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalExpenseRef}
           children={<AddTransactionModal bottomSheetModalRef={bottomSheetModalExpenseRef} navigation={navigation} dispatch={dispatch} />}
-          intialSnap='25%'
-          snapArr={['25%']}
+          intialSnap='21%'
+          snapArr={['21%']}
           drag={false}
+          // modalStyle={modalStyle}
         />
       </SafeAreaView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.white,
+    // backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.black,
+  },
+  subContainer: {
+    backgroundColor:'white',
+    flex:1
+  },
+  headerContainer :{
+    height:70
   },
   header: {
     paddingHorizontal: 12,
@@ -202,25 +238,27 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.white,
   },
   companyName: {
-    fontSize: fontSizes.large,
+    fontSize: fontSize.large.size,
     fontFamily: fonts.bold,
     color: theme.colors.white,
+    lineHeight: fontSize.large.lineHeight
   },
   branchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'center',
   },
   branchName: {
-    fontSize: fontSizes.small,
+    fontSize: fontSize.small.size,
+    lineHeight: fontSize.small.lineHeight,
     color: theme.colors.gray1,
-    paddingBottom: 5,
+    // paddingBottom: 5,
     fontFamily: fonts.regular,
-    paddingLeft: 3,
-    marginTop:3,
+    marginLeft: 5,
+    // marginTop:3,
   },
   heading: {
-    fontSize: fontSizes.extraLarge,
+    fontSize: fontSize.xLarge.size,
+    lineHeight:fontSize.xLarge.lineHeight,
     fontFamily: fonts.regular,
     marginLeft: 10,
   },
@@ -242,7 +280,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   transactionHeading: {
-    fontSize: fontSizes.large,
+    fontSize: fontSize.large.size,
+    lineHeight: fontSize.large.lineHeight,
     fontFamily: fonts.bold,
     backgroundColor: theme.colors.white,
   },
@@ -261,7 +300,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyListText: {
-    fontSize: fontSizes.extraLarge,
+    fontSize: fontSize.xLarge.size,
+    lineHeight: fontSize.xLarge.lineHeight,
     fontFamily: fonts.medium,
   },
   footer: {
@@ -287,6 +327,10 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 20,
   },
+  companyBranch:{
+    flexDirection:'column',
+    padding:2
+  }
 });
 
 export default Home;

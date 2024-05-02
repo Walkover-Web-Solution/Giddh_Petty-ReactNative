@@ -21,7 +21,7 @@ const ScheduleMeet = ({isModalVisible,setModalVisible,navigation}) => {
         <WebView
         containerStyle={{backgroundColor: '#fff',
         width: '100%',
-        marginVertical: 80,
+        marginVertical: 50,
         alignSelf: 'center',
         flex: 1,
         borderRadius: 10,
@@ -37,11 +37,14 @@ const ScheduleMeet = ({isModalVisible,setModalVisible,navigation}) => {
         originWhitelist={['*']}
         scrollEnabled={false}
         startInLoadingState={true}
-        renderLoading={() => <View style={{alignItems:'center',justifyContent:'center',flex:1}}><LoaderKit
-        style={{ width: 50, height: 50,alignSelf:'center' }}
-        name={'BallPulse'}
-        color={'black'}
-        /></View>}
+        renderLoading={() => 
+        <View style={styles.container}>
+          <LoaderKit
+          style={styles.loadKit}
+          name={'BallPulse'}
+          color={'black'}
+          />
+        </View>}
         // renderError={() => {
         // return (
         // <View style={style.renderErrorView}>
@@ -57,4 +60,15 @@ const ScheduleMeet = ({isModalVisible,setModalVisible,navigation}) => {
 
 export default ScheduleMeet
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    position:'absolute',
+    top:'50%',
+    left:'50%',
+    transform:[{ translateX: -25 }, { translateY: -25 }]
+  },
+  loadKit : { 
+    width: 50, 
+    height: 50
+  }
+})

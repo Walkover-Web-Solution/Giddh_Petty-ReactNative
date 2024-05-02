@@ -2,16 +2,16 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import { useSelector } from 'react-redux';
-import { fonts, theme } from '../theme/theme';
+import { fontSize, fonts, theme } from '../theme/theme';
 
 const RenderChart = () => {
   const expenses = useSelector(state => state?.expenses?.expenses);
   
-  const totalAmount = expenses["AllRequests"]?.reduce((total, expense) => total + expense?.amount, 0);
+  const totalAmount = expenses?.["AllRequests"]?.reduce((total, expense) => total + expense?.amount, 0);
 
-  const pendingPercentage = (expenses["Pending"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
-  const rejectedPercentage = (expenses["Rejected"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
-  const approvedPercentage = (expenses["Approved"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
+  const pendingPercentage = (expenses?.["Pending"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
+  const rejectedPercentage = (expenses?.["Rejected"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
+  const approvedPercentage = (expenses?.["Approved"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
 
   const pieData = [
     { value: pendingPercentage===0&&rejectedPercentage===0&&approvedPercentage===0?100:0, color: theme.colors.black, gradientCenterColor: theme.colors.secondary,},
@@ -61,12 +61,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   totalAmount: {
-    fontSize: 20,
+    fontSize: fontSize.xLargeV1.size,
+    lineHeight: fontSize.xLargeV1.lineHeight,
     color: theme.colors.black,
     fontFamily:fonts.bold,
   },
   spending: {
-    fontSize: 14,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight,
     color: theme.colors.gray1,
     fontFamily:fonts.bold,
   },

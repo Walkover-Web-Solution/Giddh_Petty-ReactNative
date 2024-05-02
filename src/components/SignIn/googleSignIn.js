@@ -1,7 +1,7 @@
 import { View, Text,StyleSheet,TouchableOpacity,Modal } from 'react-native'
 import React,{useState} from 'react'
 import SVGImg from '../../../assets/images/icons8-google-20.svg'
-import { fonts, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import SVGMsg from '../../../assets/images/msg.svg'
 import { useDispatch } from 'react-redux';
 import { OTPVerification } from '@msg91comm/react-native-sendotp';
@@ -18,7 +18,7 @@ const SignInButton = (props) => {
 
   return (
     <>
-        <TouchableOpacity style={[styles.googleButton,{backgroundColor: props.type=='Otp'?theme.colors.primary:theme.colors.secondary,}]} onPress={props.type==='Otp'?handleOtpSignIn:handleSignIn}>
+        <TouchableOpacity style={[styles.googleButton,{backgroundColor: props.type=='Otp'?theme.colors.primary:theme.colors.secondary,}]} activeOpacity={activeOpacity.regular} onPress={props.type==='Otp'?handleOtpSignIn:handleSignIn}>
             <View style={styles.buttonContent}>
                 {props.type==='Otp'?<SVGMsg width={20} height={20} paddingVertical={18}></SVGMsg>:<SVGImg marginLeft={20} width={22} height={22} paddingVertical={18}/>}
                 <View style={styles.verticalLine} />
@@ -29,7 +29,7 @@ const SignInButton = (props) => {
         <OTPVerification 
           onVisible={isModalVisible} 
           onCompletion={(data) => {
-            console.log(data)                       // Get your response of success/failure.
+            // console.log(data)                       // Get your response of success/failure.
             setModalVisible(false)
           }} 
           widgetId={'33696b6b3344363232333039'}     // Get widgetId from MSG91 OTP Widget Configuration
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
   },
   googleButtonText: {
     color: theme.colors.white,
-    fontSize: 15,
+    fontSize: fontSize.regular.size,
     fontFamily:fonts.regular,
+    lineHeight: fontSize.regular.lineHeight
   },
 });

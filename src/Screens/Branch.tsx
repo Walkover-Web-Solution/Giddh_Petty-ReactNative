@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fonts, theme } from '../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../theme/theme';
 import { setSelectedBranch } from '../redux/company/BranchSlice';
 import  Header  from '../components/Header/Header';
 import { useNavigation } from '@react-navigation/native';
 
-const Branch: React.FC = () => {
+const Branch: React.FC = React.memo(() => {
   const dispatch = useDispatch();
   const selectedBranch = useSelector((state: any) => state?.branch?.selectedBranch);
   const branches = useSelector((state: any) => state?.branch?.branches);
@@ -15,9 +15,10 @@ const Branch: React.FC = () => {
   const renderBranchItem = ({ item }: { item: any }) => (
     <TouchableOpacity
       style={styles.branchItem}
+      activeOpacity={activeOpacity.regular}
       onPress={() => {
         dispatch(setSelectedBranch(item));
-        navigation.push('Drawer');
+        navigation.replace('Drawer');
       }}
     >
       <Text style={[styles.branchName, { color: selectedBranch?.alias === item?.alias ? theme.colors.secondary : theme.colors.text }]}>
@@ -28,24 +29,33 @@ const Branch: React.FC = () => {
   );
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
       <StatusBar backgroundColor={theme.colors.black} />
       <Header title={"Select a Branch"} />
-      <View style={styles.container}>
+      <View style={styles.listView}>
         <FlatList
           data={branches}
           keyExtractor={(item) => item.alias}
           renderItem={renderBranchItem}
         />
       </View>
-    </>
+      </View>
+    </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 15,
+    flex:1,
+    backgroundColor:theme.colors.black
+  },
+  subContainer: {
+    flex:1,
+    backgroundColor:theme.colors.LightGray
+  },
+  listView:{
+    flex:1
   },
   branchItem: {
     backgroundColor: theme.colors.white,
@@ -56,15 +66,17 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
   },
   branchName: {
-    fontSize: 14,
+    fontSize: fontSize.regular.size,
     fontFamily: fonts.regular,
     textDecorationLine: 'none',
+    lineHeight: fontSize.regular.lineHeight
   },
   tickIcon: {
-    fontSize: 17,
+    fontSize: fontSize.large.size,
     color: theme.colors.secondary,
     paddingRight: 40,
     fontFamily: fonts.regular,
+    lineHeight: fontSize.large.lineHeight
   },
 });
 

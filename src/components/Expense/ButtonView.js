@@ -1,46 +1,87 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { theme } from '../../theme/theme';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter, Modal, Pressable } from 'react-native';
+import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import { ScreenNames } from '../../constants/NavigationConstants';
 import axios from 'axios'; 
 import {useSelector} from 'react-redux';
 const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepareRequestBody }) => {
   const navigation = useNavigation();
   const user = useSelector(state => state?.auth?.user);
+  const [showModal,setShowModal] = useState(false);
+  const [isSuccess,setIsSuccess] = useState(false);
+  const [apiResponse,setApiResponse] = useState('');
   const handleSaveButton = async () => {
     const requestBody = prepareRequestBody();
-    console.log(requestBody);
+    const entryType = name === 'Income' ? 'Sales' : name;
     try {
-      const response = await axios.post(`https://api.giddh.com/company/${companyUniqueName}/pettycash-manager/generate?entryType=${name.toLowerCase()}`, requestBody, {
+      const response = await axios.post(`https://api.giddh.com/company/${companyUniqueName}/pettycash-manager/generate?entryType=${entryType.toLowerCase()}`, requestBody, {
         headers: {
           'Content-Type': 'application/json',
-          'auth-key': user?.session?.id,
+          'session-id': user?.session?.id,
         },
       });
-
-      console.log('Response:', response.data);
-
-      navigation.navigate(ScreenNames.YOUR_SCREEN_NAME);
+      setShowModal(true);
+      if(response?.data?.status){
+        setApiResponse('Success!');
+        setIsSuccess(true);
+      }else{
+        setApiResponse(response?.body?.message);
+        setIsSuccess(false);
+      }
     } catch (error) {
+      setShowModal(true);
+      setIsSuccess(false);
+      setApiResponse('Something went wrong!');
       console.error('Error:', error);
     }
   };
+const modalClose = ()=>{
+  setShowModal(!showModal);
+  if(isSuccess){
+    DeviceEventEmitter.emit('successResponse');
+    navigation.navigate(ScreenNames.DRAWER);
+  }
+}
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
+        activeOpacity={activeOpacity.regular}
         onPress={() => navigation.navigate(ScreenNames.ADD_EXPENSE, { selectedItem: selectedItem, getBack: getBack, name: name })}
       >
         <Text style={styles.buttonText}>Add {name}</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: true ? theme.colors.gray2 : 'white' }]}
+        style={styles.button}
+        activeOpacity={activeOpacity.regular}
         onPress={handleSaveButton}
       >
         <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
+      <Modal 
+        animationType="fade"
+        transparent={true}
+        visible={showModal}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {isSuccess 
+              ? <Icon name='file-circle-check' size={100} color={theme.colors.black} style={styles.icon}/>
+              : <Icon name='file-circle-exclamation' size={100} color={theme.colors.black} style={styles.icon}/>
+              }
+            {isSuccess ? <Text style={styles.buttonText}>{apiResponse}</Text>
+            : <Text style={styles.buttonText}>{apiResponse}</Text>}
+            <Pressable
+              style={isSuccess ? styles.doneButton : styles.errorBtn}
+              onPress={modalClose}>
+              <Text style={[styles.buttonText,{color:'white'}]}>Done</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -51,7 +92,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginTop: 20,
+    paddingVertical:20,
+    marginTop: 10,
   },
   button: {
     width: 150,
@@ -63,9 +105,55 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontSize: 16,
-    fontFamily: 'Helvetica',
+    fontSize: fontSize.large.size,
+    fontFamily: fonts.regular,
+    padding: 4,
+    lineHeight: fontSize.large.lineHeight
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)'
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    width:300,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  doneButton: {
+    marginTop:30,
+    width: 150,
+    height: 50,
+    borderRadius: 60,
+    backgroundColor: theme.colors.black,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+  },
+  errorBtn: {
+    marginTop:30,
+    width: 150,
+    height: 50,
+    borderRadius: 60,
+    backgroundColor: theme.colors.black,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+  },
+  icon : {
+    padding : 10
+  }
 });
 
 export default RowWithButtons;

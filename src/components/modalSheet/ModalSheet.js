@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,TouchableWithoutFeedback,BackHandler } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView,useBottomSheetModal } from '@gorhom/bottom-sheet';
 
-const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children}) => {
+const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children,modalStyle}) => {
 
   const {dismiss}=useBottomSheetModal()
-  
+  // const {backgroundColor,detached} = modalStyle;
   useEffect(() => {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
         const res=dismiss()
@@ -20,7 +20,7 @@ const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
-      backgroundStyle={{backgroundColor:'white'}}
+      backgroundStyle={{backgroundColor : modalStyle ? modalStyle?.backgroundColor : 'white' }}
       enablePanDownToClose={true}
       index={0}
       backdropComponent={({ style }) => (
@@ -28,7 +28,7 @@ const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children
       )}
       overlayOpacity={5}
       snapPoints={[...snapArr]}
-      handleIndicatorStyle={{backgroundColor:'black'}}
+      handleIndicatorStyle={{backgroundColor:modalStyle ? modalStyle?.backgroundColor : 'black'}}
       animated={true}
       keyboardBehavior={'extend'}
       keyboardBlurBehavior={'restore'}

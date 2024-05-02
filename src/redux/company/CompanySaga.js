@@ -6,10 +6,10 @@ function* fetchCompanyList(actions) {
   try {
     const response = yield call(api.get, `users/${actions.payload.uniqueName}/v2/companies`);
     const data = response.data.body;
-    console.log(data);
+    // console.log(data);
     yield put(fetchCompanyListSuccess(data));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     yield put(fetchCompanyListFailure(error.message));
   }
 }

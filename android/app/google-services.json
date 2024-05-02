@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "199340919612-iileihtk1bb0aau4ff0gj9d47ph4hq1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giddh.pettycash",
+            "certificate_hash": "1df9c718d37e5e17723ba43ee94e3472405547d4"
+          }
+        },
+        {
           "client_id": "199340919612-pa6u39tvo4hcurk22u3omsi6qvhncr3i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

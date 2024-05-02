@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, FlatList, Image } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import { fonts, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 const Tab = ({ title, isActive, onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.tab, { borderColor: isActive ? theme.colors.secondary : theme.colors.gray, flex: isActive ? 2 : 1 }]}>
+    <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={onPress} style={[styles.tab, { borderColor: isActive ? theme.colors.secondary : theme.colors.gray, flex: isActive ? 2 : 1 }]}>
       <Text numberOfLines={1} style={[styles.tabText, { color: isActive ? theme.colors.secondary : theme.colors.gray }]}>{title}</Text>
     </TouchableOpacity>
   );
@@ -59,22 +59,21 @@ const TabSwitcher = () => {
     }
   };
 
-  const pendingOrRejected = expenseList.pendingOrRejected.filter(item => {
+  const pendingOrRejected = expenseList?.pendingOrRejected?.filter(item => {
     const itemDate = item.entryDate;
     const reversedStartDate = itemDate.split('-').reverse().join('-');
     return reversedStartDate >= new Date(startDate)?.toISOString().split('T')[0] && reversedStartDate <= new Date(endDate)?.toISOString().split('T')[0];
   });
-  const approved = expenseList.approved.filter(item => {
+  const approved = expenseList?.approved?.filter(item => {
     const itemDate = item.entryDate;
     const reversedStartDate = itemDate.split('-').reverse().join('-');
     return reversedStartDate >= new Date(startDate)?.toISOString().split('T')[0] && reversedStartDate <= new Date(endDate)?.toISOString().split('T')[0];
   });
-  const allRequests = expenseList.allRequests.filter(item => {
+  const allRequests = expenseList?.allRequests?.filter(item => {
     const itemDate = item.entryDate;
     const reversedStartDate = itemDate.split('-').reverse().join('-');
     return reversedStartDate >= new Date(startDate)?.toISOString().split('T')[0] && reversedStartDate <= new Date(endDate)?.toISOString().split('T')[0];
   });
-  console.log(startDate)
   return (
     <View style={styles.container}>
       <View style={styles.tabs}>
@@ -133,6 +132,8 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     marginHorizontal: 2,
     textAlign: 'center',
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight
   },
   itemContainer: {
     paddingVertical: 12,
@@ -153,17 +154,20 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontFamily: fonts.regular,
-    fontSize: 14,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight
   },
   itemSubtitle: {
     fontFamily: fonts.regular,
-    fontSize: 14,
+    fontSize: fontSize.regular.size,
     color: theme.colors.gray,
+    lineHeight: fontSize.regular.lineHeight
   },
   itemAmount: {
     fontFamily: fonts.regular,
-    fontSize: 16,
+    fontSize: fontSize.large.size,
     paddingHorizontal: 10,
+    lineHeight: fontSize.large.lineHeight
   },
 });
 

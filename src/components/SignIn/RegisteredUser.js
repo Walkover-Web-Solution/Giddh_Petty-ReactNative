@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity,StyleSheet } from 'react-native';
 import EmailIcon from '../../../assets/images/mail.svg';
 import PassIcon from '../../../assets/images/lock.svg';
-import { fonts, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 export const RegisteredUser = () => {
   return (
     <View >
@@ -18,15 +18,15 @@ export const RegisteredUser = () => {
         </View>
       </View>
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} activeOpacity={activeOpacity.regular}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity activeOpacity={activeOpacity.regular}>
           <Text style={styles.smallText}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.troubleLoggingContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity activeOpacity={activeOpacity.regular}>
         <Text style={styles.createNewAcc}>Create a new account</Text>
         </TouchableOpacity>
       </View>
@@ -37,10 +37,11 @@ export const RegisteredUser = () => {
 const styles = StyleSheet.create({
   heading: {
     marginTop: 15,
-    fontSize: 20,
+    fontSize: fontSize.xLarge.size,
     fontFamily:fonts.bold,
     color:theme.colors.black,
     marginBottom: 15,
+    lineHeight: fontSize.xLarge.lineHeight
   },
   inputContainer: {
     width: '100%',
@@ -76,15 +77,17 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: theme.colors.white,
-    fontSize: 15,
+    fontSize: fontSize.regular.size,
     fontFamily:fonts.regular,
+    lineHeight: fontSize.regular.lineHeight
   },
   smallText: {
     marginTop: 10,
-    fontSize: 17,
+    fontSize: fontSize.large.size,
     fontFamily:fonts.regular,
     marginRight: 10,
     color: theme.colors.black,
+    lineHeight: fontSize.large.lineHeight
   },
   troubleLoggingContainer: {
     flexDirection: 'row',
@@ -97,6 +100,7 @@ const styles = StyleSheet.create({
     marginTop: 13,
     textDecorationLine: 'underline',
     fontFamily:fonts.regular,
+    lineHeight: lineHeight.large
   },
-  createNewAcc:{fontSize:18,marginTop:10,color:theme.colors.secondary,textDecorationLine: 'underline',fontFamily:fonts.regular}
+  createNewAcc:{fontSize:fontSize.xLarge.size,marginTop:10,color:theme.colors.secondary,textDecorationLine: 'underline',fontFamily:fonts.regular,lineHeight: fontSize.xLarge.lineHeight}
 });

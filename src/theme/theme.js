@@ -1,3 +1,6 @@
+import { Dimensions } from "react-native";
+
+const {height,width} = Dimensions.get('window');
 export const theme={
     colors:{
      primary: '#6188EA',
@@ -25,8 +28,15 @@ export const fonts = {
   regular: 'PlusJakartaSans-Regular',
   bold: 'PlusJakartaSans-Bold',
   medium:'PlusJakartaSans-Medium',
-  semibold:'PlusJakartaSans-SemiBold',
+  semibold:'PlusJakartaSans-SemiBold'
 };
+
+export const styleFonts = {
+  regular: 'DancingScript-Regular',
+  bold: 'DancingScript-Bold',
+  medium:'DancingScript-Medium',
+  semibold:'DancingScript-SemiBold'
+}
 
 export const fontSizes = {
   small: 12,
@@ -34,6 +44,7 @@ export const fontSizes = {
   large: 16,
   extraSmall: 10,
   extraLarge: 18,
+  max: 24
 };
 
 export const spacing = {
@@ -55,3 +66,56 @@ export const shadows = {
   shadowRadius: 3.84,
   elevation: 5,
 };
+
+
+export const lineHeight = {
+  large : 20 
+}
+
+export const fontSize = {
+  max: {
+    size: 32,
+    lineHeight: 36
+  },
+  xxxLarge: {
+    size: 26,
+    lineHeight: 28
+  },
+  xxLarge: {
+    size: 22,
+    lineHeight: 24
+  },
+  xLargeV1: {
+    size: 20,
+    lineHeight: 28
+  },
+  xLarge: {
+    size: 18,
+    lineHeight: 26
+  },
+  large: {
+    size: height > 1024 ? 20 : 16,
+    lineHeight: height > 1024 ? 22 : 18
+  },
+  regular: {
+    size: height > 1024 ? 18 : 14,
+    lineHeight: height > 1024 ? 26 : 16
+  },
+  small: {
+    size: height > 1024 ? 16 : 12,
+    lineHeight: height > 1024 ? 18 : 16
+  },
+  xSmall: {
+    size: height > 1024 ? 14 : 10,
+    lineHeight: height > 1024 ? 16 : 12
+  },
+  xxSmall: {
+    size: height > 1024 ? 12 : 8,
+    lineHeight: height > 1024 ? 12 : 10
+  }
+}
+
+export const activeOpacity = {
+  default : 0.2,
+  regular : 0.7
+}
