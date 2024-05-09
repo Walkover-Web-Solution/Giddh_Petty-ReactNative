@@ -79,7 +79,7 @@ const Home = () => {
     setIsListEnd(false);
     setLoading(true);
     dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
-  }, [startDate]);
+  }, [startDate,endDate]);
 
   const onPress = useCallback((item) => {
     dispatch(setSelectedExpense(item));

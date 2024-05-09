@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { activeOpacity, fonts, fontSize, fontSizes, lineHeight } from '../../theme/theme';
+import { resetExpenses } from '../../redux/expense/ExpenseSlice';
+import { useDispatch } from 'react-redux';
 
 const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef }) => {
   const today = new Date();
   const currentMonth = today.getMonth() + 1;
-  
+  const dispatch = useDispatch();
   const reverseDateFormat = (dateStr) =>{
     const parts = dateStr.split('-');
     const reversedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
@@ -84,6 +86,7 @@ const calculateFinancialYearEndDate = () => {
   ];
 
   const handlePeriodSelection = (startDate, endDate) => {
+    dispatch(resetExpenses());
     setStartDate(startDate);
     setEndDate(endDate);
     bottomSheetModalRef?.current?.dismiss();

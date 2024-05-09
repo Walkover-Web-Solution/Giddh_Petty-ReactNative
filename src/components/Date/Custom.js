@@ -3,13 +3,15 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme';
 import { errorToast } from '../customToast/CustomToast';
+import { useDispatch } from 'react-redux';
+import { resetExpenses } from '../../redux/expense/ExpenseSlice';
 
 const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [startDate, setStartDateLocal] = useState(null);
     const [endDate, setEndDateLocal] = useState(null);
-
+    const dispatch = useDispatch();
     const showStartDatePickerModal = () => {
         setShowStartDatePicker(true);
     };
@@ -44,22 +46,26 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
         const end = new Date(endDate);
         return start<end;
     }
-    const handleDone = () => {
-        if(dateValidator()){
-            setStartDate(formatDate(startDate));
-            setEndDate(formatDate(endDate));
-            bottomSheetModalRef?.current?.dismiss();
-        }else{
-            errorToast("Enter a valid date range!");
-        }
-    };
-
     const formatDate = (date) => {
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
     };
+
+    const handleDone = () => {
+        if(dateValidator()){
+            dispatch(resetExpenses());
+            const newStart = formatDate(startDate);
+            const newEnd = formatDate(endDate);
+            setStartDate(newStart);
+            setEndDate(newEnd);
+            bottomSheetModalRef?.current?.dismiss();
+        }else{
+            errorToast("Enter a valid date range!");
+        }
+    };
+
 
     return (
         <View style={styles.container}>
