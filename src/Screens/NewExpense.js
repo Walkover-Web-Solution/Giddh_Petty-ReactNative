@@ -16,6 +16,7 @@ import ProductServicesList from '../components/Expense/SelectedProduct';
 import EditExpense from '../components/Expense/EditExpenseModal';
 import axios from 'axios';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
+import { errorToast } from '../components/customToast/CustomToast';
 
 const NewExpense = () => {
   const navigation = useNavigation();
@@ -81,6 +82,11 @@ const NewExpense = () => {
     } else if (response.error) {
       console.error('ImagePicker Error: ', response.error);
     } else {
+      console.log("response on selection",response);
+      if(response?.assets?.some((item) => item.fileSize > 2000000)){
+        errorToast("Image size to large!");
+        return ;
+      }
       const updatedImages = response.assets.map(asset => ({
         ...asset,
         uploading: true,

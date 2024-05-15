@@ -6,14 +6,30 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import { ScreenNames } from '../../constants/NavigationConstants';
 import axios from 'axios'; 
 import {useSelector} from 'react-redux';
+import { errorToast } from '../customToast/CustomToast';
 const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepareRequestBody }) => {
   const navigation = useNavigation();
   const user = useSelector(state => state?.auth?.user);
   const [showModal,setShowModal] = useState(false);
   const [isSuccess,setIsSuccess] = useState(false);
   const [apiResponse,setApiResponse] = useState('');
+  const selectedMode = useSelector((state)=>state?.payment?.selectedMode);
   const handleSaveButton = async () => {
     const requestBody = prepareRequestBody();
+    console.log("enter",requestBody);
+    if(!requestBody?.baseAccount?.uniqueName){
+      errorToast("Choose Payment Mode!");
+      return;
+    }
+    if(requestBody?.transactions?.length == 0){
+      errorToast("Transactions cannot be empty.");
+      return ;
+    }
+    const services = requestBody?.transactions?.filter((item)=>item.amount == 0);
+    if(services?.length > 0){
+      errorToast("Entry amount should be greater than zero for ",services?.[0]?.name);
+      return;
+    }
     const entryType = name === 'Income' ? 'Sales' : name;
     try {
       const response = await axios.post(`https://api.giddh.com/company/${companyUniqueName}/pettycash-manager/generate?entryType=${entryType.toLowerCase()}`, requestBody, {
@@ -22,6 +38,7 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
           'session-id': user?.session?.id,
         },
       });
+      console.log("api response",response?.body);
       setShowModal(true);
       if(response?.data?.status){
         setApiResponse('Success!');

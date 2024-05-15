@@ -6,7 +6,7 @@ function* fetchExpenses(action) {
   try {
     const { uniqueName, page, setLoading, setIsListEnd, startDate, endDate } = action.payload;
     console.log("page",page)
-    const apiUrl = `company/${uniqueName}/pettycash-manager/client-report?page=${page}&count=6&lang=en`;
+    const apiUrl = `company/${uniqueName}/pettycash-manager/client-report?page=${page}&count=50&lang=en`;
     const payload = {
       from: startDate,
       to: endDate,
@@ -64,7 +64,7 @@ function* fetchExpenses(action) {
     for(let i=0;i<resultData.length;i++){
       const currentExpenses = yield select(state => state?.expenses?.expenses);
       if(page!==1){
-        if(6*(page-1) >= currentExpenses?.["AllRequests"]?.length){
+        if(50*(page-1) >= currentExpenses?.["AllRequests"]?.length){
           if(response?.data?.body?.results.length === 0){
             setIsListEnd(true);
             setLoading(false);

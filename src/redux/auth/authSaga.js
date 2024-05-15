@@ -5,6 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import api, { loginInstance } from '../../../interceptor'; // Import the axios interceptor instance
 import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInStart } from './authSlice';
 import { Alert, AsyncStorage } from 'react-native';
+import LogRocket from '@logrocket/react-native';
 
 function* signInWithGoogle() {
   try {
@@ -12,6 +13,11 @@ function* signInWithGoogle() {
     yield GoogleSignin.signOut();
     const res = yield GoogleSignin.signIn();
     const token = yield GoogleSignin.getTokens();
+    LogRocket.identify(res?.user?.email, {
+      name: res?.user?.name,
+      email: res?.user?.email,
+      newUser:true
+    });
     const response = yield call(loginInstance.get, 'v2/signup-with-google', {
       headers: {
         'access-token': token.accessToken,

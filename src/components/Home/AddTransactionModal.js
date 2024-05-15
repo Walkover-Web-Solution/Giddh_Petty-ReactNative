@@ -16,7 +16,7 @@ const AddTransactionModal = ({ bottomSheetModalRef, navigation, dispatch }) => {
           navigation.navigate(ScreenNames.NEW_EXPENSE, { name: 'Income' });
         }}>
           <View style={styles.icon}>
-            <Feather name="arrow-up-circle" size={30} color={theme.colors.white} />
+            <Feather name="arrow-down-circle" size={30} color={theme.colors.white} />
           </View>
       </TouchableOpacity>
             <Text style={styles.buttonText}>Income</Text>

@@ -216,6 +216,10 @@ PODS:
   - libwebp/sharpyuv (1.3.2)
   - libwebp/webp (1.3.2):
     - libwebp/sharpyuv
+  - LogRocket (1.33.5)
+  - logrocket-react-native (1.33.5):
+    - LogRocket (= 1.33.5)
+    - React
   - lottie-ios (4.4.1)
   - lottie-react-native (6.7.2):
     - glog
@@ -1375,6 +1379,7 @@ DEPENDENCIES:
   - GoogleUtilities
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
+  - "logrocket-react-native (from `../node_modules/@logrocket/react-native`)"
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -1472,6 +1477,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - libevent
     - libwebp
+    - LogRocket
     - lottie-ios
     - nanopb
     - NVActivityIndicatorView
@@ -1500,6 +1506,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2023-11-17-RNv0.73.0-21043a3fc062be445e56a2c10ecd8be028dd9cc5
+  logrocket-react-native:
+    :path: "../node_modules/@logrocket/react-native"
   lottie-react-native:
     :path: "../node_modules/lottie-react-native"
   RCT-Folly:
@@ -1663,6 +1671,8 @@ SPEC CHECKSUMS:
   hermes-engine: 5420539d016f368cd27e008f65f777abd6098c56
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
+  LogRocket: de6c5637879e34e767b835b01f16056fc4bbcaab
+  logrocket-react-native: f5818fcffd4f10e735fd87b1f3c06e0b3dba56b2
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
   lottie-react-native: 3b9199d34e014bcb71c46728992ef5c8026538bb
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5

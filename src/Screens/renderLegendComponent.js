@@ -7,8 +7,7 @@ import { fontSize, fonts, theme } from '../theme/theme';
 const RenderChart = () => {
   const expenses = useSelector(state => state?.expenses?.expenses);
   
-  const totalAmount = expenses?.["AllRequests"]?.reduce((total, expense) => total + expense?.amount, 0);
-
+  const totalAmount = expenses?.["AllRequests"]?.filter((item)=>item?.entryType !='sales')?.reduce((total, expense) => total + expense?.amount, 0);
   const pendingPercentage = (expenses?.["Pending"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
   const rejectedPercentage = (expenses?.["Rejected"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
   const approvedPercentage = (expenses?.["Approved"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
@@ -47,7 +46,7 @@ const RenderChart = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
+    paddingTop: 20,
     backgroundColor: theme.colors.white,
     marginBottom: 30,
   },
