@@ -178,7 +178,7 @@ const Home = () => {
             {useNativeDriver: false}
           )}
           refreshControl={
-          <RefreshControl progressViewOffset={320} refreshing={refreshing} onRefresh={()=>{
+          <RefreshControl progressViewOffset={330} refreshing={refreshing} onRefresh={()=>{
             dispatch(resetExpenses())
             const newPage = page - 1;
             setPage( newPage <= 0 ? 2 : 1);
@@ -206,7 +206,7 @@ const Home = () => {
           drag={false}
           // modalStyle={modalStyle}
         />
-        <Animated.View style={[styles.animationView,{top:(65+headerHeight.top), transform: [{translateY : animatedHeaderHeight}]}]}>
+        <Animated.View style={[styles.animationView,{top : (65+headerHeight.top), transform: [{translateY : animatedHeaderHeight}]}]}>
           {/* <View>
           <DynamicHeader animHeaderValue={scrollOffsetY}/>
           </View> */}
