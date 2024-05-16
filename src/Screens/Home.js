@@ -178,7 +178,7 @@ const Home = () => {
             {useNativeDriver: false}
           )}
           refreshControl={
-          <RefreshControl progressViewOffset={330} refreshing={refreshing} onRefresh={()=>{
+          <RefreshControl progressViewOffset={315} refreshing={refreshing} onRefresh={()=>{
             dispatch(resetExpenses())
             const newPage = page - 1;
             setPage( newPage <= 0 ? 2 : 1);
