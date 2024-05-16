@@ -85,6 +85,14 @@ const Home = () => {
     dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
   }, [page]);
 
+  useEffect(()=>{
+    if(refreshing){
+      setPage(1);
+      setLoading(true);
+      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
+    }
+  },[refreshing])
+
   useEffect(() => {
     setPage(1);
     setIsListEnd(false);
@@ -180,8 +188,11 @@ const Home = () => {
           refreshControl={
           <RefreshControl progressViewOffset={315} refreshing={refreshing} onRefresh={()=>{
             dispatch(resetExpenses())
-            const newPage = page - 1;
-            setPage( newPage <= 0 ? 2 : 1);
+            // const newPage = page - 1;
+            setRefreshing(true);
+            setTimeout(() => {
+              setRefreshing(false)
+            }, 1000);
             // setIsListEnd(false),
             // setLoading(true);
           }}/>

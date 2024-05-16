@@ -1,5 +1,5 @@
 import React,{useState,useRef} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet ,Linking,DeviceEventEmitter, SafeAreaView} from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet ,Linking,DeviceEventEmitter, SafeAreaView, Pressable} from 'react-native';
 import LogOutIcon from '../../../assets/images/power.svg';
 import {useSelector,useDispatch} from 'react-redux';
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
@@ -22,6 +22,7 @@ import MyBottomSheetModal from '../modalSheet/ModalSheet';
 import PaymentModeSelector from '../Expense/ModalComponent';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
 import ScheduleMeet from '../scheduleMeet/scheduleMeet';
+import { infoToast } from '../customToast/CustomToast';
 const CustomDrawer = ({setVisible,navigation}) => {
   const openGmail = (email) => {
     const gmailUrl = `mailto:${email}`;
@@ -64,7 +65,9 @@ const CustomDrawer = ({setVisible,navigation}) => {
           <Image source={photo?{uri:photo}:require('../../../assets/images/user-picture.png')} style={styles.drawerImage} />
           <View style={styles.userInfo}>
             <Text style={styles.drawerText}>{user?.user?.name}</Text>
-            <Text numberOfLines={1} style={styles.drawerText}>{user?.user?.email}</Text>
+            <Pressable onLongPress={()=>infoToast(user?.user?.email,'','bottom')}>
+              <Text numberOfLines={1} style={styles.drawerText}>{user?.user?.email}</Text>
+            </Pressable>
           </View>
         </View>
       </View>

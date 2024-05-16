@@ -17,6 +17,7 @@ import EditExpense from '../components/Expense/EditExpenseModal';
 import axios from 'axios';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
 import { errorToast } from '../components/customToast/CustomToast';
+import { ScreenNames } from '../constants/NavigationConstants';
 
 const NewExpense = () => {
   const navigation = useNavigation();
@@ -234,6 +235,15 @@ image?.uploading ? (
             onChangeText={(text)=>setDesc(text)}
             placeholder='Add Description'
           />
+        </View>
+        <View style={styles.inputContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={activeOpacity.regular}
+            onPress={() => navigation.navigate(ScreenNames.ADD_EXPENSE, { selectedItem: selectedItems, getBack: getBack, name: name })}
+          >
+            <Text style={styles.buttonText}>Add {name}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.header}>
         {/* <FontAwesome5 name="box-open" size={20} color="black" style={styles.icon} /> */}
@@ -572,6 +582,30 @@ const styles = StyleSheet.create({
     backgroundColor:theme.colors.black,
     width:'100%',
     height:'15%'
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: fontSize.large.size,
+    fontFamily: fonts.regular,
+    padding: 4,
+    lineHeight: fontSize.large.lineHeight,
+    textAlign:'center'
+  },
+  button:{
+    backgroundColor: theme.colors.LightGray, 
+    borderRadius: 5,
+    paddingHorizontal:10,
+    justifyContent:'center',
+    height:50, 
+    marginTop:30,
+    elevation:3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1, 
   }
 });
 
