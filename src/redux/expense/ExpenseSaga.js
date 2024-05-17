@@ -152,7 +152,7 @@ function* fetchExpenses(action) {
 //     // return;
 // }}
   } catch (error) {
-    console.error("e", error);
+    console.error("err", error);
     yield put(fetchExpensesFailure(error.message));
   }
 }

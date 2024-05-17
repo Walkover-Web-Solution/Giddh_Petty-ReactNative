@@ -25,7 +25,7 @@ function* signInWithGoogle() {
     });
     yield put(signInSuccess({ user: response.data.body, photo: res.user.photo }));
   } catch (error) {
-    // console.log("error",error);
+    console.log("error",error);
     Alert.alert("Fail to login");
     yield put(signInStart({loading:false}));
     yield put(signInFailure(error.message));
@@ -45,7 +45,7 @@ function* signInWithOtp({ payload }) {
     });
     yield put(signInSuccess({ user: response.data.body, photo:null}));
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     yield put(signInFailure(error.message));
     yield put(signInStart({loading:false}));
   }
@@ -58,10 +58,10 @@ function* signOut() {
   try {
     // yield GoogleSignin.revokeAccess();
     // yield GoogleSignin.signOut();
-    const usersGmail = yield select((state)=>
+    const uniqueName = yield select((state)=>
     state?.auth?.user?.user?.uniqueName
   )
-  yield call(api.delete, `users/${usersGmail}/destroy-session?lang=en`);
+  yield call(api.delete, `users/${uniqueName}/destroy-session?lang=en`);
   yield put(signInStart({loading:false}));
   } catch (error) {
     console.warn(error);
