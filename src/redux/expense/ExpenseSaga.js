@@ -67,7 +67,7 @@ function* fetchExpenses(action) {
         if(50*(page-1) >= currentExpenses?.["AllRequests"]?.length){
           if(response?.data?.body?.results.length === 0){
             setIsListEnd(true);
-            setLoading(false);
+            setTimeout(()=>setLoading(false),1000);
             return ;
           }
           else{
@@ -117,11 +117,11 @@ function* fetchExpenses(action) {
   }
     if(response?.data?.body?.results.length === 0){
       setIsListEnd(true);
-      setLoading(false);
+      setTimeout(()=>setLoading(false),1000);
       return;
     }
     setIsListEnd(false);
-    setLoading(false)
+    setTimeout(()=>setLoading(false),1000);
 // if(response?.data?.body?.results?.length >=1){
 //   const resultData = response?.data?.body?.results;
 //   for(let i=1;i<resultData.length;i++){
