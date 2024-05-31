@@ -12,12 +12,12 @@ function showToast(type: string = 'success', text1: string = '', text2: string =
   });
 }
 
-export const successToast = (text1: string, text2?: string) => {
-  showToast('success', text1, text2);
+export const successToast = (text1: string, text2?: string, position?:ToastPosition) => {
+  showToast('success', text1, text2, position);
 };
-export const errorToast = (text1: string, text2?: string) => {
-  showToast('error', text1, text2);
+export const errorToast = (text1: string, text2?: string, position?:ToastPosition) => {
+  showToast('error', text1, text2, position);
 };
-export const infoToast = (text1: string, text2?: string) => {
-  showToast('info', text1, text2);
+export const infoToast = (text1: string, text2?: string, position?:ToastPosition) => {
+  showToast('info', text1, text2, position);
 };

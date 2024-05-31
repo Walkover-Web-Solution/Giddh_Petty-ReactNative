@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar, SafeAreaView, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import  Header  from '../components/Header/Header';
 import { resetBranch } from '../redux/company/BranchSlice';
@@ -13,6 +13,7 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   const companies = useSelector((state: any) => state?.company?.companies);
   const user = useSelector((state: any) => state?.auth?.user);
   const userSession = useSelector((state:any)=>state?.auth?.user?.session?.id)
+  const [isRefreshing, setIsRefreshing] = useState(false);
   useEffect(() => {
     if(companies.length == 0 && selectedCompany == null)
       dispatch({ type: 'company/FETCH_COMPANY_LIST', payload: { uniqueName: user?.user?.uniqueName, sessionToken: user?.session?.id } });
@@ -62,6 +63,11 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
           data={companies}
           keyExtractor={(item) => item.name}
           renderItem={renderCompanyItem}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={()=>{
+              dispatch({ type: 'company/FETCH_COMPANY_LIST', payload: { uniqueName: user?.user?.uniqueName, sessionToken: user?.session?.id } });
+            }} />
+          }
         />
       </View>
       </View>

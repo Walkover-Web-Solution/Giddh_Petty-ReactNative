@@ -9,32 +9,29 @@ const AddTransactionModal = ({ bottomSheetModalRef, navigation, dispatch }) => {
   return (
     <View style={styles.mainContainer}>
     <View style={styles.container}>
-      <View>
-      <TouchableOpacity style={styles.button} activeOpacity={activeOpacity.regular} onPress={() => {
-          bottomSheetModalRef?.current?.dismiss();
-          dispatch(resetPayment());
-          navigation.navigate(ScreenNames.NEW_EXPENSE, { name: 'Income' });
-        }}>
-          <View style={styles.icon}>
-            <Feather name="arrow-up-circle" size={30} color={theme.colors.white} />
-          </View>
-      </TouchableOpacity>
-            <Text style={styles.buttonText}>Income</Text>
+      <View style={styles.buttonView}>
+        <TouchableOpacity style={styles.button} activeOpacity={activeOpacity.regular} onPress={() => {
+            bottomSheetModalRef?.current?.dismiss();
+            dispatch(resetPayment());
+            navigation.navigate(ScreenNames.NEW_EXPENSE, { name: 'Income' });
+          }}>
+            <View style={styles.icon}>
+              <Feather name="arrow-down-circle" size={30} color={theme.colors.white} />
+            </View>
+        </TouchableOpacity>
+        <Text style={styles.buttonText}>Income</Text>
       </View>
-      <View>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={activeOpacity.regular}
-        onPress={() => {
-          bottomSheetModalRef?.current?.dismiss();
-          dispatch(resetPayment());
-          navigation.navigate(ScreenNames.NEW_EXPENSE, { name: 'Expense' });
-        }}>
-          <View style={styles.icon}>
-            <Feather name="dollar-sign" size={25} color={theme.colors.white} />
-          </View>
-      </TouchableOpacity>
-            <Text style={styles.buttonText}>Expense</Text>
+      <View style={styles.buttonView}>
+        <TouchableOpacity style={styles.button} activeOpacity={activeOpacity.regular} onPress={() => {
+            bottomSheetModalRef?.current?.dismiss();
+            dispatch(resetPayment());
+            navigation.navigate(ScreenNames.NEW_EXPENSE, { name: 'Expense' });
+          }}>
+            <View style={styles.icon}>
+              <Feather name="arrow-up-circle" size={30} color={theme.colors.white} />
+            </View>
+        </TouchableOpacity>
+        <Text style={styles.buttonText}>Expense</Text>
       </View>
     </View>
     {/* <View style={{alignItems:'center'}}>
@@ -80,6 +77,9 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     // marginHorizontal: 10,
     // backgroundColor: 'white',
+  },
+  buttonView : {
+    alignItems:'center'
   },
   buttonText: {
     color: theme.colors.black,

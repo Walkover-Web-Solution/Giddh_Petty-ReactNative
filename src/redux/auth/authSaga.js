@@ -5,6 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import api, { loginInstance } from '../../../interceptor'; // Import the axios interceptor instance
 import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInStart } from './authSlice';
 import { Alert, AsyncStorage } from 'react-native';
+import LogRocket from '@logrocket/react-native';
 
 function* signInWithGoogle() {
   try {
@@ -12,6 +13,11 @@ function* signInWithGoogle() {
     yield GoogleSignin.signOut();
     const res = yield GoogleSignin.signIn();
     const token = yield GoogleSignin.getTokens();
+    LogRocket.identify(res?.user?.email, {
+      name: res?.user?.name,
+      email: res?.user?.email,
+      newUser:true
+    });
     const response = yield call(loginInstance.get, 'v2/signup-with-google', {
       headers: {
         'access-token': token.accessToken,
@@ -19,7 +25,7 @@ function* signInWithGoogle() {
     });
     yield put(signInSuccess({ user: response.data.body, photo: res.user.photo }));
   } catch (error) {
-    // console.log("error",error);
+    console.log("error",error);
     Alert.alert("Fail to login");
     yield put(signInStart({loading:false}));
     yield put(signInFailure(error.message));
@@ -39,7 +45,7 @@ function* signInWithOtp({ payload }) {
     });
     yield put(signInSuccess({ user: response.data.body, photo:null}));
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     yield put(signInFailure(error.message));
     yield put(signInStart({loading:false}));
   }
@@ -52,10 +58,10 @@ function* signOut() {
   try {
     // yield GoogleSignin.revokeAccess();
     // yield GoogleSignin.signOut();
-    const usersGmail = yield select((state)=>
+    const uniqueName = yield select((state)=>
     state?.auth?.user?.user?.uniqueName
   )
-  yield call(api.delete, `users/${usersGmail}/destroy-session?lang=en`);
+  yield call(api.delete, `users/${uniqueName}/destroy-session?lang=en`);
   yield put(signInStart({loading:false}));
   } catch (error) {
     console.warn(error);

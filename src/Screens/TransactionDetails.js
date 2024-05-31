@@ -15,6 +15,7 @@ import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/
 const TransactionDetails = () => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
   const bottomSheetModalRef = useRef(null);
+  const status = selectedExpense?.status;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -43,6 +44,7 @@ const TransactionDetails = () => {
         <DetailRow label="Entry type" value={capitalizeFirstLetter(selectedExpense?.entryType)} />
         <DetailRow label="Entry date" value={selectedExpense?.entryDate} />
         <DetailRow label="Description" value={selectedExpense?.description || 'N/A'} />
+        {status == 'rejected' && <DetailRow label="Rejected reason" value={capitalizeFirstLetter(selectedExpense?.statusMessage)} />}
       </View>
       <View style={styles.circleContainer}>
         <View style={styles.circleContainer1}>
@@ -80,13 +82,13 @@ const styles = StyleSheet.create({
   },
   blackBackground: {
     backgroundColor: theme.colors.black,
-    height: '91%',
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    height: '100%',
+    // borderBottomLeftRadius: 50,
+    // borderBottomRightRadius: 50,
   },
   whiteSheet: {
     backgroundColor: theme.colors.white,
-    height: '67%',
+    height: '76%',
     width: '90%',
     position: 'absolute',
     top: '20%',

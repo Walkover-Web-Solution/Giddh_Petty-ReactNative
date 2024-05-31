@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator, DeviceEventEmitter, RefreshControl } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator, DeviceEventEmitter, RefreshControl, ScrollView, Dimensions, Animated, Platform } from 'react-native';
 import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import RenderChart from './renderLegendComponent';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +17,8 @@ import EmptySVG from '../../assets/images/empty_list.svg';
 import AddTransactionModal from '../components/Home/AddTransactionModal';
 import { ScreenNames } from '../constants/NavigationConstants';
 import { ProgressBar } from 'react-native-paper';
+import DynamicHeader from '../components/DynamicHeader/DynamicHeader';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const list = [
   { label: 'AllRequests', color: theme.colors.black, name: 'All Requests' },
@@ -55,6 +57,15 @@ const Home = () => {
     return formatDate(monthAgo);
   });
   const [refreshing, setRefreshing]=useState(false);
+  const scrollOffsetY = useRef(new Animated.Value(0)).current;
+  const Max_Header_Height = 0;
+  const Min_Header_Height = -250;
+  const Scroll_Distance = Max_Header_Height - Min_Header_Height
+  const animatedHeaderHeight =  scrollOffsetY.interpolate({
+      inputRange: [0, Scroll_Distance],
+      outputRange: [Max_Header_Height , Min_Header_Height],
+      extrapolate: 'clamp'
+  })
   // console.log(startDate);
   useEffect(() => {
     DeviceEventEmitter.addListener('successResponse',()=>{
@@ -73,6 +84,14 @@ const Home = () => {
     setLoading(true);
     dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
   }, [page]);
+
+  useEffect(()=>{
+    if(refreshing){
+      setPage(1);
+      setLoading(true);
+      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
+    }
+  },[refreshing])
 
   useEffect(() => {
     setPage(1);
@@ -95,6 +114,20 @@ const Home = () => {
       </View>
     );
   };
+  const headerHeight = useSafeAreaInsets();
+
+  const CustomStatusBar = ({
+    backgroundColor,
+    barStyle = 'light-content'
+  })=>{
+
+
+    return (
+      <View style={{height:headerHeight.top, backgroundColor:backgroundColor,zIndex:1}}>
+        <StatusBar barStyle={barStyle} backgroundColor={backgroundColor}/>
+      </View>
+    );
+  }
 
   const renderComponent = ({ item }) => {
     return (
@@ -114,11 +147,11 @@ const Home = () => {
   const renderFilterButtons = ({ item }) => {
     return <RenderButtonList item={item} handleButtonPress={handleButtonPress} selectedButton={selectedButton === item?.label} />;
   };
-
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
       <View style={styles.subContainer}>
-      <StatusBar backgroundColor={theme.colors.black} />
+      {/* <StatusBar backgroundColor={theme.colors.black} /> */}
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <View style={styles.headerContainer}>
       <View style={styles.header}>
         <View style={styles.userContainer}>
@@ -135,44 +168,38 @@ const Home = () => {
         {loading && <ProgressBar indeterminate visible={true} color={theme.colors.primary} />}
       </View>
       </View>
-      <RenderChart />
 
-      <View style={styles.buttonScroll}>
-        <FlatList
-          horizontal
-          data={list}
-          renderItem={renderFilterButtons}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.buttonContainer}
-        />
-      </View>
-
-      <View style={styles.transactionContainer}>
-        <Text style={styles.transactionHeading}>Transaction History</Text>
-        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleFilterPress}>
-          <Feather name="filter" size={25} style={styles.filterIcon} />
-        </TouchableOpacity>
-      </View>
-
-      <SafeAreaView style={styles.safeAreaContainer}>
+      {/* <SafeAreaView style={styles.safeAreaContainer}> */}
         <FlatList
           data={expense?.[selectedButton]}
           keyExtractor={(item) => item?.uniqueName?.toString()}
           renderItem={renderComponent}
+          style={{backgroundColor:theme.colors.white}}
           contentContainerStyle={styles.flatListContent}
           ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>No Data ..</Text></View>}
           ListFooterComponent={renderFooter}
           onEndReached={() => { if (!isListEnd && !loading) setPage(page + 1); }}
           onEndReachedThreshold={0.5}
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollOffsetY}}}],
+            {useNativeDriver: false}
+          )}
           refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={()=>{
+          <RefreshControl progressViewOffset={315} refreshing={refreshing} onRefresh={()=>{
             dispatch(resetExpenses())
-            setPage(1);
+            // const newPage = page - 1;
+            setRefreshing(true);
+            setTimeout(() => {
+              setRefreshing(false)
+            }, 1000);
             // setIsListEnd(false),
             // setLoading(true);
           }}/>
         }
         />
+        {/* </SafeAreaView> */}
+      {/* </ScrollView> */}
         <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
           <PlusSVG color={theme.colors.white} />
         </TouchableOpacity>
@@ -190,9 +217,29 @@ const Home = () => {
           drag={false}
           // modalStyle={modalStyle}
         />
-      </SafeAreaView>
+        <Animated.View style={[styles.animationView,{top : (65+headerHeight.top), transform: [{translateY : animatedHeaderHeight}]}]}>
+          {/* <View>
+          <DynamicHeader animHeaderValue={scrollOffsetY}/>
+          </View> */}
+          <RenderChart />   
+          <View style={styles.buttonScroll}>
+            <FlatList
+              horizontal
+              data={list}
+              renderItem={renderFilterButtons}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.buttonContainer}
+            />
+          </View>
+          <View style={styles.transactionContainer}>
+            <Text style={styles.transactionHeading}>Transaction History</Text>
+            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleFilterPress}>
+              <Feather name="filter" size={25} style={styles.filterIcon} />
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
       </View>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -207,7 +254,8 @@ const styles = StyleSheet.create({
     flex:1
   },
   headerContainer :{
-    height:70
+    height:70,
+    zIndex:1,
   },
   header: {
     paddingHorizontal: 12,
@@ -221,6 +269,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+    zIndex:3
   },
   userContainer: {
     flexDirection: 'row',
@@ -293,6 +342,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatListContent: {
+    paddingTop:345,
     paddingBottom: 0,
   },
   emptyListContainer: {
@@ -330,6 +380,14 @@ const styles = StyleSheet.create({
   companyBranch:{
     flexDirection:'column',
     padding:2
+  },
+  animationView :{
+    flexDirection:'column',
+    flex:1,
+    position:'absolute',
+    left:0,
+    height:345,
+    backgroundColor:theme.colors.white
   }
 });
 
