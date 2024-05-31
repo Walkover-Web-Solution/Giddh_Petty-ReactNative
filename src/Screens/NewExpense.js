@@ -137,19 +137,18 @@ const NewExpense = () => {
     particular: key,
     name: value.name
   }));
-  const attachedFiles = selectedImages.map(image => ({
-    uniqueName: image.responseData?.uniqueName 
-  }));
+  const attachedFileUniqueNames = selectedImages.map(image => (
+    image.responseData?.uniqueName 
+  ));
   const baseAccount = {
     name: paymentMode?.name,
     uniqueName: paymentMode?.uniqueName
   };
   const description = desc
-
   const requestBody = {
     description,
     transactions,
-    attachedFiles,
+    attachedFileUniqueNames,
     entryType: name === 'Income' ? 'Sales' : name,
     entryDate: selectedDate.toLocaleDateString("es-CL"), 
     chequeNumber: "",
