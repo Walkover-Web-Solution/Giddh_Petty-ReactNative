@@ -92,11 +92,11 @@ const CustomDrawer = ({setVisible,navigation}) => {
         <Text style={styles.contactText}>Contact Us</Text>
         <View style={styles.contactDetail}>
           <Text style={styles.mailText} onPress={()=>openGmail('sales@giddh.com')}>Sales: sales@giddh.com</Text>
-          <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{copyToClipboard('sales@giddh.com');showToast();}}><CopySVG width={17} height={17} paddingLeft={40} marginTop={3}/></TouchableOpacity>
+          <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{copyToClipboard('sales@giddh.com');infoToast('Copied...','','bottom');}}><CopySVG width={17} height={17} paddingLeft={40} marginTop={3}/></TouchableOpacity>
         </View>
         <View style={styles.contactDetail}>
         <Text style={styles.mailText} onPress={()=>openGmail('support@giddh.com')}>Support: support@giddh.com</Text>
-        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{copyToClipboard('support@giddh.com');showToast();}}><CopySVG width={17} height={17} paddingLeft={40} marginTop={3}/></TouchableOpacity>
+        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{copyToClipboard('support@giddh.com');infoToast('Copied...','','bottom');}}><CopySVG width={17} height={17} paddingLeft={40} marginTop={3}/></TouchableOpacity>
         </View>
       </View>
       <TouchableOpacity style={styles.logoutButton} activeOpacity={activeOpacity.regular} onPress={()=>bottomSheetModalRef.current?.present()}>
@@ -153,11 +153,9 @@ const styles = StyleSheet.create({
   },
   switchCompanyButton: {
     flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: theme.colors.white,
-    // paddingVertical: 10,
     paddingHorizontal: 20,
-    paddingBottom:20
+    paddingVertical:10
   },
   switchCompanyButtonText: {
     color: 'black',
