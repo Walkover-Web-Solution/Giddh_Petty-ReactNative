@@ -1,4 +1,4 @@
-package com.giddh.pettycash
+package com.giddh.petty.cash
 import org.devio.rn.splashscreen.SplashScreen
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
