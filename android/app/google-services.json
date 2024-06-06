@@ -1,50 +1,57 @@
 {
   "project_info": {
-    "project_number": "199340919612",
-    "project_id": "giddhpetty",
-    "storage_bucket": "giddhpetty.appspot.com"
+    "project_number": "451349469887",
+    "project_id": "giddh-petty-cash",
+    "storage_bucket": "giddh-petty-cash.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:199340919612:android:eaa9ca9d3526979e6fac39",
+        "mobilesdk_app_id": "1:451349469887:android:f2630be408f8795925840a",
         "android_client_info": {
-          "package_name": "com.giddh.pettycash"
+          "package_name": "com.giddh.petty.cash"
         }
       },
       "oauth_client": [
         {
-          "client_id": "199340919612-iileihtk1bb0aau4ff0gj9d47ph4hq1k.apps.googleusercontent.com",
+          "client_id": "451349469887-k78g1hio5d3eftf02fo0obbn4u2ejnql.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.giddh.pettycash",
+            "package_name": "com.giddh.petty.cash",
+            "certificate_hash": "513606a11ee1273b1e7e66e5950b0e3dda089196"
+          }
+        },
+        {
+          "client_id": "451349469887-uo6c6ul9t4n83itops6414qboi3j4shb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giddh.petty.cash",
             "certificate_hash": "1df9c718d37e5e17723ba43ee94e3472405547d4"
           }
         },
         {
-          "client_id": "199340919612-pa6u39tvo4hcurk22u3omsi6qvhncr3i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.giddh.pettycash",
-            "certificate_hash": "ea5371fc99576c53da5a46b9e886fe6e4efe8af2"
-          }
-        },
-        {
-          "client_id": "199340919612-s4ll85tldbukd4eqh4upelbirks7ivri.apps.googleusercontent.com",
+          "client_id": "451349469887-9jd95j33tg8phj2723vs8pjqio2sp17h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMvR26PKhNi9tXEDKByhDMcwVyLNTpchE"
+          "current_key": "AIzaSyBmYTF0g2a26PSPzQb4vXzLypfiJ2SRm34"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "199340919612-s4ll85tldbukd4eqh4upelbirks7ivri.apps.googleusercontent.com",
+              "client_id": "451349469887-9jd95j33tg8phj2723vs8pjqio2sp17h.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "451349469887-fuh93nhb6hub3jtfkfnjndlblffbrak1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.giddh.pettycash"
+              }
             }
           ]
         }
