@@ -79,8 +79,8 @@ android {
         applicationId "com.giddh.petty.cash"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1000
-        versionName "1.0.0"
+        versionCode 1003
+        versionName "1.0.3"
     }
     signingConfigs {
         debug {
