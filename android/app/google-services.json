@@ -14,27 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "451349469887-3occ9vp6qdg62bf9sir97amer921ipbe.apps.googleusercontent.com",
+          "client_id": "451349469887-k78g1hio5d3eftf02fo0obbn4u2ejnql.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.giddh.petty.cash",
-            "certificate_hash": "e80bb4a58d7f1d56e574eb0576f51d5b3bd0564e"
-          }
-        },
-        {
-          "client_id": "451349469887-d7714jrpptq2ts9o1qv2sdbe14kpe1gr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.giddh.petty.cash",
-            "certificate_hash": "ea5371fc99576c53da5a46b9e886fe6e4efe8af2"
-          }
-        },
-        {
-          "client_id": "451349469887-dbjk8bpeju8ncfdr6s1fa57j59li7n58.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.giddh.petty.cash",
-            "certificate_hash": "8dbeb831c418551b14ac701878b546ac9192e8dd"
+            "certificate_hash": "513606a11ee1273b1e7e66e5950b0e3dda089196"
           }
         },
         {
