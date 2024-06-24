@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, Modal, Platform, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import Header from '../components/SignIn/Header';
 import GidhhSvg from '../../assets/images/giddh_icon.svg';
 import SVGMsg from '../../assets/images/msg.svg';
 import GoogleIcon from '../../assets/images/icons8-google-20.svg';
+import AppleIcon from '../../assets/images/apple.svg'
 import { OTPVerification } from '@msg91comm/react-native-sendotp';
 import { environment } from '../environments/environment.prod';
 import LoaderKit from 'react-native-loader-kit'
+import appleAuth from '@invertase/react-native-apple-authentication';
 
 interface SignInData {
   message: string;
@@ -32,6 +34,31 @@ const SignIn: React.FC = () => {
     // setLoading(true);
   };
 
+  async function onAppleButtonPress() {
+    try{
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      // Note: it appears putting FULL_NAME first is important, see issue #293
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+  
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+  
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+          // user is authenticated
+          dispatch({type:'SIGN_IN_APPLE', payload:appleAuthRequestResponse})
+        }
+    
+      } catch (error) {
+          console.log("error",error);
+          Alert.alert("Fail to login");
+      }
+  }
+
   const handleOtpCompletion = async (data: string) => {
     const response: SignInData = JSON.parse(data);
     dispatch({type:'SIGN_IN_OTP',payload:response});
@@ -52,6 +79,10 @@ const SignIn: React.FC = () => {
             <Text style={styles.buttonText}>Login with Google</Text>
             <GoogleIcon width={23} height={23} />
           </TouchableOpacity>
+          {Platform.OS === 'ios' && <TouchableOpacity style={styles.socialLoginButton} activeOpacity={activeOpacity.regular} onPress={onAppleButtonPress}>
+            <Text style={styles.buttonText}>Login with Apple</Text>
+            <AppleIcon width={20} height={20} />
+          </TouchableOpacity>}
           <TouchableOpacity style={styles.socialLoginButton} activeOpacity={activeOpacity.regular} onPress={handleOtpSignIn}>
             <Text style={styles.buttonText}>Login with OTP</Text>
             <SVGMsg width={20} height={20} />
@@ -97,7 +128,7 @@ const styles = StyleSheet.create({
     paddingBottom: '25%',
     backgroundColor: theme.colors.black,
     width: '100%',
-    height: '60%',
+    height: Platform.OS == 'android' ? '60%' : '55%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -109,9 +140,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
   },
   buttonContainer: {
-    padding:10,
+    height:'auto',
     alignItems:'center',
-    justifyContent:'space-between'
+    justifyContent:'space-around',
+    padding:7
   },
   socialLoginButton: {
     flexDirection: 'row',

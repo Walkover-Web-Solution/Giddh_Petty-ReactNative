@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar, SafeAreaView, RefreshControl } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar, SafeAreaView, RefreshControl, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import  Header  from '../components/Header/Header';
 import { resetBranch } from '../redux/company/BranchSlice';
@@ -7,6 +7,7 @@ import { setSelectedCompany } from '../redux/company/CompanySlice';
 import { resetExpenses } from '../redux/expense/ExpenseSlice';
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../theme/theme';
 
+const {height,width} = Dimensions.get('window');
 const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   const dispatch = useDispatch();
   const selectedCompany = useSelector((state: any) => state?.company?.selectedCompany);
@@ -68,6 +69,17 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
               dispatch({ type: 'company/FETCH_COMPANY_LIST', payload: { uniqueName: user?.user?.uniqueName, sessionToken: user?.session?.id } });
             }} />
           }
+          ListEmptyComponent={()=>{
+            return (
+                <View style={styles.modalCancelView}>
+                <Text
+                    style={styles.modalCancelText}>
+                    No Company Available
+                </Text>
+                </View>
+
+            );
+          }}
         />
       </View>
       </View>
@@ -108,6 +120,21 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     lineHeight: fontSize.large.lineHeight
   },
+  modalCancelView :{
+    height: height * 0.3, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    paddingVertical: 8
+  },
+  modalCancelText :{
+      flex: 1,
+      color: '#1C1C1C',
+      paddingVertical: 4,
+      fontFamily: fonts.regular,
+      fontSize: 14,
+      textAlign: 'center',
+      alignSelf: 'center'
+  }
 });
 
 export default Company;

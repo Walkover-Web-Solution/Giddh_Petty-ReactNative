@@ -40,7 +40,7 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
       });
       console.log("api response",response?.body);
       setShowModal(true);
-      if(response?.data?.status){
+      if(response?.data?.status === 'success'){
         setApiResponse('Success!');
         setIsSuccess(true);
       }else{
@@ -50,7 +50,15 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
     } catch (error) {
       setShowModal(true);
       setIsSuccess(false);
-      setApiResponse('Something went wrong!');
+      let errorMessage = 'Something went wrong!';
+      if (error?.response) {
+        errorMessage = error.response.data.message || error.response.data.error || errorMessage;
+      } else if (error?.request) {
+        errorMessage = 'No response from server. Please try again later.';
+      } else {
+        errorMessage = error?.message;
+      }
+      setApiResponse(errorMessage);
       console.error('Error:', error);
     }
   };

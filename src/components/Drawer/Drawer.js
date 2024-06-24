@@ -23,6 +23,7 @@ import PaymentModeSelector from '../Expense/ModalComponent';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
 import ScheduleMeet from '../scheduleMeet/scheduleMeet';
 import { infoToast } from '../customToast/CustomToast';
+import appleAuth from '@invertase/react-native-apple-authentication';
 const CustomDrawer = ({setVisible,navigation}) => {
   const openGmail = (email) => {
     const gmailUrl = `mailto:${email}`;
@@ -44,6 +45,7 @@ const CustomDrawer = ({setVisible,navigation}) => {
   const handleLogout = async () => {
     try {
       dispatch({type:'SIGN_OUT'})
+      appleAuth.Operation.LOGOUT
     if(photo){
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
