@@ -71,13 +71,12 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
           }
           ListEmptyComponent={()=>{
             return (
-                <View style={styles.modalCancelView}>
-                <Text
-                    style={styles.modalCancelText}>
-                    No Company Available
-                </Text>
-                </View>
-
+              <View style={styles.modalCancelView}>
+              <Text
+                  style={styles.modalCancelText}>
+                  No Company Available
+              </Text>
+              </View>
             );
           }}
         />

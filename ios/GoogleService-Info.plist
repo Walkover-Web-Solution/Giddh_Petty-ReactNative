@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>199340919612-9u1ftshk8ld0kivgdon40al8t6p9581t.apps.googleusercontent.com</string>
+	<string>451349469887-kek3lmn2gj39q9sd807fob693mgkoa0l.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.199340919612-9u1ftshk8ld0kivgdon40al8t6p9581t</string>
+	<string>com.googleusercontent.apps.451349469887-kek3lmn2gj39q9sd807fob693mgkoa0l</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>199340919612-1ngdvg59j9j3kbo36rqd2s2cm1n3aftc.apps.googleusercontent.com</string>
+	<string>451349469887-2i6fiepjdqav6p1h08dpl1hn1qqnjrtk.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDb2h2aG6gd5PVOMHwfBUXW3oXvnX43bfQ</string>
+	<string>AIzaSyAX5pAmrL7spBQrfChKLjxSWssXE0Miems</string>
 	<key>GCM_SENDER_ID</key>
-	<string>199340919612</string>
+	<string>451349469887</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.giddh.petty.cash</string>
 	<key>PROJECT_ID</key>
-	<string>giddhpetty</string>
+	<string>giddh-petty-cash</string>
 	<key>STORAGE_BUCKET</key>
-	<string>giddhpetty.appspot.com</string>
+	<string>giddh-petty-cash.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:199340919612:ios:fdb846db8926c42b6fac39</string>
+	<string>1:451349469887:ios:5dcb822d1d639e2525840a</string>
 </dict>
 </plist>

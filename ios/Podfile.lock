@@ -1111,8 +1111,6 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - react-native-flipper (0.212.0):
-    - React-Core
   - react-native-image-picker (7.1.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1411,7 +1409,6 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
-  - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-loader-kit (from `../node_modules/react-native-loader-kit`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -1560,8 +1557,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
-  react-native-flipper:
-    :path: "../node_modules/react-native-flipper"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-loader-kit:
@@ -1711,7 +1706,6 @@ SPEC CHECKSUMS:
   React-logger: cb0dd15ac67b00e7b771ef15203edcb29d4a3f8e
   React-Mapbuffer: d59258be3b0d2280c6ba8964ab6e36ec69211871
   react-native-blur: 27113acc008facbc8accae5fb3a78b8424f64cfd
-  react-native-flipper: 9c1957af24b76493ba74f46d000a5c1d485e7731
   react-native-image-picker: 6c51359eca7a7df9f07e297218c25696eb9da976
   react-native-loader-kit: ed18c8ce83b69083211912326897d8286f37d797
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
