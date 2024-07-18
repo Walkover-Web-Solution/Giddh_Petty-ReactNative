@@ -48,6 +48,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Need Media library access for saving and uploading documents</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Avenir LT Std 35 Light.otf</string>
