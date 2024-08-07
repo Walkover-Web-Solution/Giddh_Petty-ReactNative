@@ -54,6 +54,29 @@ function* signInWithOtp({ payload }) {
   }
 }
 
+function* signInWithApple({ payload }) {
+  try {
+    const response = yield call(loginInstance.post, 'v2/signup-with-apple', {
+      authorizationCode: payload.authorizationCode,
+      requestFromPettyCash : true,
+      email: payload.email,
+      fullName: payload.fullName,
+      identityToken: payload.identityToken,
+      state: payload.state,
+      user: payload.user
+  });
+    yield put(signInSuccess({ user: response.data.body, photo:null}));
+  } catch (error) {
+    console.log("error----->",error);
+    Alert.alert("Fail to login");
+    yield put(signInStart({loading:false}));
+    yield put(signInFailure(error.message));
+  }
+  finally{
+    yield put(signInStart({loading:false}));
+  }
+}
+
 function* signOut() {
   try {
     // yield GoogleSignin.revokeAccess();
@@ -88,4 +111,5 @@ export function* authSaga() {
   yield takeLatest('SIGN_START',signStart);
   yield takeLatest('SIGN_OUT', signOut);
   yield takeLatest('SIGN_IN_OTP', signInWithOtp);
+  yield takeLatest('SIGN_IN_APPLE',signInWithApple);
 }

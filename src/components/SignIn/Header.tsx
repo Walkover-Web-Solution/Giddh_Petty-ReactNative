@@ -14,9 +14,7 @@ const Header: React.FC = () => {
           resizeMode="contain"
           />
       </View>
-      <View>
         <Text style={styles.text}>Petty Cash</Text>
-      </View>
     </View>
   );
 };
@@ -26,14 +24,13 @@ export default Header;
 const styles = StyleSheet.create({
   container: {
     alignItems:'center',
-    height:'50%',
-    flexDirection:'column'
+    flexDirection:'column',
+    paddingVertical:15
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 25,
   },
   headerText: {
     fontFamily: fonts.bold,

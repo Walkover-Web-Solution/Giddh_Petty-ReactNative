@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.199340919612-9u1ftshk8ld0kivgdon40al8t6p9581t</string>
+				<string>com.googleusercontent.apps.451349469887-kek3lmn2gj39q9sd807fob693mgkoa0l</string>
 			</array>
 		</dict>
 		<dict>
@@ -48,6 +48,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Need Media library access for saving and uploading documents</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Avenir LT Std 35 Light.otf</string>
