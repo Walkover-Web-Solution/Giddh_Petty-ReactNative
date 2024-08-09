@@ -14,7 +14,7 @@ const Header: React.FC = () => {
           resizeMode="contain"
           />
       </View>
-        <Text style={styles.text}>Petty Cash</Text>
+        <Text style={styles.text}>Expense</Text>
     </View>
   );
 };
