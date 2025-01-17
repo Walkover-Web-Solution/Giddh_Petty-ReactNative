@@ -18,7 +18,9 @@ import AddTransactionModal from '../components/Home/AddTransactionModal';
 import { ScreenNames } from '../constants/NavigationConstants';
 import { ProgressBar } from 'react-native-paper';
 import DynamicHeader from '../components/DynamicHeader/DynamicHeader';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import moment from 'moment';
 
 const list = [
   { label: 'AllRequests', color: theme.colors.black, name: 'All Requests' },
@@ -66,6 +68,7 @@ const Home = () => {
       outputRange: [Max_Header_Height , Min_Header_Height],
       extrapolate: 'clamp'
   })
+  const [selectedDateRange, setSelectedDateRange] = useState({});
   // console.log(startDate);
   useEffect(() => {
     DeviceEventEmitter.addListener('successResponse',()=>{
@@ -205,7 +208,15 @@ const Home = () => {
         </TouchableOpacity>
         <MyBottomSheetModal
           bottomSheetModalRef={bottomSheetModalRef}
-          children={<DateScreen setStartDate={setStartDate} setEndDate={setEndDate} bottomSheetModalRef={bottomSheetModalRef}/>}
+          children={<DateScreen 
+            setStartDate={setStartDate} 
+            setEndDate={setEndDate} 
+            bottomSheetModalRef={bottomSheetModalRef} 
+            selectedDateRange={selectedDateRange} 
+            setSelectedDateRange={setSelectedDateRange}
+            prevStartDate={startDate}
+            prevEndDate={endDate}
+            />}
           intialSnap='45%'
           snapArr={['45%','55%']}
         />
@@ -233,8 +244,17 @@ const Home = () => {
           </View>
           <View style={styles.transactionContainer}>
             <Text style={styles.transactionHeading}>Transaction History</Text>
-            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleFilterPress}>
-              <Feather name="filter" size={25} style={styles.filterIcon} />
+            <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.dateContainer}
+                onPress={handleFilterPress}>
+                <MaterialCommunityIcons name="calendar-month" size={18} color={'#808080'} />
+                <Text style={styles.dateText}>
+                  {/* {startDate}<Text style={styles.dateBoldText}> | </Text>{endDate} */}
+                  {moment(startDate, 'DD-MM-YYYY').format('DD MMM YY') +
+                    ' - ' +
+                    moment(endDate, 'DD-MM-YYYY').format('DD MMM YY')}
+                </Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -325,7 +345,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    marginBottom: 16,
+    paddingBottom:7,
     backgroundColor: theme.colors.white,
   },
   transactionHeading: {
@@ -388,6 +408,27 @@ const styles = StyleSheet.create({
     left:0,
     height:345,
     backgroundColor:theme.colors.white
+  },
+  dateContainer: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    borderWidth: 1,
+    justifyContent: 'center',
+    borderColor: theme.colors.gray1,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  dateText : { 
+    fontFamily: fonts.medium,
+    fontSize: fontSize.small.size,
+    lineHeight: fontSize.small.lineHeight,
+    marginLeft: 5 
+  },
+  dateBoldText: {
+    fontFamily: fonts.medium,
+    fontSize: fontSize.regular.size, 
+    lineHeight: fontSize.regular.lineHeight
   }
 });
 

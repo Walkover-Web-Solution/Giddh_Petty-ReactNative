@@ -6,14 +6,14 @@ import PeriodListComponent from '../components/Date/Period';
 import { activeOpacity, borderRadius, fonts, fontSize, fontSizes, lineHeight, spacing, theme } from '../theme/theme';
 
 const {height,width} = Dimensions.get('window');
-const Item = ({ item, selectedIndex,setStartDate,setEndDate,bottomSheetModalRef }) => {
-    if(item === 'Period' && selectedIndex === 0) return <View style={{width:width}}><PeriodListComponent bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} /></View>
-    else if(item === 'Custom' && selectedIndex === 1)return <View style={{width:width}}><DateRangePicker bottomSheetModalRef={bottomSheetModalRef} setEndDate={setEndDate} setStartDate={setStartDate} /></View>
+const Item = ({ item, selectedIndex,setStartDate,setEndDate,bottomSheetModalRef,selectedDateRange,setSelectedDateRange,prevStartDate,prevEndDate }) => {
+    if(item === 'Period' && selectedIndex === 0) return <View style={{width:width}}><PeriodListComponent bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} selectedDateRange={selectedDateRange} setSelectedDateRange={setSelectedDateRange} prevStartDate={prevStartDate} prevEndDate={prevEndDate}/></View>
+    else if(item === 'Custom' && selectedIndex === 1)return <View style={{width:width}}><DateRangePicker bottomSheetModalRef={bottomSheetModalRef} setEndDate={setEndDate} setStartDate={setStartDate} setSelectedDateRange={setSelectedDateRange} prevStartDate={prevStartDate} prevEndDate={prevEndDate}/></View>
 };
 
 const routes = ['Period', 'Custom'];
 
-const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef}) => {
+const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef,selectedDateRange,setSelectedDateRange,prevStartDate,prevEndDate}) => {
     const [index, setIndex] = useState(0);
     const flatListRef = useRef(null);
 
@@ -77,7 +77,17 @@ const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef}) => {
                         ref={flatListRef}
                         data={routes}
                         horizontal={true}
-                        renderItem={({ item }) => <Item bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} item={item} selectedIndex={index} />}
+                        renderItem={({ item }) => <Item 
+                            bottomSheetModalRef={bottomSheetModalRef} 
+                            setStartDate={setStartDate} 
+                            setEndDate={setEndDate} 
+                            item={item} 
+                            selectedIndex={index} 
+                            selectedDateRange={selectedDateRange} 
+                            setSelectedDateRange={setSelectedDateRange}
+                            prevStartDate={prevStartDate}
+                            prevEndDate={prevEndDate}
+                        />}
                         pagingEnabled
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item) => item}

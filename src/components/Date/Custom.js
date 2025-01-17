@@ -6,7 +6,7 @@ import { errorToast } from '../customToast/CustomToast';
 import { useDispatch } from 'react-redux';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
 
-const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
+const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef, setSelectedDateRange, prevStartDate, prevEndDate }) => {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [startDate, setStartDateLocal] = useState(null);
@@ -53,13 +53,16 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
         return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
     };
 
-    const handleDone = () => {
+    const handleDone = (newStart, newEnd) => {
         if(dateValidator()){
-            dispatch(resetExpenses());
-            const newStart = formatDate(startDate);
-            const newEnd = formatDate(endDate);
-            setStartDate(newStart);
-            setEndDate(newEnd);
+            setSelectedDateRange({});
+            const prevDateRange = prevStartDate+'-'+prevEndDate;
+            const newDateRange = newStart+'-'+newEnd;
+            if(prevDateRange !== newDateRange){
+                dispatch(resetExpenses());
+                setStartDate(newStart);
+                setEndDate(newEnd);
+            }
             bottomSheetModalRef?.current?.dismiss();
         }else{
             errorToast("Enter a valid date range!");
@@ -75,7 +78,7 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
             <TouchableOpacity style={styles.dateButton} activeOpacity={activeOpacity.regular} onPress={showEndDatePickerModal}>
                 <Text style={styles.buttonText}>{endDate ? endDate.toDateString() : "Select End Date"}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular} onPress={handleDone}>
+            <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular} onPress={()=>{handleDone(formatDate(startDate),formatDate(endDate))}}>
                 <Text style={styles.doneButtonText}>Done</Text>
             </TouchableOpacity>
             <DateTimePickerModal
