@@ -69,7 +69,6 @@ const Home = () => {
       extrapolate: 'clamp'
   })
   const [selectedDateRange, setSelectedDateRange] = useState({});
-  // console.log(startDate);
   useEffect(() => {
     DeviceEventEmitter.addListener('successResponse',()=>{
       setPage(1);
