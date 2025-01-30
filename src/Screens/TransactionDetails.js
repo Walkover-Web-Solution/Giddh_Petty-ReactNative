@@ -11,7 +11,7 @@ import Reciept from '../../assets/images/receipt.svg'
 import ImageViewer from '../components/TransactionDetails/ImageViewer'
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import { ProgressBar } from 'react-native-paper';
-import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+// import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 const TransactionDetails = () => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
   const bottomSheetModalRef = useRef(null);

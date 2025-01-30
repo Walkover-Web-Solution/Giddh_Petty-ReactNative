@@ -1,5 +1,5 @@
 {
-  "name": "Giddh Expense",
+  "name": "GiddhExpense",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -34,6 +34,8 @@
     "@tanstack/react-query-persist-client": "^5.20.5",
     "axios": "^1.6.7",
     "cobrowse-sdk-react-native": "^2.13.0",
+    "expo": "^50.0.0",
+    "expo-updates": "~0.24.13",
     "framer-motion": "^11.0.3",
     "link": "^2.1.0",
     "lottie-react-native": "^6.7.2",

@@ -12,6 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		230EE7FDF27065B64D8E5E08 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15587A82886B376C01146904 /* ExpoModulesProvider.swift */; };
 		2D38164759861AC4A0173EF6 /* libPods-PettyCash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED5A624DB12109B80207926 /* libPods-PettyCash.a */; };
 		32930B68D3EE4EB49C696A62 /* DancingScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25030E6A5FA347648DBA98AE /* DancingScript-Bold.ttf */; };
 		3FF293CF48F4414DB8191175 /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8774079A783E431A81AFCE89 /* DancingScript-SemiBold.ttf */; };
@@ -29,6 +30,7 @@
 		9E7C8DEC454C4A86A15D1FF5 /* PlusJakartaSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EA1A453DDA840258C2DDC77 /* PlusJakartaSans-Regular.ttf */; };
 		A623579D9DF0473399D2CAEB /* Avenir LT Std 35 Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1577139BFCDB43E4A731A4EF /* Avenir LT Std 35 Light.otf */; };
 		A64D03FA2BD7EBE3007E10AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A64D03F92BD7EBE3007E10AC /* GoogleService-Info.plist */; };
+		B0738CF7D5EA4172C34E7497 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E99D9FAD04FC951375BBEE /* ExpoModulesProvider.swift */; };
 		C1927B87EFC244B8A814E4CA /* PlusJakartaSans-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8034AC2252684C6093A0780C /* PlusJakartaSans-MediumItalic.ttf */; };
 		E12AF717F05D46FC9A3A3128 /* PlusJakartaSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4A83AB44F0D4EDFA8F0B416 /* PlusJakartaSans-SemiBoldItalic.ttf */; };
 		E840603A9CEF42608E1C7A3A /* PlusJakartaSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C1209E1C4E44780B4108C37 /* PlusJakartaSans-ExtraBold.ttf */; };
@@ -56,10 +58,12 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PettyCash/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PettyCash/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PettyCash/main.m; sourceTree = "<group>"; };
+		15587A82886B376C01146904 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-PettyCash/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		1577139BFCDB43E4A731A4EF /* Avenir LT Std 35 Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Avenir LT Std 35 Light.otf"; path = "../assets/fonts/Avenir LT Std 35 Light.otf"; sourceTree = "<group>"; };
 		248EECD8E64BBC3B6F532C43 /* libPods-PettyCash-PettyCashTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PettyCash-PettyCashTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25030E6A5FA347648DBA98AE /* DancingScript-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Bold.ttf"; path = "../assets/fonts/DancingScript-Bold.ttf"; sourceTree = "<group>"; };
 		2EBC260AEA9B666A2FC46C24 /* Pods-PettyCash-PettyCashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PettyCash-PettyCashTests.debug.xcconfig"; path = "Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests.debug.xcconfig"; sourceTree = "<group>"; };
+		38E99D9FAD04FC951375BBEE /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-PettyCash-PettyCashTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		3F244AEC11AE4D0183361AFF /* PlusJakartaSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-SemiBold.ttf"; path = "../assets/fonts/PlusJakartaSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		4EA1A453DDA840258C2DDC77 /* PlusJakartaSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Regular.ttf"; path = "../assets/fonts/PlusJakartaSans-Regular.ttf"; sourceTree = "<group>"; };
 		6A98BED74107443FA5F34186 /* PlusJakartaSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Italic.ttf"; path = "../assets/fonts/PlusJakartaSans-Italic.ttf"; sourceTree = "<group>"; };
@@ -165,6 +169,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		288E5F20A36BB1B1786A67F5 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				D499375ECEF3AD4CD6F8F015 /* PettyCash */,
+				520D5BF1B54A1A8BD8BBC54F /* PettyCashTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +186,14 @@
 				248EECD8E64BBC3B6F532C43 /* libPods-PettyCash-PettyCashTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		520D5BF1B54A1A8BD8BBC54F /* PettyCashTests */ = {
+			isa = PBXGroup;
+			children = (
+				38E99D9FAD04FC951375BBEE /* ExpoModulesProvider.swift */,
+			);
+			name = PettyCashTests;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -192,6 +213,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				18555BBB01B14976A2A42E8E /* Resources */,
+				288E5F20A36BB1B1786A67F5 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -218,6 +240,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D499375ECEF3AD4CD6F8F015 /* PettyCash */ = {
+			isa = PBXGroup;
+			children = (
+				15587A82886B376C01146904 /* ExpoModulesProvider.swift */,
+			);
+			name = PettyCash;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -226,6 +256,7 @@
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PettyCashTests" */;
 			buildPhases = (
 				0907C55E69C8AB35C38662D5 /* [CP] Check Pods Manifest.lock */,
+				E0B08125B5E3762C9C501B65 /* [Expo] Configure project */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -247,6 +278,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PettyCash" */;
 			buildPhases = (
 				818B51A5D84132C464596781 /* [CP] Check Pods Manifest.lock */,
+				0053C35BB12CD006549B281B /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -340,6 +372,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0053C35BB12CD006549B281B /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-PettyCash/expo-configure-project.sh\"\n";
+		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -354,7 +405,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli')\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n";
 		};
 		0907C55E69C8AB35C38662D5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -468,6 +519,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PettyCash/Pods-PettyCash-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E0B08125B5E3762C9C501B65 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-PettyCash-PettyCashTests/expo-configure-project.sh\"\n";
+		};
 		F5D00437525A6FABA59E397C /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -489,6 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* PettyCashTests.m in Sources */,
+				B0738CF7D5EA4172C34E7497 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +569,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				230EE7FDF27065B64D8E5E08 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,8 +605,10 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PettyCash.app/PettyCash";
 			};
 			name = Debug;
@@ -557,8 +631,10 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PettyCash.app/PettyCash";
 			};
 			name = Release;
@@ -584,6 +660,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.giddh.pettycash;
 				PRODUCT_NAME = PettyCash;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -612,6 +689,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.giddh.pettycash;
 				PRODUCT_NAME = PettyCash;
 				SWIFT_VERSION = 5.0;
@@ -699,9 +777,13 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -778,9 +860,13 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};

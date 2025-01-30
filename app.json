@@ -1,4 +1,18 @@
 {
   "name": "GiddhExpense",
-  "displayName": "Giddh Expense"
+  "displayName": "Giddh Expense",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "ee1eab97-d4c4-4e1f-a724-c57d31947066"
+      }
+    },
+    "owner": "walkover_web_solutions",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/ee1eab97-d4c4-4e1f-a724-c57d31947066"
+    },
+    "android": {},
+    "ios": {}
+  }
 }
