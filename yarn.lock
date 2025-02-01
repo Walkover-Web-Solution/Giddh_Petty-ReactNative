@@ -2249,10 +2249,10 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
-"@react-native-community/datetimepicker@^7.6.2", "@react-native-community/datetimepicker@>=6.7.0":
-  version "7.6.2"
-  resolved "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-7.6.2.tgz"
-  integrity sha512-ogZnvCmNG/lGHhEQypqz/mPymiIWD5jv6uKczg/l/aWgiKs1RDPQH1abh+R0I26aKoXmgamJJPuXKeC5eRWtZg==
+"@react-native-community/datetimepicker@^7.6.3", "@react-native-community/datetimepicker@>=6.7.0":
+  version "7.7.0"
+  resolved "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-7.7.0.tgz"
+  integrity sha512-nYzZy4DQLRFUzKJShWzRleCaebmCJfZ1lIcFmZgMXJoiVuGJNw3OIGHSWmHhPETh3OhP1RO3to882d7WmDIyrA==
   dependencies:
     invariant "^2.2.4"
 
@@ -4186,11 +4186,6 @@ csstype@^3.0.2:
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.3.tgz"
   integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
 
-cycle@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/cycle/-/cycle-1.0.3.tgz"
-  integrity sha512-TVF6svNzeQCOpjCqsy0/CSy8VgObG3wXusJ73xW2GbG5rGx7lC8zxDSURicsXI2UsGdi2L0QNRCi745/wUDvsA==
-
 dag-map@~1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/dag-map/-/dag-map-1.0.2.tgz"
@@ -4223,7 +4218,7 @@ data-view-byte-offset@^1.0.1:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
-dayjs@^1.8.15, dayjs@^1.8.29:
+dayjs@^1.8.15:
   version "1.11.10"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.10.tgz"
   integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
@@ -8245,11 +8240,6 @@ react-native-fast-image@^8.6.3:
   resolved "https://registry.npmjs.org/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz"
   integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
 
-react-native-flipper@^0.212.0, react-native-flipper@>=0.100.0:
-  version "0.212.0"
-  resolved "https://registry.npmjs.org/react-native-flipper/-/react-native-flipper-0.212.0.tgz"
-  integrity sha512-bDRfIgE3v/jjEEdnvGP0T6maDD+bXhDAQ/SZUYTKd/CQ6YIU1c0EF+e0urU62LNMv6XEFQKz226McdddyVhYZA==
-
 react-native-gesture-handler@^2.15.0, "react-native-gesture-handler@> 1.0.0", "react-native-gesture-handler@>= 1.0.0", react-native-gesture-handler@>=1.10.1:
   version "2.15.0"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.15.0.tgz"
@@ -8391,7 +8381,7 @@ react-native-webview@^11.23.1:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", react-native@^0.73.3, "react-native@> 0.50.0", "react-native@>= 0.62", react-native@>=0.46, react-native@>=0.57, react-native@>=0.57.0, react-native@>=0.59.0, react-native@>=0.60.0, "react-native@>=0.60.0-rc.0 <1.0.x", react-native@>=0.63.0, react-native@>=0.65.0, react-native@>=0.69, react-native@>0.62.0:
+react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", react-native@^0.73.3, "react-native@> 0.50.0", "react-native@>= 0.62", react-native@>=0.46, react-native@>=0.57, react-native@>=0.57.0, react-native@>=0.59.0, react-native@>=0.60.0, "react-native@>=0.60.0-rc.0 <1.0.x", react-native@>=0.65.0, react-native@>=0.69:
   version "0.73.3"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.73.3.tgz"
   integrity sha512-RSQDtT2DNUcmB4IgmW9NhRb5wqvXFl6DI2NEJmt0ps2OrVHpoA8Tkq+lkFOA/fvPscJKtFKEHFBDSR5UHR3PUw==
@@ -8509,14 +8499,6 @@ recast@^0.21.0:
     source-map "~0.6.1"
     tslib "^2.0.1"
 
-redux-flipper@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/redux-flipper/-/redux-flipper-2.0.3.tgz"
-  integrity sha512-JpNEZnBnBE9kGiZZrmzi23cFD9gjRUFoJE6nX0MPfmMVeIqfvkJWMATnbqRsTn8xwBXvWtOk+7Qbs8u4RZZcVw==
-  dependencies:
-    cycle "^1.0.3"
-    dayjs "^1.8.29"
-
 redux-persist@^6.0.0:
   version "6.0.0"
   resolved "https://registry.npmjs.org/redux-persist/-/redux-persist-6.0.0.tgz"
@@ -8534,7 +8516,7 @@ redux-thunk@^3.1.0:
   resolved "https://registry.npmjs.org/redux-thunk/-/redux-thunk-3.1.0.tgz"
   integrity sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==
 
-redux@^5.0.0, redux@^5.0.1, redux@>=4, redux@>4.0.0:
+redux@^5.0.0, redux@^5.0.1, redux@>4.0.0:
   version "5.0.1"
   resolved "https://registry.npmjs.org/redux/-/redux-5.0.1.tgz"
   integrity sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==

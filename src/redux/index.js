@@ -21,7 +21,6 @@ const rootReducer = combineReducers({
 });
 
 const sagaMiddleware = createSagaMiddleware();
-const createDebugger = require('redux-flipper').default;
 const middleware = [sagaMiddleware];
 
 const persistConfig = {
@@ -31,7 +30,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(persistedReducer, applyMiddleware(...middleware,createDebugger()));
+export const store = createStore(persistedReducer, applyMiddleware(...middleware));
 sagaMiddleware.run(rootSaga);
 
 
