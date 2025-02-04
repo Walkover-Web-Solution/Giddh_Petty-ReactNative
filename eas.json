@@ -19,6 +19,21 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {},
+      "ios": {
+        "appleId": "deepanshu@whozzat.com",
+        "ascAppId": "6503641717",
+        "appleTeamId": "F3U6Z5L2EJ"
+      }
+    },
+    "preview": {
+      "android": {},
+      "ios": {
+        "appleId": "deepanshu@whozzat.com",
+        "ascAppId": "6503641717",
+        "appleTeamId": "F3U6Z5L2EJ"
+      }
+    }
   }
 }
