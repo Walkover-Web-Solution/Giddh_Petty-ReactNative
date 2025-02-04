@@ -4,7 +4,7 @@ import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme
 import RenderChart from './renderLegendComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { resetExpenses, setSelectedExpense } from '../redux/expense/ExpenseSlice';
+import { fetchExpensesSuccess, resetExpenses, setSelectedExpense } from '../redux/expense/ExpenseSlice';
 import PlusSVG from '../../assets/images/plus.svg';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import { capitalizeFirstLetter } from '../utils/capitalise';
@@ -78,6 +78,12 @@ const Home = () => {
     })
     setLoading(true);
     setPage(1);
+    dispatch(fetchExpensesSuccess({
+      "Pending": [],
+      "Approved": [],
+      "AllRequests": [],
+      "Rejected": []
+    }))
     dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
     return () => DeviceEventEmitter.removeAllListeners('successResponse');
   }, []);
