@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight } from '../../theme/theme';
+import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
 import { useDispatch } from 'react-redux';
 
-const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef }) => {
+const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef,selectedDateRange,setSelectedDateRange,prevStartDate,prevEndDate }) => {
   const today = new Date();
   const currentMonth = today.getMonth() + 1;
   const dispatch = useDispatch();
@@ -86,9 +86,13 @@ const calculateFinancialYearEndDate = () => {
   ];
 
   const handlePeriodSelection = (startDate, endDate) => {
-    dispatch(resetExpenses());
-    setStartDate(startDate);
-    setEndDate(endDate);
+    const prevDateRange = prevStartDate+'-'+prevEndDate;
+    const newDateRange = startDate+'-'+endDate;
+    if(prevDateRange !== newDateRange){
+      dispatch(resetExpenses());
+      setStartDate(startDate);
+      setEndDate(endDate);
+    }
     bottomSheetModalRef?.current?.dismiss();
   };
 
@@ -96,9 +100,15 @@ const calculateFinancialYearEndDate = () => {
     <TouchableOpacity
       style={styles.item}
       activeOpacity={activeOpacity.regular}
-      onPress={() => handlePeriodSelection(item.startDate, item.endDate)}
+      onPress={() => {
+        setSelectedDateRange({...item});
+        handlePeriodSelection(item.startDate, item.endDate)}
+      }
     >
       <Text style={styles.itemText}>{item.name}</Text>
+      {selectedDateRange?.id == item?.id 
+      ? (<View><View style={[styles.dot, { backgroundColor: theme.colors.buttonColor }]} /></View>)
+      : null}
     </TouchableOpacity>
   );
 
@@ -116,11 +126,14 @@ const calculateFinancialYearEndDate = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft:10,
+    margin:10,
     marginBottom: 10,
   },
   item: {
     paddingHorizontal: 20,
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
     paddingVertical: 15,
   },
   itemText: {
@@ -128,6 +141,20 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: fonts.regular,
     lineHeight: fontSize.regular.lineHeight
+  },
+  dot: {
+    width: 7,
+    height: 7,
+    borderRadius: 7,
+    marginRight: 8,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
   },
 });
 

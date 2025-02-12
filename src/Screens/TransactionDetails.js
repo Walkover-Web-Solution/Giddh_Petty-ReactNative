@@ -12,10 +12,19 @@ import ImageViewer from '../components/TransactionDetails/ImageViewer'
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import { ProgressBar } from 'react-native-paper';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import CopySVG from '../../assets/images/copy.svg'
+import Clipboard from '@react-native-clipboard/clipboard';
+import { infoToast } from '../components/customToast/CustomToast';
+
 const TransactionDetails = () => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
   const bottomSheetModalRef = useRef(null);
   const status = selectedExpense?.status;
+
+  const copyToClipboard = (text) => {
+    Clipboard.setString(text);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -33,7 +42,10 @@ const TransactionDetails = () => {
         <Header title='Transaction Details'/>
       </View>
       <View style={styles.whiteSheet}>
-        <Text style={styles.transactionID}>Txn id: {selectedExpense?.uniqueName}</Text>
+        <View style={styles.txnIdContainer}>
+          <Text style={styles.transactionID}>Txn id: {selectedExpense?.uniqueName}</Text>
+          <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{copyToClipboard(selectedExpense?.uniqueName);infoToast('Copied...','','bottom');}}><CopySVG width={17} height={17}/></TouchableOpacity>
+        </View>
         <View style={styles.amountContainer}>
           <Text style={styles.currency}>{selectedExpense?.currencySymbol}</Text>
           <Text style={styles.amount}>{selectedExpense?.amount}.00</Text>
@@ -99,12 +111,12 @@ const styles = StyleSheet.create({
     paddingTop: 70,
   },
   transactionID: {
-    marginBottom: 15,
     fontSize: fontSize.large.size,
     lineHeight:fontSize.large.lineHeight,
     color: theme.colors.gray,
     textAlign: 'center',
-    fontFamily:fonts.regular
+    fontFamily:fonts.regular,
+    marginRight:7
   },
   amountContainer: {
     flexDirection: 'row',
@@ -254,6 +266,12 @@ const styles = StyleSheet.create({
   //   width: 100,
   //   height: 100
   // }
+  txnIdContainer : {
+    flexDirection:'row', 
+    alignSelf:'center',
+    paddingBottom:15,
+    justifyContent:'center'
+  }
 });
 
 export default TransactionDetails;
