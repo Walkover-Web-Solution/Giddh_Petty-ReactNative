@@ -18,6 +18,7 @@ import axios from 'axios';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
 import { errorToast } from '../components/customToast/CustomToast';
 import { ScreenNames } from '../constants/NavigationConstants';
+import moment from 'moment';
 
 const NewExpense = () => {
   const navigation = useNavigation();
@@ -177,7 +178,7 @@ const NewExpense = () => {
         <View style={styles.dateRow}>
           <TouchableOpacity style={styles.iconContainer} activeOpacity={activeOpacity.regular} onPress={showDatePicker}>
             <AntDesign name="calendar" size={22} color={theme.colors.black} />
-            <Text style={styles.text}>{selectedDate ? selectedDate.toDateString() : 'Select a date'}</Text>
+            <Text style={styles.text}>{selectedDate ? moment(selectedDate, 'DD-MM-YYYY').format('DD MMMM YY') : 'Select a date'}</Text>
           </TouchableOpacity>
           {/* <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-end', }}> */}
             <TouchableOpacity style={styles.dateButton} activeOpacity={activeOpacity.regular} onPress={isYesterdayFirst ? handleYesterday : handleToday}>
@@ -508,8 +509,7 @@ const styles = StyleSheet.create({
     lineHeight: fontSize.xLarge.lineHeight
   },
   text: { 
-    fontSize: fontSize.regular.size, 
-    lineHeight:fontSize.regular.lineHeight, 
+    fontSize: fontSize.regular.size,
     fontFamily: fonts.regular, 
     paddingHorizontal: 5
   },

@@ -28,8 +28,11 @@ const RenderChart = () => {
           showGradient
           sectionAutoFocus
           radius={95}
-          innerRadius={70}
-          innerCircleColor={'white'}
+          innerRadius={62}
+          strokeWidth={3}
+          strokeColor={theme.colors.white}
+          innerCircleColor={theme.colors.white}
+          textColor={theme.colors.black}
           centerLabelComponent={() => (
             <View style={styles.centerLabel}>
               <Text style={styles.totalAmount}>

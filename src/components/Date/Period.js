@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { activeOpacity, fonts, fontSize, fontSizes, lineHeight } from '../../theme/theme';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import api from '../../../interceptor';
+import moment from 'moment';
 
 const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef }) => {
   const today = new Date();
   const currentMonth = today.getMonth() + 1;
   const dispatch = useDispatch();
+  const companyUniqueName = useSelector(state => state?.company?.selectedCompany?.uniqueName);
+  const [currentFinancialYearStartDate, setCurrentFinancialYearStartDate] = useState("");
   const reverseDateFormat = (dateStr) =>{
     const parts = dateStr.split('-');
     const reversedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
@@ -18,6 +22,33 @@ const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef }) =
   const startDate = new Date(today.getFullYear(), quarterStartMonth, 1);
   return formatDate(startDate);
 };
+
+  const getFinancialYear  = async () => {
+    try {
+      const apiUrl = `company/${companyUniqueName}/financial-year?lang=en`;
+      const response = await api.get(apiUrl);
+      if( response?.data.status === 'success' && response?.data?.body?.financialYears ) {
+        let currentFinancialYearStartDate;
+        const todayDate = moment().startOf('day').format('DD-MM-YYYY');
+        
+        response?.data?.body?.financialYears?.forEach((item: any) => {
+          if (moment(todayDate, 'DD-MM-YYYY').isAfter(moment(item?.financialYearStarts, 'DD-MM-YYYY')) && moment(todayDate, 'DD-MM-YYYY').isBefore(moment(item.financialYearEnds, 'DD-MM-YYYY'))) {
+            currentFinancialYearStartDate = item.financialYearStarts;
+          }
+        })
+        setCurrentFinancialYearStartDate(currentFinancialYearStartDate);
+      }
+    } catch (error) {
+      console.error('------ getFinancialYear -----', error)
+      const financialYearStartMonth = 1;
+      const startDate = new Date(today.getFullYear(), financialYearStartMonth - 1, 1);
+      setCurrentFinancialYearStartDate(formatDate(startDate));
+    }
+  }
+
+  useEffect(()=>{
+    getFinancialYear();
+  },[])
 
   const calculateStartDate = (monthsAgo) => {
     const startDate = new Date(today.getFullYear(), today.getMonth() - monthsAgo, 1);
@@ -59,16 +90,9 @@ const calculateLastQuarterEndDate = () => {
   return formatDate(endDate);
 };
 
-const calculateFinancialYearStartDate = () => {
-  const financialYearStartMonth = 1;
-  const startDate = new Date(today.getFullYear(), financialYearStartMonth - 1, 1);
-  return formatDate(startDate);
-};
-
 const calculateFinancialYearEndDate = () => {
   return formatDate(today);
 };
-
 
   const formatDate = (date) => {
     const day = date.getDate();
@@ -78,11 +102,11 @@ const calculateFinancialYearEndDate = () => {
   };
 
   const PeriodList = [
-    { id: 1, name: 'This Month', startDate: calculateStartDate(0), endDate: calculateEndDate(0) },
-    { id: 2, name: 'Last Month', startDate: calculateStartDate(1), endDate: calculateEndDate(1) },
-    { id: 3, name: 'This Quarter to Date', startDate: calculateQuarterStartDate(), endDate: calculateEndDate(0) },
-    { id: 4, name: 'Last Quarter', startDate: calculateLastQuarterStartDate(), endDate: calculateLastQuarterEndDate() },
-    { id: 5, name: 'This Financial Year to Date', startDate: calculateFinancialYearStartDate(), endDate: calculateFinancialYearEndDate() },
+    { id: 1, name: 'This Month'},
+    { id: 2, name: 'Last Month'},
+    { id: 3, name: 'This Quarter to Date'},
+    { id: 4, name: 'Last Quarter'},
+    { id: 5, name: 'This Financial Year to Date'}
   ];
 
   const handlePeriodSelection = (startDate, endDate) => {
@@ -96,7 +120,21 @@ const calculateFinancialYearEndDate = () => {
     <TouchableOpacity
       style={styles.item}
       activeOpacity={activeOpacity.regular}
-      onPress={() => handlePeriodSelection(item.startDate, item.endDate)}
+      onPress={() => {
+        setSelectedDateRange({...item});
+        if(item?.id == 1){
+          handlePeriodSelection(calculateStartDate(0), calculateEndDate(0));
+        }else if(item?.id == 2){
+          handlePeriodSelection(calculateStartDate(1), calculateEndDate(1));
+        }else if(item?.id == 3){
+          handlePeriodSelection(calculateQuarterStartDate, calculateEndDate(0));
+        }else if(item?.id == 4){
+          handlePeriodSelection(calculateLastQuarterStartDate(), calculateLastQuarterEndDate());
+        }else if(item?.id == 5){
+          handlePeriodSelection(currentFinancialYearStartDate, calculateFinancialYearEndDate())
+        }
+        }
+      }
     >
       <Text style={styles.itemText}>{item.name}</Text>
     </TouchableOpacity>

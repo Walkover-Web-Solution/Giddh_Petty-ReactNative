@@ -5,6 +5,7 @@ import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '..
 import { errorToast } from '../customToast/CustomToast';
 import { useDispatch } from 'react-redux';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
+import moment from 'moment';
 
 const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
@@ -44,7 +45,7 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
         if(startDate == null || endDate == null)return false;
         const start = new Date(startDate);
         const end = new Date(endDate);
-        return start<end;
+        return start<=end;
     }
     const formatDate = (date) => {
         const day = date.getDate();
@@ -70,12 +71,12 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.dateButton} activeOpacity={activeOpacity.regular} onPress={showStartDatePickerModal}>
-                <Text style={styles.buttonText}>{startDate ? startDate.toDateString() : "Select Start Date"}</Text>
+                <Text style={styles.buttonText}>{startDate ? moment(startDate, 'DD-MM-YYYY').format('dddd, MMMM Do YYYY') : "Select Start Date"}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.dateButton} activeOpacity={activeOpacity.regular} onPress={showEndDatePickerModal}>
-                <Text style={styles.buttonText}>{endDate ? endDate.toDateString() : "Select End Date"}</Text>
+                <Text style={styles.buttonText}>{endDate ? moment(endDate, 'DD-MM-YYYY').format('dddd, MMMM Do YYYY') : "Select End Date"}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular} onPress={handleDone}>
+            <TouchableOpacity style={styles.doneButton} activeOpacity={activeOpacity.regular} onPress={()=>{if(startDate && endDate)handleDone(formatDate(startDate),formatDate(endDate))}}>
                 <Text style={styles.doneButtonText}>Done</Text>
             </TouchableOpacity>
             <DateTimePickerModal
