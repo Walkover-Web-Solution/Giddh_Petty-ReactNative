@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator, DeviceEventEmitter, RefreshControl, ScrollView, Dimensions, Animated, Platform } from 'react-native';
 import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
-import RenderChart from './renderLegendComponent';
+import RenderChart from './renderChartComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { resetExpenses, setSelectedExpense } from '../redux/expense/ExpenseSlice';
