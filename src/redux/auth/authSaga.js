@@ -7,17 +7,22 @@ import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInSta
 import { Alert, AsyncStorage } from 'react-native';
 import LogRocket from '@logrocket/react-native';
 
+const addUserDeatilsToLogRocket = (userName, userEmail) => {
+  console.log("LogRocket Details " + "  " + userName + " " + userEmail);
+  LogRocket.identify(userEmail, {
+    name: userName,
+    email: userEmail,
+    newUser: true
+  });
+}
+
 function* signInWithGoogle() {
   try {
     yield GoogleSignin.hasPlayServices();
     yield GoogleSignin.signOut();
     const res = yield GoogleSignin.signIn();
     const token = yield GoogleSignin.getTokens();
-    LogRocket.identify(res?.user?.email, {
-      name: res?.user?.name,
-      email: res?.user?.email,
-      newUser:true
-    });
+    yield addUserDeatilsToLogRocket(res?.user?.name, res?.user?.email);
     const response = yield call(loginInstance.get, 'v2/signup-with-google', {
       headers: {
         'access-token': token.accessToken,
@@ -43,6 +48,8 @@ function* signInWithOtp({ payload }) {
       },
       accessToken: payload?.message,
     });
+    const {user} = response?.data?.body;
+    yield addUserDeatilsToLogRocket(user?.name, user?.email);
     yield put(signInSuccess({ user: response.data.body, photo:null}));
   } catch (error) {
     console.log(error);
@@ -65,6 +72,7 @@ function* signInWithApple({ payload }) {
       state: payload.state,
       user: payload.user
   });
+    yield addUserDeatilsToLogRocket(response?.body?.user?.name, response?.body?.user?.email);
     yield put(signInSuccess({ user: response.data.body, photo:null}));
   } catch (error) {
     console.log("error----->",error);

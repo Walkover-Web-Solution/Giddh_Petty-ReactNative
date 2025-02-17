@@ -78,7 +78,7 @@ const CustomDrawer = ({setVisible,navigation}) => {
           <CompanySvg height={20} width={20} color={theme.colors.black} />
           <Text style={styles.switchCompanyButtonText}>{capitalizeFirstLetter(companyNames.name)}</Text>
         </TouchableOpacity>
-        {companyNames?.branchCount>1&&<TouchableOpacity style={styles.switchCompanyButton} activeOpacity={activeOpacity.regular} onPress={()=>{ navigation.navigate('Branch')}}>
+        {companyNames?.branchCount > 1 && branch?.alias && <TouchableOpacity style={styles.switchCompanyButton} activeOpacity={activeOpacity.regular} onPress={()=>{ navigation.navigate('Branch')}}>
           <Feather name="git-merge" size={20} color={theme.colors.black}/>
           <Text style={[styles.switchCompanyButtonText]}>{capitalizeFirstLetter(branch?.alias)}</Text>
         </TouchableOpacity>}
