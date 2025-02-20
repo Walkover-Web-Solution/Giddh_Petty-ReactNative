@@ -117,5 +117,6 @@ export const fontSize = {
 
 export const activeOpacity = {
   default : 0.2,
-  regular : 0.7
+  regular : 0.7,
+  max : 0.9
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,TouchableWithoutFeedback,BackHandler } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView,useBottomSheetModal } from '@gorhom/bottom-sheet';
 
-const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children,modalStyle}) => {
+const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children,modalStyle,horizontal=false,parentScrollEnable=true}) => {
 
   const {dismiss}=useBottomSheetModal()
   // const {backgroundColor,detached} = modalStyle;
@@ -22,6 +22,7 @@ const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children
       ref={bottomSheetModalRef}
       backgroundStyle={{backgroundColor : modalStyle ? modalStyle?.backgroundColor : 'white' }}
       enablePanDownToClose={true}
+      enableContentPanningGesture={false}
       index={0}
       backdropComponent={({ style }) => (
           <TouchableWithoutFeedback onPress={()=>bottomSheetModalRef.current?.dismiss()}  ><View style={[style, { backgroundColor: 'rgba(0, 0, 0, 0.5)', flex: 1 }]}></View></TouchableWithoutFeedback>
@@ -33,7 +34,7 @@ const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children
       keyboardBehavior={'extend'}
       keyboardBlurBehavior={'restore'}
     >
-      <BottomSheetScrollView>
+      <BottomSheetScrollView horizontal={horizontal} scrollEnabled={parentScrollEnable}>
         {children}
       </BottomSheetScrollView>
     </BottomSheetModal>

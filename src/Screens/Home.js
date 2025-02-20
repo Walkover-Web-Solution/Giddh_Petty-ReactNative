@@ -110,7 +110,7 @@ const Home = () => {
 
   const onPress = useCallback((item) => {
     dispatch(setSelectedExpense(item));
-    navigation.navigate(ScreenNames.TRANSACTION_DETAILS);
+    navigation.navigate(ScreenNames.TRANSACTION_DETAILS,{ selectedCompany : selectedCompany });
   }, []);
 
   const renderFooter = () => {
@@ -139,7 +139,7 @@ const Home = () => {
 
   const renderComponent = ({ item }) => {
     return (
-      <RenderListItem key={item?.uniqueName} item={item} onPress={onPress} />
+      <RenderListItem key={item?.uniqueName} item={item} onPress={onPress} uniqueName={selectedCompany?.uniqueName}/>
     );
   };
 

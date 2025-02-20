@@ -3,8 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import Reciept from '../../../assets/images/receipt.svg';
 import { capitalizeFirstLetter } from '../../utils/capitalise';
+import api from '../../../interceptor';
+import FastImage from 'react-native-fast-image';
 
-const RenderListItem = ({ item, onPress }) => {
+const RenderListItem = ({ item, onPress, uniqueName }) => {
   // console.log(item)
   return (
     <TouchableOpacity
@@ -17,7 +19,14 @@ const RenderListItem = ({ item, onPress }) => {
         </View>
       <View style={styles.cardContent}>
         <View style={styles.logoContainer}>
-          <Reciept height={25} />
+          {item?.fileNames?.[0]?.length > 0 ? 
+            <FastImage source={{
+                uri: api?.getUri()+`company/${uniqueName}/image/`+item?.fileNames?.[0] ,
+              }}
+              style={styles.imageIcon}
+              resizeMode={FastImage.resizeMode.cover}
+            /> : 
+            <Reciept height={25} />}
         </View>
         <View style={styles.cardText}>
           <Text style={styles.cardSubtitle}>{item?.particularAccount?.name}</Text>
@@ -104,6 +113,11 @@ const styles = StyleSheet.create({
     borderLeftWidth:13,
     borderBottomWidth:13,
     borderBottomColor:'transparent',
+  },
+  imageIcon: {
+    width:'100%',
+    height:'100%',
+    borderRadius:50
   }
 });
 
