@@ -3,7 +3,7 @@
 import { put, takeLatest, call, select } from 'redux-saga/effects';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import api, { loginInstance } from '../../../interceptor'; // Import the axios interceptor instance
-import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInStart } from './authSlice';
+import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInStart, twoFactorAuthenticationStarted, VERIFY_OTP, verifyOTPFailed } from './authSlice';
 import { Alert, AsyncStorage } from 'react-native';
 import LogRocket from '@logrocket/react-native';
 
@@ -28,7 +28,16 @@ function* signInWithGoogle() {
         'access-token': token.accessToken,
       },
     });
-    yield put(signInSuccess({ user: response.data.body, photo: res.user.photo }));
+    if (response?.data && response?.data?.body && response?.data?.body?.session && response?.data?.body?.session?.id) {
+      yield put(signInSuccess({ user: response.data.body, photo: res.user.photo }));
+    }else if (
+      response?.data &&
+      response?.data?.status == 'success' &&
+      response?.data?.body &&
+      response?.data?.body?.statusCode == 'AUTHENTICATE_TWO_WAY'
+    ){
+      yield put(twoFactorAuthenticationStarted(response?.data?.body))
+    }
   } catch (error) {
     console.log("error",error);
     Alert.alert("Fail to login");
@@ -50,7 +59,16 @@ function* signInWithOtp({ payload }) {
     });
     const {user} = response?.data?.body;
     yield addUserDeatilsToLogRocket(user?.name, user?.email);
-    yield put(signInSuccess({ user: response.data.body, photo:null}));
+    if (response?.data && response?.data?.body && response?.data?.body?.session && response?.data?.body?.session?.id) {
+      yield put(signInSuccess({ user: response.data.body, photo: null }));
+    }else if (
+      response?.data &&
+      response?.data?.status == 'success' &&
+      response?.data?.body &&
+      response?.data?.body?.statusCode == 'AUTHENTICATE_TWO_WAY'
+    ){
+      yield put(twoFactorAuthenticationStarted(response?.data?.body))
+    }
   } catch (error) {
     console.log(error);
     yield put(signInFailure(error.message));
@@ -73,7 +91,16 @@ function* signInWithApple({ payload }) {
       user: payload.user
   });
     yield addUserDeatilsToLogRocket(response?.body?.user?.name, response?.body?.user?.email);
-    yield put(signInSuccess({ user: response.data.body, photo:null}));
+    if (response?.data && response?.data?.body && response?.data?.body?.session && response?.data?.body?.session?.id) {
+      yield put(signInSuccess({ user: response.data.body, photo: null }));
+    }else if (
+      response?.data &&
+      response?.data?.status == 'success' &&
+      response?.data?.body &&
+      response?.data?.body?.statusCode == 'AUTHENTICATE_TWO_WAY'
+    ){
+      yield put(twoFactorAuthenticationStarted(response?.data?.body))
+    }
   } catch (error) {
     console.log("error----->",error);
     Alert.alert("Fail to login");
@@ -115,9 +142,27 @@ function* signStart({payload}){
   }
 }
 
+export function* verifyOTP(action) {
+  try {
+    const response = yield call(
+      loginInstance.post, 'v2/verify-number', {
+        oneTimePassword:action.payload.otp,
+        mobileNumber: action.payload.mobileNumber,
+        countryCode:action.payload.countryCode
+      });
+    if (response?.data && response?.data?.body && response?.data?.body?.session) {
+      yield put(signInSuccess({ user: response.data.body, photo: null }));
+    } 
+  } catch (error) {
+      yield put(verifyOTPFailed());
+      Alert.alert(error.message);
+  }
+}
+
 export function* authSaga() {
   yield takeLatest('SIGN_START',signStart);
   yield takeLatest('SIGN_OUT', signOut);
   yield takeLatest('SIGN_IN_OTP', signInWithOtp);
   yield takeLatest('SIGN_IN_APPLE',signInWithApple);
+  yield takeLatest(VERIFY_OTP.type,verifyOTP);
 }

@@ -1,12 +1,15 @@
 
 import { createSlice } from '@reduxjs/toolkit';
+import { REHYDRATE } from 'redux-persist';
 
 const initialState = {
   user: null,
   photo:null,
   sessionToken:null,
   isAuthenticated: false,
-  loading: false
+  loading: false,
+  tfaStart: undefined,
+  isVerifyingOTP: false
 };
 
 const authSlice = createSlice({
@@ -34,12 +37,40 @@ const authSlice = createSlice({
       state.photo = null;
       state.sessionToken = null;
       state.loading = false;
+      state.isVerifyingOTP = false;
+      state.tfaStart = undefined;
+      state.tfaDetails = undefined;
     },
+    twoFactorAuthenticationStarted(state, action) {
+      state.tfaStart = true;
+      state.tfaDetails = action?.payload
+    },
+    unMountingTwoFactorAuthScreen(state) {
+      state.tfaStart = false;
+      state.tfaDetails = undefined
+    },
+    VERIFY_OTP(state,action) {
+      state.isVerifyingOTP = true;    
+    },
+    verifyOTPFailed(state) {
+      state.isVerifyingOTP = false;    
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(REHYDRATE, (state, action) => {
+      if (action.payload && action.payload.auth) {
+        const authReducer = action.payload.auth;
+        state = authReducer
+        state.tfaStart = undefined;
+        state.tfaDetails = undefined;
+        state.isVerifyingOTP = false;  
+      }
+    });
   },
 });
 export const signIn = () => ({
   type: 'auth/signIn',
 });
-export const { signInSuccess, signInFailure, signOut, signInStart } = authSlice.actions;
+export const { signInSuccess, signInFailure, signOut, signInStart, twoFactorAuthenticationStarted, unMountingTwoFactorAuthScreen, VERIFY_OTP, verifyOTPFailed } = authSlice.actions;
 
 export default authSlice.reducer;
