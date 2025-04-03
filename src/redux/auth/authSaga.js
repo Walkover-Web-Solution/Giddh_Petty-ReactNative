@@ -155,7 +155,7 @@ export function* verifyOTP(action) {
     } 
   } catch (error) {
       yield put(verifyOTPFailed());
-      Alert.alert(error.message);
+      Alert.alert(error.response?.data?.message);
   }
 }
 
