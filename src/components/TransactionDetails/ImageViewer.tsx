@@ -9,6 +9,7 @@ const ImageViewer = ({bottomSheetModalRef, fileNames, setIsVisible})=>{
     return (
       <SafeAreaView style={styles.container}>
           <FlatList
+            contentContainerStyle={{flexGrow: 1}}
             data={fileNames}
             horizontal
             renderItem={({item, index}) => (
