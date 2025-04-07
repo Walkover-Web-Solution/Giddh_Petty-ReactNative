@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Animated } from 'react-native';
-import RenderChart from '../../Screens/renderLegendComponent';
+import RenderChart from '../../Screens/renderChartComponent';
 
 const DynamicHeader = ({animHeaderValue}) => {
     const Max_Header_Height = 0;
