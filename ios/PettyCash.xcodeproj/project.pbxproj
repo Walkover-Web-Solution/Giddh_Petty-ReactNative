@@ -21,6 +21,7 @@
 		4C1AD0AC1B4A4350AA7FB972 /* PlusJakartaSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2E7E99B541F4584BA7CF0BB /* PlusJakartaSans-Light.ttf */; };
 		5ED41239FC2848A891929BED /* PlusJakartaSans-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA6AF91447CF431787330C93 /* PlusJakartaSans-ExtraLightItalic.ttf */; };
 		6882FF1C93424E63B5009649 /* PlusJakartaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3D9EE8782634DA1B2067C28 /* PlusJakartaSans-Bold.ttf */; };
+		6D2CA24302DB963042E1A29F /* libPods-PettyCash-PettyCashTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E268FA335A5341D686CAD4BD /* libPods-PettyCash-PettyCashTests.a */; };
 		6E2E04A4EBE542478580FEF7 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94F41C13C6C14D5A9B6794E4 /* PlusJakartaSans-ExtraBoldItalic.ttf */; };
 		7B042C702A1749298E463AA0 /* PlusJakartaSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF8A955D18784BDFB153EBEC /* PlusJakartaSans-LightItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -29,10 +30,12 @@
 		A3D34DC15A0FB716C768CC4B /* libPods-PettyCash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E27DA94273E7A7A990BAE057 /* libPods-PettyCash.a */; };
 		A623579D9DF0473399D2CAEB /* Avenir LT Std 35 Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1577139BFCDB43E4A731A4EF /* Avenir LT Std 35 Light.otf */; };
 		A64D03FA2BD7EBE3007E10AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A64D03F92BD7EBE3007E10AC /* GoogleService-Info.plist */; };
+		A75552038972AA832B5DC4FB /* libPods-PettyCash-PettyCashTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA6FF4A12D64E67F5D336E79 /* libPods-PettyCash-PettyCashTests.a */; };
 		C1927B87EFC244B8A814E4CA /* PlusJakartaSans-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8034AC2252684C6093A0780C /* PlusJakartaSans-MediumItalic.ttf */; };
 		E12AF717F05D46FC9A3A3128 /* PlusJakartaSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4A83AB44F0D4EDFA8F0B416 /* PlusJakartaSans-SemiBoldItalic.ttf */; };
 		E840603A9CEF42608E1C7A3A /* PlusJakartaSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C1209E1C4E44780B4108C37 /* PlusJakartaSans-ExtraBold.ttf */; };
 		EE9C30BDB90D4F7C987C06B8 /* DancingScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9985CB17E1FE43E2BE94E319 /* DancingScript-Medium.ttf */; };
+		FB1A671FDC98E441682718C9 /* libPods-PettyCash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B48F4A6C1FEB6B9BA95BABD1 /* libPods-PettyCash.a */; };
 		FF716077858344168D1F688A /* PlusJakartaSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A98BED74107443FA5F34186 /* PlusJakartaSans-Italic.ttf */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +61,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PettyCash/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PettyCash/main.m; sourceTree = "<group>"; };
 		1577139BFCDB43E4A731A4EF /* Avenir LT Std 35 Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Avenir LT Std 35 Light.otf"; path = "../assets/fonts/Avenir LT Std 35 Light.otf"; sourceTree = "<group>"; };
+		1A3AD9C9908B8A846D2A72C2 /* Pods-PettyCash-PettyCashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PettyCash-PettyCashTests.release.xcconfig"; path = "Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests.release.xcconfig"; sourceTree = "<group>"; };
+		21DF8FDDAD72A5AB57E09FE8 /* Pods-PettyCash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PettyCash.release.xcconfig"; path = "Target Support Files/Pods-PettyCash/Pods-PettyCash.release.xcconfig"; sourceTree = "<group>"; };
 		25030E6A5FA347648DBA98AE /* DancingScript-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Bold.ttf"; path = "../assets/fonts/DancingScript-Bold.ttf"; sourceTree = "<group>"; };
 		2DE02E98346E953E55289A64 /* Pods-PettyCash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PettyCash.debug.xcconfig"; path = "Target Support Files/Pods-PettyCash/Pods-PettyCash.debug.xcconfig"; sourceTree = "<group>"; };
 		3F244AEC11AE4D0183361AFF /* PlusJakartaSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-SemiBold.ttf"; path = "../assets/fonts/PlusJakartaSans-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -66,6 +71,7 @@
 		6D605ECCF8D94928B10CE1E5 /* DancingScript-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Regular.ttf"; path = "../assets/fonts/DancingScript-Regular.ttf"; sourceTree = "<group>"; };
 		7425D3E54ECC4C51BBC82BC2 /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Medium.ttf"; path = "../assets/fonts/PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
 		8034AC2252684C6093A0780C /* PlusJakartaSans-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-MediumItalic.ttf"; path = "../assets/fonts/PlusJakartaSans-MediumItalic.ttf"; sourceTree = "<group>"; };
+		81255B2265A25279787137F4 /* Pods-PettyCash-PettyCashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PettyCash-PettyCashTests.debug.xcconfig"; path = "Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PettyCash/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8774079A783E431A81AFCE89 /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-SemiBold.ttf"; path = "../assets/fonts/DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
 		8832206DD786447803757D14 /* Pods-PettyCash-PettyCashTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PettyCash-PettyCashTests.release.xcconfig"; path = "Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,6 +84,7 @@
 		A64D03F92BD7EBE3007E10AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A6F527392C1834CB0018573F /* PettyCash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PettyCash.entitlements; path = PettyCash/PettyCash.entitlements; sourceTree = "<group>"; };
 		AA6AF91447CF431787330C93 /* PlusJakartaSans-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-ExtraLightItalic.ttf"; path = "../assets/fonts/PlusJakartaSans-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		AC96FEB19248F3B03AC1DA44 /* Pods-PettyCash-PettyCashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PettyCash-PettyCashTests.debug.xcconfig"; path = "Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D2E7E99B541F4584BA7CF0BB /* PlusJakartaSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Light.ttf"; path = "../assets/fonts/PlusJakartaSans-Light.ttf"; sourceTree = "<group>"; };
 		E27DA94273E7A7A990BAE057 /* libPods-PettyCash.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PettyCash.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3D9EE8782634DA1B2067C28 /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Bold.ttf"; path = "../assets/fonts/PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
@@ -440,14 +447,23 @@
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-PettyCash-PettyCashTests-checkManifestLockResult.txt",
 			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PettyCash-PettyCashTests-checkManifestLockResult.txt",
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
@@ -471,13 +487,17 @@
 			);
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 				"${PODS_ROOT}/Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests-frameworks.sh\"\n";
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PettyCash-PettyCashTests/Pods-PettyCash-PettyCashTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
@@ -578,7 +598,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -606,7 +626,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -703,6 +723,10 @@
 					"$(inherited)",
 					" ",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -780,6 +804,10 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
