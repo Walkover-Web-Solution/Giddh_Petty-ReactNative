@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { unMountingTwoFactorAuthScreen, VERIFY_OTP } from "../redux/auth/authSlice";
 import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { theme } from "../theme/theme";
+import { fonts, fontSize, theme } from "../theme/theme";
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import LoaderKit from 'react-native-loader-kit'
 import GidhhLogo from '../../assets/images/giddh.png';
@@ -40,18 +40,18 @@ const TwoFactorAuthScreen = () => {
     }, []);
     return (
         <SafeAreaView style={{flex:1}}>
-            <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'white' }}>
+            <View style={style.container}>
                 <View style={style.upperContainer}>
                     <Image style={style.logoStyle} source={GidhhLogo} resizeMode="contain" />
                 </View>
                 <Text style={style.heading}>Verify</Text>
                 <Text style={style.message}>
-                    We have sent a verification code at {'\n'} <Text style={{ color: 'black' }}>{tfaDetails?.contactNumber}</Text>, enter
+                    We have sent a verification code at {'\n'} <Text style={{ color: theme.colors.black }}>{tfaDetails?.contactNumber}</Text>, enter
                     the code {'\n'}and click on the submit button
                 </Text>
 
                 <OTPInputView
-                    style={{ width: '65%', height: height * 0.15, color: 'red',fontFamily: 'AvenirLTStd-Book' }}
+                    style={style.otpView}
                     pinCount={4}
                     color={'red'}
                     textContentType="oneTimeCode"
@@ -72,15 +72,15 @@ const TwoFactorAuthScreen = () => {
                     }}
                 />
                 <TouchableOpacity disabled={disableResendButton} onPress={() => sendOTP()} 
-                  style={{ paddingHorizontal: 10, paddingVertical: 5 }}><Text style={{ color: disableResendButton ? theme.colors.PRIMARY_DISABLED : theme.colors.PRIMARY_BASIC, fontFamily: 'AvenirLTStd-Book' }}>Resend Code</Text></TouchableOpacity>
+                  style={style.resendBtn}><Text style={{ color: disableResendButton ? theme.colors.PRIMARY_DISABLED : theme.colors.PRIMARY_BASIC, fontFamily: 'AvenirLTStd-Book' }}>Resend Code</Text></TouchableOpacity>
                 <TouchableOpacity style={[style.submitButton, { backgroundColor: code?.length == 4 ? theme.colors.PRIMARY_BASIC : theme.colors.PRIMARY_DISABLED }]} delayPressIn={0} onPress={() => {
                     if (code?.length == 4 && !isVerifyingOTP) {
                       dispatch(VERIFY_OTP({ otp:code, mobileNumber:tfaDetails.contactNumber, countryCode:tfaDetails.countryCode }))
                     }
                 }}>
-                    <Text style={{ color: 'white', fontSize: 18 ,fontFamily: 'AvenirLTStd-Book'}}>Submit</Text>
+                    <Text style={style.btnText}>Submit</Text>
                 </TouchableOpacity>
-                {isVerifyingOTP && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', position: 'absolute', left: 0, right: 0, bottom: 0, top: 0 }}>
+                {isVerifyingOTP && <View style={style.verifyOtpView}>
                 <LoaderKit 
                     style={style.loadKit}
                     name={'CubeTransition'}
@@ -140,7 +140,37 @@ const style = StyleSheet.create({
     loadKit : { 
         width: 50, 
         height: 50
-      }
+    },
+    container:{ 
+      flex: 1, 
+      alignItems: 'center', 
+      backgroundColor: 'white' 
+    },
+    otpView:{ 
+      width: '65%', 
+      height: height * 0.15, 
+      color: 'red',
+      fontFamily: 'AvenirLTStd-Book' 
+    },
+    resendBtn:{ 
+      paddingHorizontal: 10, 
+      paddingVertical: 5 
+    },
+    btnText: { 
+      color: theme.colors.white, 
+      fontSize: fontSize.large.size,
+      fontFamily: fonts.medium 
+    },
+    verifyOtpView: { 
+      flex: 1, 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      position: 'absolute', 
+      left: 0, 
+      right: 0, 
+      bottom: 0, 
+      top: 0 
+    }
   });
   
 
