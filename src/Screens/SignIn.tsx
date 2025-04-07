@@ -11,6 +11,8 @@ import { OTPVerification } from '@msg91comm/react-native-sendotp';
 import { environment } from '../environments/environment.prod';
 import LoaderKit from 'react-native-loader-kit'
 import appleAuth from '@invertase/react-native-apple-authentication';
+import { useNavigation } from '@react-navigation/native';
+import { ScreenNames } from '../constants/NavigationConstants';
 
 interface SignInData {
   message: string;
@@ -19,9 +21,10 @@ interface SignInData {
 const SignIn: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const navigation = useNavigation();
   // const isAuthenticated = useSelector((state:any)=>state.auth.isAuthenticated);
   const isLoading = useSelector((state:any)=>state?.auth?.loading);
-  
+  const TFA_Start = useSelector(state => state?.auth?.tfaStart)
   // const [data, setData] = useState<SignInData | null>(null);
   // const [loading,setLoading] = useState(false);
   const handleOtpSignIn = () => {
@@ -65,6 +68,12 @@ const SignIn: React.FC = () => {
     // setLoading(true);
     setModalVisible(false);
   };
+
+  useEffect(() => {
+    if(TFA_Start){
+      navigation.navigate(ScreenNames.TWO_FACTOR_AUTH);
+    }
+  }, [TFA_Start]);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -21,6 +21,12 @@ export const theme={
      "approved":'#0047FF',
      "rejected":'#9299AA',
      "pending":'#907FFB',
+     PRIMARY: '#FFE70A',
+     PRIMARY_NORMAL: '#5773FF',
+     PRIMARY_PRESSED: '#3553E6',
+     PRIMARY_DISABLED: '#ACBAFF',
+     PRIMARY_BASIC: '#3E82F7',
+     PRIMARY_RED: '#E04646',
    },
 };
 
