@@ -36,7 +36,7 @@ export const DetailRow = ({ label, value }) => {
       {(value !== 'N/A' && (label === 'Description' || label === 'Rejected reason')) 
       ? <View style={[styles.detailRow,{flexDirection:'column'}]}>
           <Text style={styles.detailLabel}>{label}:</Text>
-          <Text numberOfLines={label === 'Description' ? 3 : 5 } style={[styles.detailValue,{marginVertical:5}]}>{value}</Text>
+          <Text numberOfLines={label === 'Description' ? 5 : 5 } style={[styles.detailValue,{marginVertical:5}]}>{value}</Text>
         </View>
         : <View style={styles.detailRow}>
         <Text style={styles.detailLabel}>{label}</Text>

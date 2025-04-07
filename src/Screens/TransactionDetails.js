@@ -1,26 +1,31 @@
-import React, { useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar, ScrollView,SafeAreaView } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
 import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
 import { useSelector } from 'react-redux';
 import { capitalizeFirstLetter } from '../utils/capitalise';
-import AnimatedLoader from "react-native-animated-loader";
-import ReturnButton from '../components/TransactionDetails/ReturnButton';
 import {  UserCard, DetailRow } from '../components/Transaction/TransactionDetailComponents';
 import Header from '../components/Header/Header'
 import Reciept from '../../assets/images/receipt.svg'
 import ImageViewer from '../components/TransactionDetails/ImageViewer'
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
-import { ProgressBar } from 'react-native-paper';
-import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import CopySVG from '../../assets/images/copy.svg'
 import Clipboard from '@react-native-clipboard/clipboard';
 import { infoToast } from '../components/customToast/CustomToast';
+import FastImage from 'react-native-fast-image';
+import api from '../../interceptor';
+import ImageView from "react-native-image-viewing";
 
-const TransactionDetails = () => {
+const TransactionDetails = ({route}) => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
   const bottomSheetModalRef = useRef(null);
   const status = selectedExpense?.status;
-
+  const { uniqueName : companyUniqueName } = route?.params?.selectedCompany
+  const fileNames = selectedExpense?.fileNames?.filter?.(item => item != null)?.map(item => ({
+    uri : api?.getUri()+`company/${companyUniqueName}/image/`+item,
+    uniqueName : item
+  }));
+  const [visible, setIsVisible] = useState({isVisible:false, index: 0});
+  
   const copyToClipboard = (text) => {
     Clipboard.setString(text);
   };
@@ -55,8 +60,10 @@ const TransactionDetails = () => {
         <DetailRow label="Status" value={capitalizeFirstLetter(selectedExpense?.status)} />
         <DetailRow label="Entry type" value={capitalizeFirstLetter(selectedExpense?.entryType)} />
         <DetailRow label="Entry date" value={selectedExpense?.entryDate} />
-        <DetailRow label="Description" value={selectedExpense?.description || 'N/A'} />
-        {status == 'rejected' && <DetailRow label="Rejected reason" value={capitalizeFirstLetter(selectedExpense?.statusMessage)} />}
+        <View style={styles.descContainer}>
+          <DetailRow label="Description" value={selectedExpense?.description || 'N/A'} />
+        </View>
+        {status == 'rejected' && <View style={{ paddingBottom:25 }}><DetailRow label="Rejected reason" value={capitalizeFirstLetter(selectedExpense?.statusMessage)} /></View>}
       </View>
       <View style={styles.circleContainer}>
         <View style={styles.circleContainer1}>
@@ -64,12 +71,18 @@ const TransactionDetails = () => {
           <View style={[styles.halfCircle, styles.lowerHalfCircle]} />
           <View style={styles.circle}>
             <View style={[styles.tickContainer, styles.tickContainerShadow]}>
-              {selectedExpense?.attachedFiles 
+              {fileNames?.length > 0 
               ? <TouchableOpacity 
                 style={styles.imageIcon}
                 activeOpacity={activeOpacity.regular}
                 onPress={()=>bottomSheetModalRef?.current?.present()}
                 >
+                  <FastImage source={{
+                    uri: fileNames?.[0]?.uri,
+                  }}
+                  style={styles.imageIcon}
+                  resizeMode={FastImage.resizeMode.cover}
+                  />
               </TouchableOpacity> 
               : <Reciept height={40}/>}
             </View>
@@ -77,8 +90,14 @@ const TransactionDetails = () => {
         </View>
       </View>
       {/* <ReturnButton text={'Edit'} color={theme.colors.black}/> */}
-      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<ImageViewer bottomSheetModalRef={bottomSheetModalRef} />} />
       </View>
+      <ImageView
+        images={fileNames}
+        imageIndex={visible?.index}
+        visible={visible?.isVisible}
+        onRequestClose={() => setIsVisible(false)}
+      />
+      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<ImageViewer bottomSheetModalRef={bottomSheetModalRef} fileNames={fileNames} setIsVisible={setIsVisible} />} horizontal={false} parentScrollEnable={false} snapArr={['35%']}/>
     </SafeAreaView>
   );
 };
@@ -100,7 +119,7 @@ const styles = StyleSheet.create({
   },
   whiteSheet: {
     backgroundColor: theme.colors.white,
-    height: '76%',
+    minHeight:440,
     width: '90%',
     position: 'absolute',
     top: '20%',
@@ -186,23 +205,23 @@ const styles = StyleSheet.create({
     top: '14.45%',
     left:'50%',
     transform : [{ translateX: -47 }, { translateY: 0 }],
-    width:94,
-    height:94,
+    width:93,
+    height:93,
     borderRadius:50,
-    elevation:2,
+    elevation:5,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 1.5,
     },
     shadowOpacity: 0.5,
     shadowRadius: 1,
 
   },
   circleContainer1: {
-    width: 90,
-    height: 90,
-    borderRadius: 90,
+    width: 91,
+    height: 91,
+    borderRadius: 92,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -257,7 +276,6 @@ const styles = StyleSheet.create({
     color: theme.colors.secondary,
   },
   imageIcon: {
-    borderWidth:2,
     width:'100%',
     height:'100%',
     borderRadius:50
@@ -271,6 +289,10 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     paddingBottom:15,
     justifyContent:'center'
+  },
+  descContainer: { 
+    minHeight:55, 
+    paddingBottom:10 
   }
 });
 
