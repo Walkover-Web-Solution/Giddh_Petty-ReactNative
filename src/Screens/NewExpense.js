@@ -245,17 +245,18 @@ image?.uploading ? (
             <Text style={styles.buttonText}>Add {name}</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.header}>
-        {/* <FontAwesome5 name="box-open" size={20} color="black" style={styles.icon} /> */}
-        <Text style={styles.text}>Selected Product/Services</Text>
-        <Text style={[styles.text, { textAlign: 'right', flex: 1 }]}>INR</Text>
-        </View>
-        <ScrollView style={styles.productView} nestedScrollEnabled={true}>
-          <ProductServicesList setSelectedProduct={setSelectedProduct} setSelectedItems={setSelectedItems} selectedItems={selectedItems} bottomSheetModalRefExpense={bottomSheetModalRefExpense}/>
-        </ScrollView>
+        {Object.keys(selectedItems)?.length > 0 && <>
+          <View style={styles.header}>
+            <Text style={styles.text}>Selected Product/Services</Text>
+            <Text style={[styles.text, { textAlign: 'right', flex: 1 }]}>{selectedCompany?.subscription?.country?.alpha3CountryCode ??'INR'}</Text>
+          </View>
+          <ScrollView style={styles.productView} nestedScrollEnabled={true}>
+            <ProductServicesList setSelectedProduct={setSelectedProduct} setSelectedItems={setSelectedItems} selectedItems={selectedItems} bottomSheetModalRefExpense={bottomSheetModalRefExpense}/>
+          </ScrollView>
+        </>}
         <View style={styles.amountView}>
           <Text style={styles.amtText}>Total Amount </Text>
-          <Text style={styles.amtText}>&#8377;{totalAmount}.00</Text>
+          <Text style={styles.amtText}>{selectedCompany?.subscription?.planDetails?.currency?.symbol ?? '\u20B9'}{totalAmount}.00</Text>
         </View>
       </View>
       <View style={styles.btnView}>
@@ -561,13 +562,14 @@ const styles = StyleSheet.create({
     lineHeight: fontSize.regular.lineHeight
   },
   productView : {
-    height:160,
+    maxHeight:160,
     marginVertical:5,
     paddingHorizontal:10
   },
   amountView: {
     flexDirection:'row',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    marginTop:10
   },
   amtText : {
     paddingVertical:10,

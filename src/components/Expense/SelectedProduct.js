@@ -4,6 +4,7 @@ import { ScrollView, Swipeable } from 'react-native-gesture-handler'; // Import 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useSelector } from 'react-redux';
 const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSelectedProduct,setSelectedItems}) => {
   const handleDelete = (key) => {
         const updatedItems = { ...selectedItems };
@@ -11,7 +12,7 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
         setSelectedProduct(updatedItems);
         setSelectedItems(updatedItems);
     };
-
+  const selectedCompany = useSelector(state => state?.company?.selectedCompany);
 
   const renderRightActions = (progress, dragX, key) => {
     return (
@@ -32,7 +33,7 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
             onPress={() => { setSelectedProduct({ [key]: value }); bottomSheetModalRefExpense?.current.present() }}
           >
             <Text style={styles.itemTitle}>{selectedItems?.[key]?.name}</Text>
-            <Text style={styles.itemSubtitle}>1 &#215; &#8377;{value.amount}</Text>
+            <Text style={styles.itemSubtitle}>1 x {selectedCompany?.subscription?.planDetails?.currency?.symbol ?? '\u20B9'}{value.amount}</Text>
           </TouchableOpacity>
         </Swipeable>
       ))}

@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import { fontSize, fonts, theme } from '../theme/theme';
 
 const RenderChart = () => {
-  const expenses = useSelector(state => state?.expenses?.expenses);
+  const {expenses,selectedCompany } = useSelector((state) => ({
+    expenses: state?.expenses?.expenses,
+    selectedCompany: state?.company?.selectedCompany
+  }));
   
   const totalAmount = expenses?.["AllRequests"]?.filter((item)=>item?.entryType !='sales')?.reduce((total, expense) => total + expense?.amount, 0);
   const pendingPercentage = (expenses?.["Pending"]?.reduce((total, expense) => total + expense?.amount, 0) / (totalAmount===0?1:totalAmount)) * 100;
@@ -36,7 +39,7 @@ const RenderChart = () => {
           centerLabelComponent={() => (
             <View style={styles.centerLabel}>
               <Text style={styles.totalAmount}>
-                &#8377;{totalAmount?.toFixed(2)}
+                {selectedCompany?.subscription?.planDetails?.currency?.symbol ?? '\u20B9'} {totalAmount?.toFixed(2)}
               </Text>
               <Text style={styles.spending}>Spending</Text>
             </View>
