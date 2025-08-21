@@ -39,7 +39,7 @@ const TwoFactorAuthScreen = () => {
         };
     }, []);
     return (
-        <SafeAreaView style={{flex:1}}>
+        <View style={{flex:1}}>
             <View style={style.container}>
                 <View style={style.upperContainer}>
                     <Image style={style.logoStyle} source={GidhhLogo} resizeMode="contain" />
@@ -88,7 +88,7 @@ const TwoFactorAuthScreen = () => {
                     />
                 </View>}
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 

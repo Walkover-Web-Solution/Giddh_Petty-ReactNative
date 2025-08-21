@@ -85,12 +85,14 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef, setSel
             <DateTimePickerModal
                 isVisible={showStartDatePicker}
                 mode="date"
+                pickerComponentStyleIOS={{height: 250}}
                 onConfirm={handleStartDateConfirm}
                 onCancel={hideStartDatePickerModal}
             />
             <DateTimePickerModal
                 isVisible={showEndDatePicker}
                 mode="date"
+                pickerComponentStyleIOS={{height: 250}}
                 onConfirm={handleEndDateConfirm}
                 onCancel={hideEndDatePickerModal}
             />

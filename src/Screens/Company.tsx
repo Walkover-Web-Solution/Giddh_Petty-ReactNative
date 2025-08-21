@@ -13,6 +13,8 @@ import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signOut } from '../redux/auth/authSlice';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const {height,width} = Dimensions.get('window');
 const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
@@ -24,6 +26,7 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const bottomSheetModalRef=useRef(null);
   const photo=useSelector((state)=>state?.auth?.photo);
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     if(companies.length == 0 && selectedCompany == null)
       dispatch({ type: 'company/FETCH_COMPANY_LIST', payload: { uniqueName: user?.user?.uniqueName, sessionToken: user?.session?.id } });
@@ -86,9 +89,9 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
-      <StatusBar backgroundColor={theme.colors.black} />
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <Header title={"Select a Company"} />
       <View style={styles.listView}>
         <FlatList
@@ -113,12 +116,15 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
         />
       </View>
       <TouchableOpacity style={styles.logoutButton} activeOpacity={activeOpacity.regular} onPress={()=>bottomSheetModalRef.current?.present()}>
+        <View style={{flexDirection:'row', alignItems:'center', paddingVertical: 7}}>
           <AntDesign name="logout" size={25} color={theme.colors.black} />
           <Text style={[styles.switchCompanyButtonText,{fontFamily:fonts.medium}]}>Logout</Text>
+        </View>
+        <View style={{height:insets.bottom}}></View>
       </TouchableOpacity>
       <MyBottomSheetModal snapArr={['20%']} bottomSheetModalRef={bottomSheetModalRef} intialSnap={'17%'} children={<ConfirmationComponent handleClose={handleClose} handleLogout={handleLogout}/>}/>
       </View>
-    </SafeAreaView>
+    </View>
   );
 });
 
@@ -173,9 +179,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     backgroundColor:theme.colors.LightGray,
     justifyContent:'center',
-    flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
     paddingHorizontal: 20,
   },
   switchCompanyButtonText: {

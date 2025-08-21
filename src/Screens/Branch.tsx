@@ -5,6 +5,7 @@ import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../theme/them
 import { setSelectedBranch } from '../redux/company/BranchSlice';
 import  Header  from '../components/Header/Header';
 import { useNavigation } from '@react-navigation/native';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
 
 const Branch: React.FC = React.memo(() => {
   const dispatch = useDispatch();
@@ -29,9 +30,9 @@ const Branch: React.FC = React.memo(() => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
-      <StatusBar backgroundColor={theme.colors.black} />
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <Header title={"Select a Branch"} />
       <View style={styles.listView}>
         <FlatList
@@ -41,7 +42,7 @@ const Branch: React.FC = React.memo(() => {
         />
       </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 });
 

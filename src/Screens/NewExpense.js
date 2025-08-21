@@ -1,43 +1,55 @@
-import React, { useState, useRef, } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, TextInput, StatusBar,ActivityIndicator, SafeAreaView, KeyboardAvoidingView } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import React, {useState, useRef} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather'
+import Feather from 'react-native-vector-icons/Feather';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'; // Import DateTimePickerModal
-import { useNavigation } from '@react-navigation/native';
-import  Header  from '../components/Header/Header';
+import {useNavigation} from '@react-navigation/native';
+import Header from '../components/Header/Header';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import RowWithButtons from '../components/Expense/ButtonView';
 import PaymentModeSelector from '../components/Expense/ModalComponent';
-import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
-import { useSelector } from 'react-redux';
-import { useRoute } from '@react-navigation/native';
+import {activeOpacity, fonts, fontSize, fontSizes, theme} from '../theme/theme';
+import {useSelector} from 'react-redux';
+import {useRoute} from '@react-navigation/native';
 import ProductServicesList from '../components/Expense/SelectedProduct';
 import EditExpense from '../components/Expense/EditExpenseModal';
 import axios from 'axios';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
-import { errorToast } from '../components/customToast/CustomToast';
-import { ScreenNames } from '../constants/NavigationConstants';
+import {errorToast} from '../components/customToast/CustomToast';
+import {ScreenNames} from '../constants/NavigationConstants';
 import moment from 'moment';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const NewExpense = () => {
   const navigation = useNavigation();
   const [selectedImages, setSelectedImages] = useState([]);
-  const [desc,setDesc] = useState('');
+  const [desc, setDesc] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isYesterdayFirst, setIsYesterdayFirst] = useState(true);
   const [description, setDescription] = useState('');
-  const [selectedItems,setSelectedItems]=useState({});
+  const [selectedItems, setSelectedItems] = useState({});
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalRefExpense = useRef(null);
   const route = useRoute();
-  const { name } = route.params;
+  const {name} = route.params;
   const user = useSelector(state => state?.auth?.user);
   const photo = useSelector(state => state?.auth?.photo);
-  const paymentMode=useSelector(state=>state?.payment?.selectedMode)
-  const selectedCompany=useSelector(state=>state?.company?.selectedCompany)
-   const calculateTotalAmount = () => {
+  const paymentMode = useSelector(state => state?.payment?.selectedMode);
+  const selectedCompany = useSelector(state => state?.company?.selectedCompany);
+  const insets = useSafeAreaInsets();
+  const calculateTotalAmount = () => {
     let totalAmount = 0;
     Object.values(selectedItems).forEach(item => {
       if (item.isSelected) {
@@ -56,7 +68,7 @@ const NewExpense = () => {
     setDatePickerVisibility(false);
   };
 
-  const handleDateConfirm = (date) => {
+  const handleDateConfirm = date => {
     setSelectedDate(date);
     hideDatePicker();
   };
@@ -74,222 +86,305 @@ const NewExpense = () => {
   };
 
   const handleImageSelection = () => {
-  const options = {
-    mediaType: 'photo',
-    selectionLimit: 5 - selectedImages.length,
-  };
-  launchImageLibrary(options, (response) => {
-    if (response.didCancel) {
-      console.log('Image selection cancelled');
-    } else if (response.error) {
-      console.error('ImagePicker Error: ', response.error);
-    } else {
-      console.log("response on selection",response);
-      if(response?.assets?.some((item) => item.fileSize > 2000000)){
-        errorToast("Image size to large!");
-        return ;
-      }
-      const updatedImages = response.assets.map(asset => ({
-        ...asset,
-        uploading: true,
-        responseData: null 
-      }));
-      setSelectedImages([...selectedImages, ...updatedImages]);
-      response.assets.forEach((asset, index) => {
-        const formData = new FormData();
-        formData.append(`file`, { uri: asset.uri, type: asset.type, name: `image_${index}.jpg` });
-        axios.post(`https://api.giddh.com/company/${selectedCompany?.uniqueName}/ledger/upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'session-id': user?.session?.id,
-          },
-        })
-        .then((response) => {
-          setSelectedImages(prevImages => {
-            return prevImages.map(img => {
-              if (img.uri === asset.uri) {
-                return { ...img, uploading: false, responseData: response.data.body };
-              }
-              return img;
-            });
+    const options = {
+      mediaType: 'photo',
+      selectionLimit: 5 - selectedImages.length,
+    };
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('Image selection cancelled');
+      } else if (response.error) {
+        console.error('ImagePicker Error: ', response.error);
+      } else {
+        console.log('response on selection', response);
+        if (response?.assets?.some(item => item.fileSize > 2000000)) {
+          errorToast('Image size to large!');
+          return;
+        }
+        const updatedImages = response.assets.map(asset => ({
+          ...asset,
+          uploading: true,
+          responseData: null,
+        }));
+        setSelectedImages([...selectedImages, ...updatedImages]);
+        response.assets.forEach((asset, index) => {
+          const formData = new FormData();
+          formData.append(`file`, {
+            uri: asset.uri,
+            type: asset.type,
+            name: `image_${index}.jpg`,
           });
-        })
-        .catch((error) => {
-          console.error('Error sending FormData to POS API:', error);
-          setSelectedImages(prevImages => prevImages.filter(img => img.uri !== asset.uri));
+          axios
+            .post(
+              `https://api.giddh.com/company/${selectedCompany?.uniqueName}/ledger/upload`,
+              formData,
+              {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'session-id': user?.session?.id,
+                },
+              },
+            )
+            .then(response => {
+              setSelectedImages(prevImages => {
+                return prevImages.map(img => {
+                  if (img.uri === asset.uri) {
+                    return {
+                      ...img,
+                      uploading: false,
+                      responseData: response.data.body,
+                    };
+                  }
+                  return img;
+                });
+              });
+            })
+            .catch(error => {
+              console.error('Error sending FormData to POS API:', error);
+              setSelectedImages(prevImages =>
+                prevImages.filter(img => img.uri !== asset.uri),
+              );
+            });
         });
-      });
-    }
-  });
-};
+      }
+    });
+  };
 
-
-  const [selectedProduct,setSelectedProduct]=useState({});
-  const getBack=(item)=>{
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const getBack = item => {
     setSelectedItems(item);
-  }
-  const removeImage = (indexToRemove) => {
-    setSelectedImages(selectedImages.filter((_, index) => index !== indexToRemove));
+  };
+  const removeImage = indexToRemove => {
+    setSelectedImages(
+      selectedImages.filter((_, index) => index !== indexToRemove),
+    );
   };
   const prepareRequestBody = () => {
-    
-  const transactions = Object.entries(selectedItems).map(([key, value]) => ({
-    amount: value.amount,
-    particular: key,
-    name: value.name
-  }));
-  const attachedFileUniqueNames = selectedImages.map(image => (
-    image.responseData?.uniqueName 
-  ));
-  const baseAccount = {
-    name: paymentMode?.name,
-    uniqueName: paymentMode?.uniqueName
-  };
-  const description = desc
-  const requestBody = {
-    description,
-    transactions,
-    attachedFileUniqueNames,
-    entryType: name === 'Income' ? 'Sales' : name,
-    entryDate: selectedDate.toLocaleDateString("es-CL"), 
-    chequeNumber: "",
-    baseAccount
-  };
+    const transactions = Object.entries(selectedItems).map(([key, value]) => ({
+      amount: value.amount,
+      particular: key,
+      name: value.name,
+    }));
+    const attachedFileUniqueNames = selectedImages.map(
+      image => image.responseData?.uniqueName,
+    );
+    const baseAccount = {
+      name: paymentMode?.name,
+      uniqueName: paymentMode?.uniqueName,
+    };
+    const description = desc;
+    const requestBody = {
+      description,
+      transactions,
+      attachedFileUniqueNames,
+      entryType: name === 'Income' ? 'Sales' : name,
+      entryDate: selectedDate.toLocaleDateString('es-CL'),
+      chequeNumber: '',
+      baseAccount,
+    };
 
-  return requestBody;
-};
+    return requestBody;
+  };
 
   return (
     // <View style={styles.container}>
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView>
-      <ScrollView>
-      <StatusBar backgroundColor={theme.colors.black} />
-      <Header title={'New '+name+' Claim'} />
-      {/* <ScrollView style={{borderWidth:2,borderColor:'blue'}}> */}
-      <View style={styles.cardContainer}>
-    {/* <ScrollView contentContainerStyle={{ flexGrow: 1 }}> */}
-        <View style={styles.headerRow}>
-          <View style={styles.userContainer}>
-            <Image source={photo?{ uri: photo }:require('../../assets/images/user-picture.png')} style={styles.userImage} />
+      <ScrollView style={styles.container}>
+        <CustomStatusBar backgroundColor={theme.colors.black} />
+        <Header title={'New ' + name + ' Claim'} />
+        <View style={styles.cardContainer}>
+          <View style={styles.headerRow}>
+            <View style={styles.userContainer}>
+              <Image
+                source={
+                  photo
+                    ? {uri: photo}
+                    : require('../../assets/images/user-picture.png')
+                }
+                style={styles.userImage}
+              />
+            </View>
+            <Text style={styles.userText}>{user?.user?.name}</Text>
           </View>
-          <Text style={styles.userText}>{user?.user?.name}</Text>
-        </View>
-        <View style={styles.dateRow}>
-          <TouchableOpacity style={styles.iconContainer} activeOpacity={activeOpacity.regular} onPress={showDatePicker}>
-            <AntDesign name="calendar" size={22} color={theme.colors.black} />
-            <Text style={styles.text}>{selectedDate ? moment(selectedDate, 'DD-MM-YYYY').format('DD MMMM YY') : 'Select a date'}</Text>
-          </TouchableOpacity>
-          {/* <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-end', }}> */}
-            <TouchableOpacity style={styles.dateButton} activeOpacity={activeOpacity.regular} onPress={isYesterdayFirst ? handleYesterday : handleToday}>
-              <Text style={styles.dateButtonText}>{isYesterdayFirst ? 'Yesterday?' : 'Today?'}</Text>
+          <View style={styles.dateRow}>
+            <TouchableOpacity
+              style={styles.iconContainer}
+              activeOpacity={activeOpacity.regular}
+              onPress={showDatePicker}>
+              <AntDesign name="calendar" size={22} color={theme.colors.black} />
+              <Text style={styles.text}>
+                {selectedDate
+                  ? moment(selectedDate, 'DD-MM-YYYY').format('DD MMMM YY')
+                  : 'Select a date'}
+              </Text>
             </TouchableOpacity>
-          {/* </View> */}
-        </View>
-        <View style={styles.imgContainer}>
-          <View style={styles.selectImageRow}>
-            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleImageSelection} style={styles.selectImageBox}>
-              <Text style={styles.selectImageText}>Select Image</Text>
+            <TouchableOpacity
+              style={styles.dateButton}
+              activeOpacity={activeOpacity.regular}
+              onPress={isYesterdayFirst ? handleYesterday : handleToday}>
+              <Text style={styles.dateButtonText}>
+                {isYesterdayFirst ? 'Yesterday?' : 'Today?'}
+              </Text>
             </TouchableOpacity>
-            <ScrollView horizontal={true} contentContainerStyle={styles.selectedImagesContainer} showsVerticalScrollIndicator={false}
-    showsHorizontalScrollIndicator={false}>
-              {selectedImages.map((image, index) => (
-image?.uploading ? (
-  <View key={index} style={styles.imageContainer}>
-    <ActivityIndicator size="small" color={theme.colors.secondary} />
-  </View>
-) : (
-  <View key={index} style={styles.imageContainer}>
-    <Image source={{ uri: image.uri }} style={styles.image} />
-    <TouchableOpacity style={styles.closeButton} activeOpacity={activeOpacity.regular} onPress={() => removeImage(index)}>
-      {/* <View style={styles.closeBtnIcon}>
-      </View>
-        <Text style={styles.closeButtonText}>X</Text> */}
-        <Feather name="x" size={15}/>
-    </TouchableOpacity>
-  </View>
-)
-))}
-
-            </ScrollView>
+          </View>
+          <View style={styles.imgContainer}>
+            <View style={styles.selectImageRow}>
+              <TouchableOpacity
+                activeOpacity={activeOpacity.regular}
+                onPress={handleImageSelection}
+                style={styles.selectImageBox}>
+                <Text style={styles.selectImageText}>Select Image</Text>
+              </TouchableOpacity>
+              <ScrollView
+                horizontal={true}
+                contentContainerStyle={styles.selectedImagesContainer}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}>
+                {selectedImages.map((image, index) =>
+                  image?.uploading ? (
+                    <View key={index} style={styles.imageContainer}>
+                      <ActivityIndicator
+                        size="small"
+                        color={theme.colors.secondary}
+                      />
+                    </View>
+                  ) : (
+                    <View key={index} style={styles.imageContainer}>
+                      <Image source={{uri: image.uri}} style={styles.image} />
+                      <TouchableOpacity
+                        style={styles.closeButton}
+                        activeOpacity={activeOpacity.regular}
+                        onPress={() => removeImage(index)}>
+                        <Feather name="x" size={15} />
+                      </TouchableOpacity>
+                    </View>
+                  ),
+                )}
+              </ScrollView>
+            </View>
+          </View>
+          <View style={styles.paymentRow}>
+            <Text style={styles.payText}>Payment Mode</Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <TouchableOpacity
+              activeOpacity={activeOpacity.regular}
+              onPress={() => bottomSheetModalRef.current?.present()}
+              style={styles.inputContainerStyle}>
+              <Text style={styles.inputText}>
+                {paymentMode ? paymentMode.name : 'Select'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.descriptionRow}>
+            <Text style={styles.payText}>Comment/Description</Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputField}
+              multiline={true}
+              numberOfLines={2}
+              onChangeText={text => setDesc(text)}
+              placeholder="Add Description"
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              activeOpacity={activeOpacity.regular}
+              onPress={() =>
+                navigation.navigate(ScreenNames.ADD_EXPENSE, {
+                  selectedItem: selectedItems,
+                  getBack: getBack,
+                  name: name,
+                })
+              }>
+              <Text style={styles.buttonText}>Add {name}</Text>
+            </TouchableOpacity>
+          </View>
+          {Object.keys(selectedItems)?.length > 0 && (
+            <>
+              <View style={styles.header}>
+                <Text style={styles.text}>Selected Product/Services</Text>
+                <Text style={[styles.text, {textAlign: 'right', flex: 1}]}>
+                  {selectedCompany?.subscription?.country?.alpha3CountryCode ??
+                    'INR'}
+                </Text>
+              </View>
+              <View style={styles.productView}>
+                <ProductServicesList
+                  setSelectedProduct={setSelectedProduct}
+                  setSelectedItems={setSelectedItems}
+                  selectedItems={selectedItems}
+                  bottomSheetModalRefExpense={bottomSheetModalRefExpense}
+                />
+              </View>
+            </>
+          )}
+          <View style={styles.amountView}>
+            <Text style={styles.amtText}>Total Amount </Text>
+            <Text style={styles.amtText}>
+              {selectedCompany?.subscription?.planDetails?.currency?.symbol ??
+                '\u20B9'}
+              {totalAmount}.00
+            </Text>
           </View>
         </View>
-        <View style={styles.paymentRow}>
-          <Text style={styles.payText}>Payment Mode</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TouchableOpacity
-            activeOpacity={activeOpacity.regular} onPress={() => bottomSheetModalRef.current?.present()}
-            style={styles.inputContainerStyle}
-          ><Text style={styles.inputText}>{paymentMode?paymentMode.name:'Select'}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.descriptionRow}>
-          <Text style={styles.payText}>Comment/Description</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputField}
-            multiline={true}
-            numberOfLines={2}
-            onChangeText={(text)=>setDesc(text)}
-            placeholder='Add Description'
+        <View style={styles.btnView}>
+          <RowWithButtons
+            companyUniqueName={selectedCompany?.uniqueName}
+            name={name}
+            selectedItem={selectedItems}
+            getBack={getBack}
+            prepareRequestBody={prepareRequestBody}
           />
         </View>
-        <View style={styles.inputContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            activeOpacity={activeOpacity.regular}
-            onPress={() => navigation.navigate(ScreenNames.ADD_EXPENSE, { selectedItem: selectedItems, getBack: getBack, name: name })}
-          >
-            <Text style={styles.buttonText}>Add {name}</Text>
-          </TouchableOpacity>
-        </View>
-        {Object.keys(selectedItems)?.length > 0 && <>
-          <View style={styles.header}>
-            <Text style={styles.text}>Selected Product/Services</Text>
-            <Text style={[styles.text, { textAlign: 'right', flex: 1 }]}>{selectedCompany?.subscription?.country?.alpha3CountryCode ??'INR'}</Text>
-          </View>
-          <ScrollView style={styles.productView} nestedScrollEnabled={true}>
-            <ProductServicesList setSelectedProduct={setSelectedProduct} setSelectedItems={setSelectedItems} selectedItems={selectedItems} bottomSheetModalRefExpense={bottomSheetModalRefExpense}/>
-          </ScrollView>
-        </>}
-        <View style={styles.amountView}>
-          <Text style={styles.amtText}>Total Amount </Text>
-          <Text style={styles.amtText}>{selectedCompany?.subscription?.planDetails?.currency?.symbol ?? '\u20B9'}{totalAmount}.00</Text>
-        </View>
-      </View>
-      <View style={styles.btnView}>
-        <RowWithButtons companyUniqueName={selectedCompany?.uniqueName} name={name} selectedItem={selectedItems} getBack={getBack} prepareRequestBody={prepareRequestBody}/>
-      </View>
-      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} snapArr={['60%','80%']} children={<PaymentModeSelector bottomSheetModalRef={bottomSheetModalRef} />} />
-      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRefExpense} intialSnap={'37%'} snapArr={['40%','70%']} children={<EditExpense selectedProduct={selectedProduct} bottomSheetModalRef={bottomSheetModalRefExpense} setSelectedItems={setSelectedItems} selectedItems={selectedItems} />} />
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleDateConfirm}
-        onCancel={hideDatePicker}
+        <View style={{height: insets.bottom}}></View>
+        <MyBottomSheetModal
+          bottomSheetModalRef={bottomSheetModalRef}
+          snapArr={['80%']}
+          enableDynamicSizing={true}
+          children={
+            <PaymentModeSelector bottomSheetModalRef={bottomSheetModalRef} />
+          }
         />
-          </ScrollView>
-        </KeyboardAvoidingView>
-        </SafeAreaView>
-          // </View>
+        <MyBottomSheetModal
+          bottomSheetModalRef={bottomSheetModalRefExpense}
+          enableDynamicSizing={true}
+          snapArr={['70%']}
+          topOffset={1000}
+          children={
+            <EditExpense
+              selectedProduct={selectedProduct}
+              bottomSheetModalRef={bottomSheetModalRefExpense}
+              setSelectedItems={setSelectedItems}
+              selectedItems={selectedItems}
+            />
+          }
+        />
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          pickerComponentStyleIOS={{height: 250}}
+          onConfirm={handleDateConfirm}
+          onCancel={hideDatePicker}
+        />
+      </ScrollView>
+    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection:'column',
+    flexDirection: 'column',
     // height:770,
     backgroundColor: theme.colors.black,
-
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 25,
-    marginBottom:10,
+    marginBottom: 10,
     paddingHorizontal: 20,
   },
   icon: {
@@ -298,7 +393,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSize.large.size,
     fontFamily: fonts.medium,
-    lineHeight: fontSize.large.lineHeight
+    lineHeight: fontSize.large.lineHeight,
   },
   userContainer: {
     borderRadius: 40,
@@ -334,11 +429,11 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: 'white',
-    height:'75%',
+    // height: '75%',
     borderRadius: 16,
-    margin: 16,
+    marginHorizontal: 16,
     overflow: 'hidden',
-    flexDirection:'column'
+    flexDirection: 'column',
   },
   selectImageRow: {
     flexDirection: 'row',
@@ -369,7 +464,7 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
     writingDirection: 'rtl',
     textAlign: 'center',
-    fontFamily: fonts.regular
+    fontFamily: fonts.regular,
   },
   selectedImagesContainer: {
     flexDirection: 'row',
@@ -408,9 +503,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 20,
     height: 20,
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:theme.colors.LightGray
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.LightGray,
   },
   closeButtonText: {
     // position: 'absolute',
@@ -419,7 +514,7 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
     fontFamily: fonts.bold,
     fontSize: fontSize.xSmall.size,
-    lineHeight:fontSize.xSmall.lineHeight
+    lineHeight: fontSize.xSmall.lineHeight,
   },
   paymentRow: {
     flexDirection: 'row',
@@ -443,15 +538,15 @@ const styles = StyleSheet.create({
   dateRow: {
     // borderWidth:2,
     flexDirection: 'row',
-    alignItems:'center',
-    justifyContent:'space-between',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
     marginTop: 5,
   },
   iconContainer: {
     // marginRight: 10,
-    flexDirection:'row',
-    alignItems:'center'
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   dateButton: {
     // paddingHorizontal: 10,
@@ -499,90 +594,89 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: 30, 
-    paddingHorizontal: 10
+    marginTop: 30,
+    paddingHorizontal: 10,
   },
   headerText: {
     alignSelf: 'center',
     marginLeft: 30,
     fontFamily: fonts.regular,
     fontSize: fontSize.xLarge.size,
-    lineHeight: fontSize.xLarge.lineHeight
+    lineHeight: fontSize.xLarge.lineHeight,
   },
-  text: { 
+  text: {
     fontSize: fontSize.regular.size,
-    fontFamily: fonts.regular, 
-    paddingHorizontal: 5
+    fontFamily: fonts.regular,
+    paddingHorizontal: 5,
   },
-  imgContainer : { alignItems: 'center' },
-  closeBtnIcon : {
-    backgroundColor:theme.colors.gray2,
-    flex:1,
+  imgContainer: {alignItems: 'center'},
+  closeBtnIcon: {
+    backgroundColor: theme.colors.gray2,
+    flex: 1,
     // position: 'absolute',
     // top: 3.5,
     // right: -8.5,
     borderRadius: 10,
     width: 15,
-    height: 15
+    height: 15,
   },
-  payText : { 
+  payText: {
     fontFamily: fonts.bold,
     fontSize: fontSize.small.size,
-    lineHeight:fontSize.small.lineHeight, 
-    color: theme.colors.gray, 
-    marginTop: 10
+    lineHeight: fontSize.small.lineHeight,
+    color: theme.colors.gray,
+    marginTop: 10,
   },
-  inputContainer : { 
-    paddingHorizontal: 20
+  inputContainer: {
+    paddingHorizontal: 20,
   },
   inputContainerStyle: {
-    backgroundColor: theme.colors.LightGray, 
+    backgroundColor: theme.colors.LightGray,
     borderRadius: 5,
-    paddingHorizontal:10,
-    justifyContent:'center',
-    height:50, 
-    marginTop: 5 
-  },
-  inputText :{
-    fontFamily : fonts.regular,
-    fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight
-  },
-  inputField :{
-    minHeight:45,
-    backgroundColor: theme.colors.LightGray, 
-    borderRadius: 5, 
     paddingHorizontal: 10,
-    // paddingVertical:5, 
-    justifyContent:'center',
-    maxHeight:85,
+    justifyContent: 'center',
+    height: 50,
     marginTop: 5,
-    fontFamily : fonts.regular,
-    fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight
   },
-  productView : {
-    maxHeight:160,
-    marginVertical:5,
-    paddingHorizontal:10
+  inputText: {
+    fontFamily: fonts.regular,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight,
+  },
+  inputField: {
+    minHeight: 45,
+    backgroundColor: theme.colors.LightGray,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    // paddingVertical:5,
+    justifyContent: 'center',
+    maxHeight: 85,
+    marginTop: 5,
+    fontFamily: fonts.regular,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight,
+  },
+  productView: {
+    marginVertical: 5,
+    paddingHorizontal: 15,
   },
   amountView: {
-    flexDirection:'row',
-    justifyContent:'space-between',
-    marginTop:10
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
   },
-  amtText : {
-    paddingVertical:10,
-    paddingHorizontal:20,
-    fontFamily:fonts.medium,
-    fontSize:fontSize.regular.size,
-    lineHeight:fontSize.regular.lineHeight
+  amtText: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    fontFamily: fonts.medium,
+    fontSize: fontSize.regular.size,
+    lineHeight: fontSize.regular.lineHeight,
   },
-  btnView : {
-    paddingBottom:10,
-    backgroundColor:theme.colors.black,
-    width:'100%',
-    height:'15%'
+  btnView: {
+    backgroundColor: theme.colors.black,
+    width: '100%',
+    marginTop: 20,
+    // position: 'absolute',
   },
   buttonText: {
     color: 'black',
@@ -590,24 +684,24 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     padding: 4,
     lineHeight: fontSize.large.lineHeight,
-    textAlign:'center'
+    textAlign: 'center',
   },
-  button:{
-    backgroundColor: theme.colors.LightGray, 
+  button: {
+    backgroundColor: theme.colors.LightGray,
     borderRadius: 5,
-    paddingHorizontal:10,
-    justifyContent:'center',
-    height:50, 
-    marginTop:30,
-    elevation:3,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    height: 50,
+    marginTop: 30,
+    elevation: 3,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 0.2,
-    shadowRadius: 1, 
-  }
+    shadowRadius: 1,
+  },
 });
 
 export default NewExpense;

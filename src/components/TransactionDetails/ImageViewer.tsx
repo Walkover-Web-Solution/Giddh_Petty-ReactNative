@@ -7,7 +7,7 @@ import LoaderKit from 'react-native-loader-kit'
 const ImageViewer = ({bottomSheetModalRef, fileNames, setIsVisible})=>{
 	  const [loading, setLoading] = useState(true);
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
           <FlatList
             contentContainerStyle={{flexGrow: 1}}
             data={fileNames}
@@ -40,7 +40,7 @@ const ImageViewer = ({bottomSheetModalRef, fileNames, setIsVisible})=>{
             )}
             keyExtractor={(item, index) => index.toString()}
           />
-      </SafeAreaView>
+      </View>
     );
   };
     

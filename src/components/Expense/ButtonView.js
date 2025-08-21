@@ -71,6 +71,7 @@ const modalClose = ()=>{
 }
 
   return (
+    <>
     <View style={styles.container}>
       {/* <TouchableOpacity
         style={styles.button}
@@ -86,10 +87,14 @@ const modalClose = ()=>{
       >
         <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
+    </View>
       <Modal 
         animationType="fade"
         transparent={true}
         visible={showModal}
+        statusBarTranslucent={true}
+        // presentationStyle="overFullScreen"
+        navigationBarTranslucent={false}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -107,7 +112,7 @@ const modalClose = ()=>{
           </View>
         </View>
       </Modal>
-    </View>
+      </>
   );
 };
 
@@ -116,9 +121,7 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical:20,
-    marginTop: 10,
+    paddingHorizontal: 20
   },
   button: {
     // width: 150,

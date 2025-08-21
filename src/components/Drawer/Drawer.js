@@ -24,6 +24,8 @@ import { resetExpenses } from '../../redux/expense/ExpenseSlice';
 import ScheduleMeet from '../scheduleMeet/scheduleMeet';
 import { infoToast } from '../customToast/CustomToast';
 import appleAuth from '@invertase/react-native-apple-authentication';
+import CustomStatusBar from '../Header/CustomStatusBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const CustomDrawer = ({setVisible,navigation}) => {
   const openGmail = (email) => {
     const gmailUrl = `mailto:${email}`;
@@ -39,6 +41,7 @@ const CustomDrawer = ({setVisible,navigation}) => {
   const user=useSelector((state)=>state?.auth?.user);
   const photo=useSelector((state)=>state?.auth?.photo);
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
   const handleClose=()=>{
     bottomSheetModalRef.current.dismiss();
   }
@@ -60,7 +63,8 @@ const CustomDrawer = ({setVisible,navigation}) => {
   }
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <View style={styles.subContainer}>
       <View style={styles.drawerHeader}>
         <View>
@@ -82,7 +86,7 @@ const CustomDrawer = ({setVisible,navigation}) => {
           <Feather name="git-merge" size={20} color={theme.colors.black}/>
           <Text style={[styles.switchCompanyButtonText]}>{capitalizeFirstLetter(branch?.alias)}</Text>
         </TouchableOpacity>}
-        <TouchableOpacity style={styles.switchCompanyButton} activeOpacity={activeOpacity.regular} onPress={() => DeviceEventEmitter.emit("showHelloWidget", { status: true })}>
+        <TouchableOpacity style={styles.switchCompanyButton} activeOpacity={activeOpacity.regular} onPress={() => navigation.navigate('ContactUsScreen')}>
           <MaterialIcons name="support-agent" size={20} color={theme.colors.black} />
           <Text style={[styles.switchCompanyButtonText]}>{'Chat with us'}</Text>
         </TouchableOpacity>
@@ -101,14 +105,18 @@ const CustomDrawer = ({setVisible,navigation}) => {
         <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{copyToClipboard('support@giddh.com');infoToast('Copied...','','bottom');}}><CopySVG width={17} height={17} paddingLeft={40} marginTop={3}/></TouchableOpacity>
         </View>
       </View>
+
       <TouchableOpacity style={styles.logoutButton} activeOpacity={activeOpacity.regular} onPress={()=>bottomSheetModalRef.current?.present()}>
+        <View style={{flexDirection:'row', alignItems:'center', paddingVertical: 7}}>
           <AntDesign name="logout" size={25} color={theme.colors.black} />
           <Text style={[styles.switchCompanyButtonText,{fontFamily:fonts.medium}]}>Logout</Text>
+        </View>
+        <View style={{height:insets.bottom}}></View>
       </TouchableOpacity>
-      <MyBottomSheetModal snapArr={['20%']} bottomSheetModalRef={bottomSheetModalRef} intialSnap={'17%'} children={<ConfirmationComponent handleClose={handleClose} handleLogout={handleLogout}/>}/>
+      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} children={<ConfirmationComponent handleClose={handleClose} handleLogout={handleLogout}/>}/>
       </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -194,9 +202,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     backgroundColor:theme.colors.LightGray,
     justifyContent:'center',
-    flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
     paddingHorizontal: 20,
   },
   logoutTextContainer: {

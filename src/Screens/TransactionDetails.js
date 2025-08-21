@@ -14,6 +14,7 @@ import { infoToast } from '../components/customToast/CustomToast';
 import FastImage from 'react-native-fast-image';
 import api from '../../interceptor';
 import ImageView from "react-native-image-viewing";
+import CustomStatusBar from '../components/Header/CustomStatusBar';
 
 const TransactionDetails = ({route}) => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
@@ -31,9 +32,9 @@ const TransactionDetails = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
-      <StatusBar backgroundColor="black" />
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       {/* <AnimatedLoader
         visible={true}
         overlayColor="rgba(255,255,255)"
@@ -98,7 +99,7 @@ const TransactionDetails = ({route}) => {
         onRequestClose={() => setIsVisible(false)}
       />
       <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<ImageViewer bottomSheetModalRef={bottomSheetModalRef} fileNames={fileNames} setIsVisible={setIsVisible} />} horizontal={false} parentScrollEnable={false} snapArr={['35%']}/>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,5 +1,5 @@
-import React, { useState,useEffect, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList, Keyboard, SafeAreaView } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../theme/theme';
@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import {useDispatch,useSelector} from 'react-redux';
 import { useRoute } from '@react-navigation/native';
 import { environment } from '../environments/environment.prod';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AddExpenseScreen = () => {
   const navigation = useNavigation();
@@ -19,6 +21,7 @@ const AddExpenseScreen = () => {
   const addExpenseData = useSelector((state) => state?.addExpense?.data)
   const [addExpense,setAddExpense] = useState(addExpenseData);
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     dispatch({type:'ADD_EXPENSE',uniqueName:selectedCompany,groups:environment[name]});
   }, []);
@@ -87,7 +90,8 @@ const AddExpenseScreen = () => {
 
 
   return (
-    <SafeAreaView style={styles.super}>
+    <View style={styles.super}>
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       {/* <View style={{flex:1,backgroundColor:theme.colors.LightGray}}></View> */}
     <View style={styles.container}>
       {isSearchExpanded ? (
@@ -129,8 +133,9 @@ const AddExpenseScreen = () => {
       }} style={styles.doneBtn}>
         <Text style={[styles.text,{color:theme.colors.white}]}>Done</Text>
       </TouchableOpacity>
+      <View style={{height:insets.bottom}}></View>
     </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -221,14 +226,13 @@ const styles = StyleSheet.create({
     lineHeight:fontSize.regular.lineHeight 
   },
   doneBtn : {
-    paddingVertical:15,
     width:'80%',
     height:50,
     backgroundColor:theme.colors.black,
     justifyContent:'center',
     alignItems:'center',
     alignSelf:'center',
-    marginVertical:20,
+    marginTop:10,
     borderRadius:100
   }
 });

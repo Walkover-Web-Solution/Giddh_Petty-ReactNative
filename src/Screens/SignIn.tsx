@@ -13,6 +13,7 @@ import LoaderKit from 'react-native-loader-kit'
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { useNavigation } from '@react-navigation/native';
 import { ScreenNames } from '../constants/NavigationConstants';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
 
 interface SignInData {
   message: string;
@@ -76,8 +77,8 @@ const SignIn: React.FC = () => {
   }, [TFA_Start]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={theme.colors.black} />
+    <View style={styles.container}>
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <View style={styles.logoContainer}>
         <GidhhSvg />
       </View>
@@ -113,7 +114,7 @@ const SignIn: React.FC = () => {
           authToken={environment.authToken}
         />
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

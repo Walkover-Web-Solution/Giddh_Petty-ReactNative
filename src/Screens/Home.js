@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, StatusBar, ActivityIndicator, DeviceEventEmitter, RefreshControl, ScrollView, Dimensions, Animated, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, ActivityIndicator, DeviceEventEmitter, RefreshControl, ScrollView, Dimensions, Animated, Platform } from 'react-native';
 import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import RenderChart from './renderChartComponent';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,8 +19,9 @@ import { ScreenNames } from '../constants/NavigationConstants';
 import { ProgressBar } from 'react-native-paper';
 import DynamicHeader from '../components/DynamicHeader/DynamicHeader';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
 
 const list = [
   { label: 'AllRequests', color: theme.colors.black, name: 'All Requests' },
@@ -115,7 +116,7 @@ const Home = () => {
 
   const renderFooter = () => {
     return (
-      <View style={styles.footer}>
+      <View style={[styles.footer, {marginBottom: headerHeight.bottom}]}>
         {loading ? (
           <ActivityIndicator color="black" style={styles.activityIndicator} />
         ) : null}
@@ -123,19 +124,6 @@ const Home = () => {
     );
   };
   const headerHeight = useSafeAreaInsets();
-
-  const CustomStatusBar = ({
-    backgroundColor,
-    barStyle = 'light-content'
-  })=>{
-
-
-    return (
-      <View style={{height:headerHeight.top, backgroundColor:backgroundColor,zIndex:1}}>
-        <StatusBar barStyle={barStyle} backgroundColor={backgroundColor}/>
-      </View>
-    );
-  }
 
   const renderComponent = ({ item }) => {
     return (
@@ -156,9 +144,7 @@ const Home = () => {
     return <RenderButtonList item={item} handleButtonPress={handleButtonPress} selectedButton={selectedButton === item?.label} />;
   };
   return (
-    <SafeAreaProvider style={styles.container}>
-      <View style={styles.subContainer}>
-      {/* <StatusBar backgroundColor={theme.colors.black} /> */}
+    <View style={styles.subContainer}>
       <CustomStatusBar backgroundColor={theme.colors.black}/>
       <View style={styles.headerContainer}>
       <View style={styles.header}>
@@ -176,95 +162,88 @@ const Home = () => {
         {loading && <ProgressBar indeterminate visible={true} color={theme.colors.primary} />}
       </View>
       </View>
-
-      {/* <SafeAreaView style={styles.safeAreaContainer}> */}
-        <FlatList
-          data={expense?.[selectedButton]}
-          keyExtractor={(item) => item?.uniqueName?.toString()}
-          renderItem={renderComponent}
-          style={{backgroundColor:theme.colors.white}}
-          contentContainerStyle={styles.flatListContent}
-          ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>No Data ..</Text></View>}
-          ListFooterComponent={renderFooter}
-          onEndReached={() => { if (!isListEnd && !loading) setPage(page + 1); }}
-          onEndReachedThreshold={0.5}
-          scrollEventThrottle={16}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollOffsetY}}}],
-            {useNativeDriver: false}
-          )}
-          refreshControl={
-          <RefreshControl progressViewOffset={315} refreshing={refreshing} onRefresh={()=>{
-            dispatch(resetExpenses())
-            // const newPage = page - 1;
-            setRefreshing(true);
-            setTimeout(() => {
-              setRefreshing(false)
-            }, 1000);
-            // setIsListEnd(false),
-            // setLoading(true);
-          }}/>
-        }
-        />
-        {/* </SafeAreaView> */}
-      {/* </ScrollView> */}
-        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
-          <PlusSVG color={theme.colors.white} />
-        </TouchableOpacity>
-        <MyBottomSheetModal
-          bottomSheetModalRef={bottomSheetModalRef}
-          children={<DateScreen 
-            setStartDate={setStartDate} 
-            setEndDate={setEndDate} 
-            bottomSheetModalRef={bottomSheetModalRef} 
-            selectedDateRange={selectedDateRange} 
-            setSelectedDateRange={setSelectedDateRange}
-            prevStartDate={startDate}
-            prevEndDate={endDate}
-            />}
-          intialSnap='45%'
-          snapArr={['45%','55%']}
-        />
-        <MyBottomSheetModal
-          bottomSheetModalRef={bottomSheetModalExpenseRef}
-          children={<AddTransactionModal bottomSheetModalRef={bottomSheetModalExpenseRef} navigation={navigation} dispatch={dispatch} />}
-          intialSnap='21%'
-          snapArr={['21%']}
-          drag={false}
-          // modalStyle={modalStyle}
-        />
-        <Animated.View style={[styles.animationView,{top : (65+headerHeight.top), transform: [{translateY : animatedHeaderHeight}]}]}>
-          {/* <View>
-          <DynamicHeader animHeaderValue={scrollOffsetY}/>
-          </View> */}
-          <RenderChart />   
-          <View style={styles.buttonScroll}>
-            <FlatList
-              horizontal
-              data={list}
-              renderItem={renderFilterButtons}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.buttonContainer}
-            />
-          </View>
-          <View style={styles.transactionContainer}>
-            <Text style={styles.transactionHeading}>Transaction History</Text>
-            <TouchableOpacity
-                activeOpacity={0.7}
-                style={styles.dateContainer}
-                onPress={handleFilterPress}>
-                <MaterialCommunityIcons name="calendar-month" size={18} color={'#808080'} />
-                <Text style={styles.dateText}>
-                  {/* {startDate}<Text style={styles.dateBoldText}> | </Text>{endDate} */}
-                  {moment(startDate, 'DD-MM-YYYY').format('DD MMM YY') +
-                    ' - ' +
-                    moment(endDate, 'DD-MM-YYYY').format('DD MMM YY')}
-                </Text>
-            </TouchableOpacity>
-          </View>
-        </Animated.View>
-      </View>
-    </SafeAreaProvider>
+      <FlatList
+        data={expense?.[selectedButton]}
+        keyExtractor={(item) => item?.uniqueName?.toString()}
+        renderItem={renderComponent}
+        style={{backgroundColor:theme.colors.white}}
+        contentContainerStyle={styles.flatListContent}
+        ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>No Data ..</Text></View>}
+        ListFooterComponent={renderFooter}
+        onEndReached={() => { if (!isListEnd && !loading) setPage(page + 1); }}
+        onEndReachedThreshold={0.5}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollOffsetY}}}],
+          {useNativeDriver: false}
+        )}
+        refreshControl={
+        <RefreshControl progressViewOffset={315} refreshing={refreshing} onRefresh={()=>{
+          dispatch(resetExpenses())
+          // const newPage = page - 1;
+          setRefreshing(true);
+          setTimeout(() => {
+            setRefreshing(false)
+          }, 1000);
+          // setIsListEnd(false),
+          // setLoading(true);
+        }}/>
+      }
+      />
+      <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => bottomSheetModalExpenseRef?.current.present()} style={styles.addButton}>
+        <PlusSVG color={theme.colors.white} />
+      </TouchableOpacity>
+      <MyBottomSheetModal
+        bottomSheetModalRef={bottomSheetModalRef}
+        children={<DateScreen 
+          setStartDate={setStartDate} 
+          setEndDate={setEndDate} 
+          bottomSheetModalRef={bottomSheetModalRef} 
+          selectedDateRange={selectedDateRange} 
+          setSelectedDateRange={setSelectedDateRange}
+          prevStartDate={startDate}
+          prevEndDate={endDate}
+          />}
+      />
+      <MyBottomSheetModal
+        bottomSheetModalRef={bottomSheetModalExpenseRef}
+        children={<AddTransactionModal bottomSheetModalRef={bottomSheetModalExpenseRef} navigation={navigation} dispatch={dispatch} />}
+        // intialSnap='21%'
+        // snapArr={['21%']}
+        drag={false}
+        // modalStyle={modalStyle}
+      />
+      <Animated.View style={[styles.animationView,{top : (65+headerHeight.top), transform: [{translateY : animatedHeaderHeight}]}]}>
+        {/* <View>
+        <DynamicHeader animHeaderValue={scrollOffsetY}/>
+        </View> */}
+        <RenderChart />   
+        <View style={styles.buttonScroll}>
+          <FlatList
+            horizontal
+            data={list}
+            renderItem={renderFilterButtons}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.buttonContainer}
+          />
+        </View>
+        <View style={styles.transactionContainer}>
+          <Text style={styles.transactionHeading}>Transaction History</Text>
+          <TouchableOpacity
+              activeOpacity={0.7}
+              style={styles.dateContainer}
+              onPress={handleFilterPress}>
+              <MaterialCommunityIcons name="calendar-month" size={18} color={'#808080'} />
+              <Text style={styles.dateText}>
+                {/* {startDate}<Text style={styles.dateBoldText}> | </Text>{endDate} */}
+                {moment(startDate, 'DD-MM-YYYY').format('DD MMM YY') +
+                  ' - ' +
+                  moment(endDate, 'DD-MM-YYYY').format('DD MMM YY')}
+              </Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    </View>
   );
 };
 
@@ -367,7 +346,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatListContent: {
-    paddingTop:345,
+    paddingTop:363,
     paddingBottom: 0,
   },
   emptyListContainer: {
@@ -411,7 +390,7 @@ const styles = StyleSheet.create({
     flex:1,
     position:'absolute',
     left:0,
-    height:345,
+    height:363,
     backgroundColor:theme.colors.white
   },
   dateContainer: {

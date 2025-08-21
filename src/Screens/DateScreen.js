@@ -44,7 +44,6 @@ const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef,selectedDateRan
 
     return (
         <View style={styles.container}>
-        <StatusBar backgroundColor={theme.colors.black} />
             <View style={styles.tabBarContainer}>
                 {routes.map((route, i) => (
                     <TouchableOpacity

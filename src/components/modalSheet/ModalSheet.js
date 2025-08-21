@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,TouchableWithoutFeedback,BackHandler } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView,useBottomSheetModal } from '@gorhom/bottom-sheet';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children,modalStyle,horizontal=false,parentScrollEnable=true}) => {
 
   const {dismiss}=useBottomSheetModal()
+  const insets = useSafeAreaInsets();
   // const {backgroundColor,detached} = modalStyle;
   useEffect(() => {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -36,6 +38,7 @@ const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children
     >
       <BottomSheetScrollView horizontal={horizontal} scrollEnabled={parentScrollEnable}>
         {children}
+        <View style={{height: insets.bottom}}></View>
       </BottomSheetScrollView>
     </BottomSheetModal>
   );
