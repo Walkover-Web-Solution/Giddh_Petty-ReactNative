@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Header } from '../components/Header/Header';
-import { activeOpacity, fontSize, fonts, lineHeight } from '../theme/theme';
+import { activeOpacity, fontSize, fonts } from '../theme/theme';
 
 const EditExpenseScreen = () => {
   const [rate, setRate] = useState('');

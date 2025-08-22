@@ -32,7 +32,7 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.label}>Rate:</Text>
-        {Platform.OS === 'ios' ? <BottomSheetTextInput 
+        {Platform.OS === 'ios' ? <TextInput 
           style={styles.input}
           placeholder={'Enter Amount'}
           keyboardType="numeric"

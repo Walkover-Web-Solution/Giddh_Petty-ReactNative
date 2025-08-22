@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { ScrollView, Swipeable } from 'react-native-gesture-handler'; // Import Swipeable
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
+import { Swipeable } from 'react-native-gesture-handler'; // Import Swipeable
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import AntDesign from '@react-native-vector-icons/ant-design';
 import { useSelector } from 'react-redux';
 const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSelectedProduct,setSelectedItems}) => {
   const handleDelete = (key) => {

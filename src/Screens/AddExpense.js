@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Entypo from 'react-native-vector-icons/Entypo';
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../theme/theme';
+import Feather from '@react-native-vector-icons/feather';
+import { activeOpacity, fonts, fontSize, theme } from '../theme/theme';
 import ArrBack from '../../assets/images/back-arrow-navigation-svgrepo-com.svg';
 import { useNavigation } from '@react-navigation/native';
 import {useDispatch,useSelector} from 'react-redux';
@@ -97,7 +96,7 @@ const AddExpenseScreen = () => {
       {isSearchExpanded ? (
         <View style={styles.header}>
           <View style={styles.expandedSearch}>
-            <AntDesign name="search1" size={20} color={theme.colors.black} style={styles.searchIcon} />
+            <Feather name="search" size={20} color={theme.colors.black} style={styles.searchIcon} />
             <TextInput
               style={styles.searchInput}
               placeholder="Search Product"
@@ -106,7 +105,7 @@ const AddExpenseScreen = () => {
               autoFocus={true}
             />
             <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleOnClose}>
-              <AntDesign name="close" size={20} color={theme.colors.black} />
+              <Feather name="x" size={20} color={theme.colors.black} />
             </TouchableOpacity>
           </View>
         </View>
@@ -117,7 +116,7 @@ const AddExpenseScreen = () => {
           </TouchableOpacity>
           <Text style={styles.title}>Add Expense</Text>
           <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleSearchExpand}>
-            <AntDesign name="search1" size={24} color={theme.colors.white} paddingTop={3} />
+            <Feather name="search" size={24} color={theme.colors.white} paddingTop={3} />
           </TouchableOpacity>
         </View>
       )}

@@ -12,9 +12,9 @@ import { resetBranch, setSelectedBranch } from '../../redux/company/BranchSlice'
 import Clipboard from '@react-native-clipboard/clipboard';
 import CompanySvg from '../../..//assets/images/nocompany-ico.svg';
 import CopySVG from '../../../assets/images/copy.svg'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import AntDesign from '@react-native-vector-icons/ant-design';
+import Feather from '@react-native-vector-icons/feather';
 import { capitalizeFirstLetter } from '../../utils/capitalise';
 import { showToast } from '../../utils/toast';
 import ConfirmationComponent from './ConfirmButton';

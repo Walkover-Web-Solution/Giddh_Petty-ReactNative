@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter, Modal, Pressable } from 'react-native';
 import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import { ScreenNames } from '../../constants/NavigationConstants';
 import axios from 'axios'; 
 import {useSelector} from 'react-redux';
 import { errorToast } from '../customToast/CustomToast';
+import AntDesign from '@react-native-vector-icons/ant-design';
+
 const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepareRequestBody }) => {
   const navigation = useNavigation();
   const user = useSelector(state => state?.auth?.user);
@@ -99,8 +100,8 @@ const modalClose = ()=>{
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {isSuccess 
-              ? <Icon name='file-circle-check' size={100} color={theme.colors.black} style={styles.icon}/>
-              : <Icon name='file-circle-exclamation' size={100} color={theme.colors.black} style={styles.icon}/>
+              ? <AntDesign name='file-done' size={90} color={theme.colors.black} style={styles.icon}/>
+              : <AntDesign name='file-exclamation' size={90} color={theme.colors.black} style={styles.icon}/>
               }
             {isSuccess ? <Text style={styles.buttonText}>{apiResponse}</Text>
             : <Text style={styles.buttonText}>{apiResponse}</Text>}

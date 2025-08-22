@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { activeOpacity, fontSize, fonts, lineHeight } from '../../theme/theme';
-import axios from 'axios';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { activeOpacity, fontSize, fonts } from '../../theme/theme';
 import {useSelector,useDispatch } from 'react-redux';
 import { setSelectedPaymentMode } from '../../redux/paymentmode/paymentSlice';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 const PaymentModeSelector = ({ bottomSheetModalRef}) => {
     const dispatch = useDispatch();
     const paymentModes=useSelector((state)=>state.payment?.paymentMode);
-    // console.log("paymentModes",paymentModes);
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Select Mode of Payment</Text>

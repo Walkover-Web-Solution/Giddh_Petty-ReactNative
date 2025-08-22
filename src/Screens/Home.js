@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, FlatList, ActivityIndicator, DeviceEventEmitter, RefreshControl, ScrollView, Dimensions, Animated, Platform } from 'react-native';
-import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, ActivityIndicator, DeviceEventEmitter, RefreshControl, Animated } from 'react-native';
+import { activeOpacity, fonts, fontSize, theme } from '../theme/theme';
 import RenderChart from './renderChartComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -8,8 +8,7 @@ import { fetchExpensesSuccess, resetExpenses, setSelectedExpense } from '../redu
 import PlusSVG from '../../assets/images/plus.svg';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import { capitalizeFirstLetter } from '../utils/capitalise';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/Feather';
+import Feather from '@react-native-vector-icons/feather';
 import DateScreen from './DateScreen';
 import RenderListItem from '../components/Home/renderListComponent';
 import RenderButtonList from '../components/Home/renderButtonList';
@@ -17,8 +16,6 @@ import EmptySVG from '../../assets/images/empty_list.svg';
 import AddTransactionModal from '../components/Home/AddTransactionModal';
 import { ScreenNames } from '../constants/NavigationConstants';
 import { ProgressBar } from 'react-native-paper';
-import DynamicHeader from '../components/DynamicHeader/DynamicHeader';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
 import CustomStatusBar from '../components/Header/CustomStatusBar';
@@ -155,7 +152,7 @@ const Home = () => {
         </View>
         <View style={styles.companyBranch}>
           <Text numberOfLines={1} style={styles.companyName}>{capitalizeFirstLetter(selectedCompany?.name)}</Text>
-          {selectedBranch && <View style={styles.branchContainer}><MaterialIcons name="git-merge" size={18} color={theme.colors.gray1} /><Text style={styles.branchName}>{capitalizeFirstLetter(selectedBranch?.alias)}</Text></View>}
+          {selectedBranch && <View style={styles.branchContainer}><Feather name="git-merge" size={18} color={theme.colors.gray1} /><Text style={styles.branchName}>{capitalizeFirstLetter(selectedBranch?.alias)}</Text></View>}
         </View>
       </View>
       <View>
@@ -233,7 +230,7 @@ const Home = () => {
               activeOpacity={0.7}
               style={styles.dateContainer}
               onPress={handleFilterPress}>
-              <MaterialCommunityIcons name="calendar-month" size={18} color={'#808080'} />
+              <Feather name="calendar" size={18} color={'#808080'} />
               <Text style={styles.dateText}>
                 {/* {startDate}<Text style={styles.dateBoldText}> | </Text>{endDate} */}
                 {moment(startDate, 'DD-MM-YYYY').format('DD MMM YY') +

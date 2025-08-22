@@ -10,21 +10,19 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
+import Feather from '@react-native-vector-icons/feather';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'; // Import DateTimePickerModal
 import {useNavigation} from '@react-navigation/native';
 import Header from '../components/Header/Header';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import RowWithButtons from '../components/Expense/ButtonView';
 import PaymentModeSelector from '../components/Expense/ModalComponent';
-import {activeOpacity, fonts, fontSize, fontSizes, theme} from '../theme/theme';
+import {activeOpacity, fonts, fontSize, theme} from '../theme/theme';
 import {useSelector} from 'react-redux';
 import {useRoute} from '@react-navigation/native';
 import ProductServicesList from '../components/Expense/SelectedProduct';
 import EditExpense from '../components/Expense/EditExpenseModal';
 import axios from 'axios';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
 import {errorToast} from '../components/customToast/CustomToast';
 import {ScreenNames} from '../constants/NavigationConstants';
 import moment from 'moment';
@@ -210,7 +208,7 @@ const NewExpense = () => {
               style={styles.iconContainer}
               activeOpacity={activeOpacity.regular}
               onPress={showDatePicker}>
-              <AntDesign name="calendar" size={22} color={theme.colors.black} />
+              <Feather name="calendar" size={22} color={theme.colors.black} />
               <Text style={styles.text}>
                 {selectedDate
                   ? moment(selectedDate, 'DD-MM-YYYY').format('DD MMMM YY')

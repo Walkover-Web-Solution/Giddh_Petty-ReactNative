@@ -97,6 +97,7 @@ const TransactionDetails = ({route}) => {
         imageIndex={visible?.index}
         visible={visible?.isVisible}
         onRequestClose={() => setIsVisible(false)}
+        presentationStyle="overFullScreen"
       />
       <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<ImageViewer bottomSheetModalRef={bottomSheetModalRef} fileNames={fileNames} setIsVisible={setIsVisible} />} horizontal={false} parentScrollEnable={false} snapArr={['35%']}/>
     </View>

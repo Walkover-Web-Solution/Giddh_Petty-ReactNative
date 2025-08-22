@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { activeOpacity, fontSize, fonts, spacing, theme } from '../../theme/theme';
-import Feather from 'react-native-vector-icons/Feather';
+import Feather from '@react-native-vector-icons/feather';
 import { ScreenNames } from '../../constants/NavigationConstants';
 import { resetPayment } from '../../redux/paymentmode/paymentSlice';
 
