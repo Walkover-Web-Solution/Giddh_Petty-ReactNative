@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter, Modal, Pressable } from 'react-native';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import { useNavigation } from '@react-navigation/native';
 import { ScreenNames } from '../../constants/NavigationConstants';
 import axios from 'axios'; 
@@ -14,7 +14,6 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
   const [showModal,setShowModal] = useState(false);
   const [isSuccess,setIsSuccess] = useState(false);
   const [apiResponse,setApiResponse] = useState('');
-  const selectedMode = useSelector((state)=>state?.payment?.selectedMode);
   const handleSaveButton = async () => {
     const requestBody = prepareRequestBody();
     console.log("enter",requestBody);

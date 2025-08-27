@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large.size,
     fontFamily: fonts.bold,
     color: theme.colors.white,
-    lineHeight:19,
     paddingLeft:20,
     lineHeight: fontSize.large.lineHeight
   },
@@ -216,13 +215,11 @@ const styles = StyleSheet.create({
   subtitle: {
     fontFamily: fonts.medium,
     fontSize: fontSize.regular.size,
-    color: theme.colors.black,
-    lineHeight: fontSize.regular.lineHeight
+    color: theme.colors.black
   },
   text : { 
     fontFamily: fonts.medium,
-    fontSize:fontSize.regular.size,
-    lineHeight:fontSize.regular.lineHeight 
+    fontSize:fontSize.regular.size 
   },
   doneBtn : {
     width:'80%',

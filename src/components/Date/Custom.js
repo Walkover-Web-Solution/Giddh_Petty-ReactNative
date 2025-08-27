@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fonts, fontSize, theme } from '../../theme/theme';
 import { errorToast } from '../customToast/CustomToast';
 import { useDispatch } from 'react-redux';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
@@ -133,8 +133,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#333',
         fontSize: fontSize.regular.size,
-        fontFamily: fonts.regular,
-        lineHeight: fontSize.regular.lineHeight
+        fontFamily: fonts.regular
     },
     doneButtonText: {
         color: 'white',

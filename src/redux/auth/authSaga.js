@@ -90,7 +90,7 @@ function* signInWithApple({ payload }) {
       state: payload.state,
       user: payload.user
   });
-    yield addUserDeatilsToLogRocket(response?.body?.user?.name, response?.body?.user?.email);
+    yield addUserDeatilsToLogRocket(response?.data?.body?.user?.name, response?.data?.body?.user?.email);
     if (response?.data && response?.data?.body && response?.data?.body?.session && response?.data?.body?.session?.id) {
       yield put(signInSuccess({ user: response.data.body, photo: null }));
     }else if (

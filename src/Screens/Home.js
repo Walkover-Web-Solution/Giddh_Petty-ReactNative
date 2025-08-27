@@ -290,8 +290,7 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: fontSize.large.size,
     fontFamily: fonts.bold,
-    color: theme.colors.white,
-    lineHeight: fontSize.large.lineHeight
+    color: theme.colors.white
   },
   branchContainer: {
     flexDirection: 'row',
@@ -299,18 +298,9 @@ const styles = StyleSheet.create({
   },
   branchName: {
     fontSize: fontSize.small.size,
-    lineHeight: fontSize.small.lineHeight,
     color: theme.colors.gray1,
-    // paddingBottom: 5,
     fontFamily: fonts.regular,
     marginLeft: 5,
-    // marginTop:3,
-  },
-  heading: {
-    fontSize: fontSize.xLarge.size,
-    lineHeight:fontSize.xLarge.lineHeight,
-    fontFamily: fonts.regular,
-    marginLeft: 10,
   },
   buttonScroll: {
     backgroundColor: theme.colors.white,
@@ -331,7 +321,6 @@ const styles = StyleSheet.create({
   },
   transactionHeading: {
     fontSize: fontSize.large.size,
-    lineHeight: fontSize.large.lineHeight,
     fontFamily: fonts.bold,
     backgroundColor: theme.colors.white,
   },
@@ -352,7 +341,6 @@ const styles = StyleSheet.create({
   },
   emptyListText: {
     fontSize: fontSize.xLarge.size,
-    lineHeight: fontSize.xLarge.lineHeight,
     fontFamily: fonts.medium,
   },
   footer: {
@@ -403,13 +391,11 @@ const styles = StyleSheet.create({
   dateText : { 
     fontFamily: fonts.medium,
     fontSize: fontSize.small.size,
-    lineHeight: fontSize.small.lineHeight,
     marginLeft: 5 
   },
   dateBoldText: {
     fontFamily: fonts.medium,
-    fontSize: fontSize.regular.size, 
-    lineHeight: fontSize.regular.lineHeight
+    fontSize: fontSize.regular.size
   }
 });
 

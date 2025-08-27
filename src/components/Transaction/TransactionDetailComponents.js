@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import ArrBack from '../../../assets/images/back-arrow-navigation-svgrepo-com.svg';
 import { useNavigation } from '@react-navigation/native';
 
@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
     fontFamily:fonts.bold,
     textAlign: 'center',
     marginLeft: 76,
-    lineHeight: fontSize.large.lineHeight
   },
   card: {
     flexDirection: 'row',
@@ -82,14 +81,12 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: fontSize.large.size,
-    fontFamily:fonts.bold,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily:fonts.bold
   },
   cardSubtitle: {
     fontSize: fontSize.regular.size,
     fontFamily:fonts.regular,
     color: 'gray',
-    lineHeight: fontSize.regular.lineHeight
   },
   detailRow: {
     flexDirection: 'row',
@@ -100,13 +97,11 @@ const styles = StyleSheet.create({
   detailLabel: {
     color: theme.colors.gray,
     fontFamily:fonts.regular,
-    fontSize:fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight
+    fontSize:fontSize.regular.size
   },
   detailValue: {
     fontFamily:fonts.bold,
-    fontSize:fontSize.regular.size,
-    lineHeight:fontSize.regular.lineHeight
+    fontSize:fontSize.regular.size
   },
 });
 

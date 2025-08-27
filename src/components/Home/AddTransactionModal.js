@@ -85,8 +85,7 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
     fontFamily: fonts.bold,
     textAlign: 'center',
-    fontSize:fontSize.large.size,
-    lineHeight:fontSize.large.lineHeight
+    fontSize:fontSize.large.size
   },
   closeButton: {
     marginTop: 0,

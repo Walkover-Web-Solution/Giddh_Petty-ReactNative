@@ -171,8 +171,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     color: 'white',
     fontFamily: fonts.medium,
-    fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight,
+    fontSize: fontSize.regular.size
   },
 });
 

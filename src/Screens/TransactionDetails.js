@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   currency: {
     fontFamily:fonts.bold,
     fontSize: fontSize.xxLarge.size,
-    lineHeight:fontSize.xxLarge.lineHeight,
     paddingTop: 3,
     paddingRight: 3,
   },
@@ -187,7 +186,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginTop: 18,
     fontSize: fontSize.large.size,
-    lineHeight:fontSize.large.lineHeight,
     fontFamily:fonts.bold
   },
   detailRow: {

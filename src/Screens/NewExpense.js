@@ -388,11 +388,6 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  title: {
-    fontSize: fontSize.large.size,
-    fontFamily: fonts.medium,
-    lineHeight: fontSize.large.lineHeight,
-  },
   userContainer: {
     borderRadius: 40,
     elevation: 3,
@@ -422,7 +417,6 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontFamily: fonts.regular,
     fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight,
     marginBottom: 6,
   },
   cardContainer: {
@@ -458,7 +452,6 @@ const styles = StyleSheet.create({
   },
   selectImageText: {
     fontSize: fontSize.small.size,
-    lineHeight: fontSize.small.lineHeight,
     color: theme.colors.black,
     writingDirection: 'rtl',
     textAlign: 'center',
@@ -511,8 +504,7 @@ const styles = StyleSheet.create({
     // top:2,
     color: theme.colors.black,
     fontFamily: fonts.bold,
-    fontSize: fontSize.xSmall.size,
-    lineHeight: fontSize.xSmall.lineHeight,
+    fontSize: fontSize.xSmall.size
   },
   paymentRow: {
     flexDirection: 'row',
@@ -555,7 +547,6 @@ const styles = StyleSheet.create({
   },
   dateButtonText: {
     fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight,
     color: theme.colors.secondary,
     fontFamily: fonts.regular,
   },
@@ -582,25 +573,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
   },
-  bottomButtonText: {
-    color: theme.colors.secondary,
-    fontSize: fontSize.large.size,
-    lineHeight: fontSize.large.lineHeight,
-    fontFamily: fonts.bold,
-  },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
     marginTop: 30,
     paddingHorizontal: 10,
-  },
-  headerText: {
-    alignSelf: 'center',
-    marginLeft: 30,
-    fontFamily: fonts.regular,
-    fontSize: fontSize.xLarge.size,
-    lineHeight: fontSize.xLarge.lineHeight,
   },
   text: {
     fontSize: fontSize.regular.size,
@@ -621,7 +599,6 @@ const styles = StyleSheet.create({
   payText: {
     fontFamily: fonts.bold,
     fontSize: fontSize.small.size,
-    lineHeight: fontSize.small.lineHeight,
     color: theme.colors.gray,
     marginTop: 10,
   },
@@ -667,8 +644,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     fontFamily: fonts.medium,
-    fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight,
+    fontSize: fontSize.regular.size
   },
   btnView: {
     backgroundColor: theme.colors.black,

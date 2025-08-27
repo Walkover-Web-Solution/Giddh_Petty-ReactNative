@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
         fontSize: fontSize.large.size,
         fontFamily: fonts.bold,
         marginBottom: 10,
-        lineHeight: fontSize.large.lineHeight
     },
     searchContainer: {
         flexDirection: 'row',
@@ -66,13 +65,12 @@ const styles = StyleSheet.create({
     option: {
         flex: 1,
         justifyContent: 'center',
-        paddingVertical: 20,
+        paddingVertical: 15,
         marginHorizontal: 5,
     },
     optionText: {
         fontSize: fontSize.large.size,
         fontFamily: fonts.medium,
-        lineHeight: fontSize.large.lineHeight
     },
 });
 

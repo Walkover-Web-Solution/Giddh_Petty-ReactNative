@@ -152,9 +152,9 @@ PODS:
   - libwebp/sharpyuv (1.5.0)
   - libwebp/webp (1.5.0):
     - libwebp/sharpyuv
-  - LogRocket (1.54.0)
-  - logrocket-react-native (1.54.0):
-    - LogRocket (= 1.54.0)
+  - LogRocket (1.56.1)
+  - logrocket-react-native (1.56.1):
+    - LogRocket (= 1.56.1)
     - React
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
@@ -1673,7 +1673,7 @@ PODS:
   - react-native-vector-icons-fontisto (12.3.0)
   - react-native-vector-icons-material-design-icons (12.3.0)
   - react-native-vector-icons-material-icons (12.3.0)
-  - react-native-webview (13.15.0):
+  - react-native-webview (13.16.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2075,8 +2075,30 @@ PODS:
     - Yoga
   - RNCMaskedView (0.1.11):
     - React
-  - RNDateTimePicker (3.5.2):
+  - RNDateTimePicker (8.4.4):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNFastImage (8.6.3):
     - React-Core
     - SDWebImage (~> 5.11.1)
@@ -2715,8 +2737,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   hermes-engine: 44bb6fe76a6eb400d3a992e2d0b21946ae999fa9
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
-  LogRocket: f07afe179f50f523fe9bfc850fbc12cb08f20981
-  logrocket-react-native: b3116503ba965e5d10f4262c41db98acd9da798f
+  LogRocket: 70fdbc5cde15913dc085f201bf24676379628f2b
+  logrocket-react-native: a50ea536eba41296cd862b4f498f52d88f309db0
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -2764,7 +2786,7 @@ SPEC CHECKSUMS:
   react-native-vector-icons-fontisto: e4bd066699d05136908cefa3c98526c32c02cfad
   react-native-vector-icons-material-design-icons: c502df5b988ce85d6c7d2b7ee909818315760b82
   react-native-vector-icons-material-icons: eff7417eb1ac6c740ab802837ad34b8233fded34
-  react-native-webview: f23e694e18f05a5340a3432c57b4145d520333db
+  react-native-webview: 31e5182717002afb31a4452498e890daf28a77de
   React-NativeModulesApple: a398af5d9799bb49f0b0fabab09c362a3899d8bc
   React-oscompat: 56b4766e96b06843a3af49a6763ef40992e720aa
   React-perflogger: 75a7a499c3839c839e76e30a175c3c81492135b7
@@ -2802,7 +2824,7 @@ SPEC CHECKSUMS:
   RNCCheckbox: 471ebdc33884c084f362615c1ef3507496cc07f1
   RNCClipboard: b202bc12352f3e213f94f6d9bf2e8c5a2739192e
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
+  RNDateTimePicker: fbf10bdffd59d64302f328a3cf941c6d3debb6e1
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: a3e139715386fe79a09c387f2dbeb6890eb05b39
   RNFBAuth: b967a31a2ce307557a4237564d8e5f7cd83a316f

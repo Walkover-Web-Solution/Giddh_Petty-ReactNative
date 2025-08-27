@@ -8,8 +8,8 @@ import SplashScreen from 'react-native-splash-screen';
 import { environment } from './src/environments/environment.prod';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import { persistor, store } from './src/redux/index';
-import Toast,{BaseToast} from 'react-native-toast-message';
-import {Text, StyleSheet, View} from 'react-native';
+import Toast from 'react-native-toast-message';
+import {Text, StyleSheet} from 'react-native';
 import { fontSize, fonts, theme } from './src/theme/theme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SystemBars } from "react-native-edge-to-edge"
@@ -55,7 +55,6 @@ const styles  = StyleSheet.create({
     color:'black',
     fontFamily:fonts.medium,
     fontSize:fontSize.regular.size,
-    lineHeight:fontSize.regular.lineHeight,
     marginBottom:40
   },
   container : {

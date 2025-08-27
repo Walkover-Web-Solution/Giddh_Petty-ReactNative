@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../theme/theme';
+import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
 import { setSelectedBranch } from '../redux/company/BranchSlice';
 import  Header  from '../components/Header/Header';
 import { useNavigation } from '@react-navigation/native';
@@ -69,15 +69,13 @@ const styles = StyleSheet.create({
   branchName: {
     fontSize: fontSize.regular.size,
     fontFamily: fonts.regular,
-    textDecorationLine: 'none',
-    lineHeight: fontSize.regular.lineHeight
+    textDecorationLine: 'none'
   },
   tickIcon: {
     fontSize: fontSize.large.size,
     color: theme.colors.secondary,
     paddingRight: 40,
-    fontFamily: fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily: fonts.regular
   },
 });
 

@@ -151,15 +151,13 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: fontSize.regular.size,
     fontFamily: fonts.regular,
-    textDecorationLine: 'none',
-    lineHeight: fontSize.regular.lineHeight
+    textDecorationLine: 'none'
   },
   tickIcon: {
     fontSize: fontSize.large.size,
     color: theme.colors.secondary,
     paddingRight: 40,
-    fontFamily: fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily: fonts.regular
   },
   modalCancelView :{
     height: height * 0.3, 
@@ -184,12 +182,9 @@ const styles = StyleSheet.create({
   },
   switchCompanyButtonText: {
     color: 'black',
-    // fontWeight: '400',
     fontSize: fontSize.large.size,
     paddingHorizontal:20,
-    // paddingBottom:3,
-    fontFamily:fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily:fonts.regular
   }
 });
 

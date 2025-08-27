@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler'; // Import Swipeable
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import { useSelector } from 'react-redux';
 const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSelectedProduct,setSelectedItems}) => {
@@ -55,11 +55,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     // marginTop: 3,
   },
-  title: {
-    fontSize: fontSize.large.size,
-    fontFamily: fonts.medium,
-    lineHeight: fontSize.large.lineHeight
-  },
   item: {
     justifyContent: 'space-between',
     paddingVertical: 5,
@@ -71,8 +66,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: fontSize.large.size,
-    fontFamily:fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily:fonts.regular
   },
   itemSubtitle: {
     fontSize: fontSize.regular.size,
@@ -86,13 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
     width: 75,
     marginBottom: 7,
-  },
-  actionText: {
-    color: 'white',
-    fontFamily: fonts.medium,
-    fontSize: 16,
-    lineHeight: lineHeight.large
-  },
+  }
 });
 
 export default ProductServicesList;

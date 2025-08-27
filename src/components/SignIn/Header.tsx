@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { fontSize, fontSizes, fonts, lineHeight, styleFonts, theme } from '../../theme/theme';
+import { fontSize, fonts, styleFonts, theme } from '../../theme/theme';
 import GidhhLogo from '../../../assets/images/Giddh-Bluesvg(1).png';
 
 const Header: React.FC = () => {
@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: fonts.bold,
     fontSize: fontSize.max.size,
+    lineHeight: 40,
     color: theme.colors.black,
-    marginRight: 10,
-    lineHeight: fontSize.max.lineHeight
+    marginRight: 5,
   },
   headerLogo: {
     width: 120,
@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: fontSize.xxxLarge.size,
-    fontFamily : styleFonts.bold,
-    lineHeight: fontSize.xxxLarge.lineHeight
+    fontFamily : styleFonts.bold
   }
 });

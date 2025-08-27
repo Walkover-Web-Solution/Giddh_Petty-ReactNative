@@ -1,7 +1,7 @@
 import { View, Text,StyleSheet,TouchableOpacity,Modal } from 'react-native'
 import React,{useState} from 'react'
 import SVGImg from '../../../assets/images/icons8-google-20.svg'
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import SVGMsg from '../../../assets/images/msg.svg'
 import { useDispatch } from 'react-redux';
 import { OTPVerification } from '@msg91comm/react-native-sendotp';

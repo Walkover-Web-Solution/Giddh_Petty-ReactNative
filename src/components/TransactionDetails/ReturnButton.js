@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { activeOpacity, fontSize, fonts, lineHeight, spacing, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, spacing, theme } from '../../theme/theme';
 const ReturnButton = ({text,color}) => {
     const navigation=useNavigation();
   return (

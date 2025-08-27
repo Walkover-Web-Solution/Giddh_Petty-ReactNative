@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet ,TextInput, Platform} from 'react-native';
-import { activeOpacity, fontSize, fonts, lineHeight, spacing, theme } from '../../theme/theme';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { activeOpacity, fontSize, fonts, spacing, theme } from '../../theme/theme';
 
 const ConfirmationComponent = ({handleLogout,handleClose}) => {
 
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.xLarge.size,
     marginBottom: 10,
     fontFamily:fonts.medium,
-    lineHeight: fontSize.xLarge.lineHeight
   },
   buttonContainer: {
     flexDirection: 'row',
