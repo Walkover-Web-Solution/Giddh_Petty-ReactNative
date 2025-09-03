@@ -8,13 +8,16 @@ import {useSelector} from 'react-redux';
 import { errorToast } from '../customToast/CustomToast';
 import AntDesign from '@react-native-vector-icons/ant-design';
 
-const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepareRequestBody }) => {
+const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepareRequestBody, isSubmittingRef }) => {
   const navigation = useNavigation();
   const user = useSelector(state => state?.auth?.user);
   const [showModal,setShowModal] = useState(false);
   const [isSuccess,setIsSuccess] = useState(false);
   const [apiResponse,setApiResponse] = useState('');
   const handleSaveButton = async () => {
+    if(isSubmittingRef.current){
+      return;
+    }
     const requestBody = prepareRequestBody();
     console.log("enter",requestBody);
     if(!requestBody?.baseAccount?.uniqueName){
@@ -31,6 +34,7 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
       return;
     }
     const entryType = name === 'Income' ? 'Sales' : name;
+    isSubmittingRef.current = true;
     try {
       const response = await axios.post(`https://api.giddh.com/company/${companyUniqueName}/pettycash-manager/generate?entryType=${entryType.toLowerCase()}`, requestBody, {
         headers: {
@@ -64,6 +68,7 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
   };
 const modalClose = ()=>{
   setShowModal(!showModal);
+  isSubmittingRef.current = false;
   if(isSuccess){
     DeviceEventEmitter.emit('successResponse');
     navigation.navigate(ScreenNames.DRAWER);
@@ -81,11 +86,13 @@ const modalClose = ()=>{
         <Text style={styles.buttonText}>Add {name}</Text>
       </TouchableOpacity> */}
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, isSubmittingRef.current && styles.disabledButton]}
         activeOpacity={activeOpacity.regular}
         onPress={handleSaveButton}
       >
-        <Text style={styles.buttonText}>Save</Text>
+        <Text style={[styles.buttonText, isSubmittingRef.current && styles.disabledButtonText]}>
+          {isSubmittingRef.current ? 'Saving...' : 'Save'}
+        </Text>
       </TouchableOpacity>
     </View>
       <Modal 
@@ -190,6 +197,12 @@ const styles = StyleSheet.create({
   },
   icon : {
     padding : 10
+  },
+  disabledButton: {
+    opacity: 0.6,
+  },
+  disabledButtonText: {
+    opacity: 0.8,
   }
 });
 

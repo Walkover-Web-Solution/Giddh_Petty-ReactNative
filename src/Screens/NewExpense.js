@@ -47,6 +47,7 @@ const NewExpense = () => {
   const paymentMode = useSelector(state => state?.payment?.selectedMode);
   const selectedCompany = useSelector(state => state?.company?.selectedCompany);
   const insets = useSafeAreaInsets();
+  const isSubmittingRef = useRef(false);
   const calculateTotalAmount = () => {
     let totalAmount = 0;
     Object.values(selectedItems).forEach(item => {
@@ -334,6 +335,7 @@ const NewExpense = () => {
             selectedItem={selectedItems}
             getBack={getBack}
             prepareRequestBody={prepareRequestBody}
+            isSubmittingRef={isSubmittingRef}
           />
         </View>
         <View style={{height: insets.bottom}}></View>
