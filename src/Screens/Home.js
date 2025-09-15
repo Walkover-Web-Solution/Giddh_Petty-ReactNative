@@ -94,8 +94,8 @@ const Home = () => {
   useEffect(()=>{
     if(refreshing){
       setPage(1);
-      setLoading(true);
-      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: page, setLoading: setLoading, setIsListEnd: setIsListEnd,startDate:startDate,endDate:endDate } });
+      setIsListEnd(false);
+      dispatch({ type: 'expenses/fetchExpensesRequest', payload: { uniqueName: selectedCompany?.uniqueName, page: 1, setLoading: setLoading, setIsListEnd: setIsListEnd, startDate: startDate, endDate: endDate } });
     }
   },[refreshing])
 
@@ -165,8 +165,8 @@ const Home = () => {
         renderItem={renderComponent}
         style={{backgroundColor:theme.colors.white}}
         contentContainerStyle={styles.flatListContent}
-        ListEmptyComponent={<View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>No Data ..</Text></View>}
-        ListFooterComponent={renderFooter}
+        ListEmptyComponent={!refreshing && !loading ? <View style={styles.emptyListContainer}><EmptySVG /><Text style={styles.emptyListText}>No Data ..</Text></View> : null}
+        ListFooterComponent={!refreshing ? renderFooter : null}
         onEndReached={() => { if (!isListEnd && !loading) setPage(page + 1); }}
         onEndReachedThreshold={0.5}
         scrollEventThrottle={16}
@@ -175,15 +175,14 @@ const Home = () => {
           {useNativeDriver: false}
         )}
         refreshControl={
-        <RefreshControl progressViewOffset={315} refreshing={refreshing} onRefresh={()=>{
+        <RefreshControl progressViewOffset={340} refreshing={refreshing} onRefresh={()=>{
           dispatch(resetExpenses())
-          // const newPage = page - 1;
           setRefreshing(true);
+          setPage(1);
+          setIsListEnd(false);
           setTimeout(() => {
             setRefreshing(false)
-          }, 1000);
-          // setIsListEnd(false),
-          // setLoading(true);
+          }, 500);
         }}/>
       }
       />
