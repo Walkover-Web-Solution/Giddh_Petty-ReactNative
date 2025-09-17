@@ -36,7 +36,7 @@ const MyBottomSheetModal = ({snapArr=['50%','60%'], bottomSheetModalRef,children
       keyboardBehavior={'extend'}
       keyboardBlurBehavior={'restore'}
     >
-      <BottomSheetScrollView horizontal={horizontal} scrollEnabled={parentScrollEnable}>
+      <BottomSheetScrollView horizontal={horizontal} scrollEnabled={parentScrollEnable} keyboardShouldPersistTaps='handled'>
         {children}
         <View style={{height: insets.bottom}}></View>
       </BottomSheetScrollView>
