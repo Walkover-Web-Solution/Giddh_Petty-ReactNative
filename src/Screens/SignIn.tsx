@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, Modal, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Platform, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import Header from '../components/SignIn/Header';
@@ -23,19 +23,14 @@ const SignIn: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const navigation = useNavigation();
-  // const isAuthenticated = useSelector((state:any)=>state.auth.isAuthenticated);
   const isLoading = useSelector((state:any)=>state?.auth?.loading);
   const TFA_Start = useSelector(state => state?.auth?.tfaStart)
-  // const [data, setData] = useState<SignInData | null>(null);
-  // const [loading,setLoading] = useState(false);
   const handleOtpSignIn = () => {
     dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_OTP' } });
     setModalVisible(true);
   };
-  // useEffect(()=>{},[isLoading])
   const handleSignIn = () => {
     dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_GOOGLE' } });
-    // setLoading(true);
   };
 
   async function onAppleButtonPress() {
@@ -66,7 +61,6 @@ const SignIn: React.FC = () => {
   const handleOtpCompletion = async (data: string) => {
     const response: SignInData = JSON.parse(data);
     dispatch({type:'SIGN_IN_OTP',payload:response});
-    // setLoading(true);
     setModalVisible(false);
   };
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
 import { useSelector } from 'react-redux';
 import { capitalizeFirstLetter } from '../utils/capitalise';
@@ -35,15 +35,6 @@ const TransactionDetails = ({route}) => {
     <View style={styles.container}>
       <View style={styles.subContainer}>
       <CustomStatusBar backgroundColor={theme.colors.black}/>
-      {/* <AnimatedLoader
-        visible={true}
-        overlayColor="rgba(255,255,255)"
-        source={require("./progessBar.json")}
-        animationStyle={styles.lottie}
-        speed={1}>
-      
-      </AnimatedLoader> */}
-      {/* <ProgressBar indeterminate visible={true} color={theme.colors.primary}/> */}
       <View style={styles.blackBackground}>
         <Header title='Transaction Details'/>
       </View>
@@ -90,7 +81,6 @@ const TransactionDetails = ({route}) => {
           </View>
         </View>
       </View>
-      {/* <ReturnButton text={'Edit'} color={theme.colors.black}/> */}
       </View>
       <ImageView
         images={fileNames}
@@ -116,8 +106,6 @@ const styles = StyleSheet.create({
   blackBackground: {
     backgroundColor: theme.colors.black,
     height: '100%',
-    // borderBottomLeftRadius: 50,
-    // borderBottomRightRadius: 50,
   },
   whiteSheet: {
     backgroundColor: theme.colors.white,
@@ -280,10 +268,6 @@ const styles = StyleSheet.create({
     height:'100%',
     borderRadius:50
   },
-  // lottie: {
-  //   width: 100,
-  //   height: 100
-  // }
   txnIdContainer : {
     flexDirection:'row', 
     alignSelf:'center',

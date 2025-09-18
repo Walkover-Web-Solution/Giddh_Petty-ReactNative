@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, View, Text, StyleSheet } from 'react-native';
+import { Animated, View, StyleSheet } from 'react-native';
 import { fontSize, fonts, theme } from '../theme/theme';
 
 const AnimatedTextLines = ({ lines }) => {

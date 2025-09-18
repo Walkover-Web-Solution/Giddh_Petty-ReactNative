@@ -9,12 +9,6 @@ const PaymentModeSelector = ({ bottomSheetModalRef}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Select Mode of Payment</Text>
-            {/* <View style={styles.searchContainer}>
-                <View style={styles.searchField}>
-                    <AntDesign name="search1" size={20} color="black" style={styles.searchIcon} />
-                    <BottomSheetTextInput placeholder='Search...' style={styles.input} />
-                </View>
-            </View> */}
             {paymentModes.map(payment => (
                 <TouchableOpacity key={payment?.uniqueName} style={styles.option} activeOpacity={activeOpacity.regular} onPress={()=>{dispatch(setSelectedPaymentMode(payment));bottomSheetModalRef?.current.dismiss()}}>
                     <Text style={styles.optionText}>{payment?.name}</Text>

@@ -8,18 +8,8 @@ const EditExpenseScreen = () => {
   const [amount, setAmount] = useState('');
   const [discount, setDiscount] = useState('');
   const [fixedDiscount, setFixedDiscount] = useState('');
-  const [selectedButton, setSelectedButton] = useState('HSN');
   const [description, setDescription] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
-
-  const handleButtonSelection = (buttonName) => {
-    setSelectedButton(buttonName);
-  };
-
-  const calculateTotalAmount = () => {
-    const calculatedAmount = // Your calculation logic here using rate, amount, discount, fixedDiscount
-    setTotalAmount(calculatedAmount);
-  };
 
   return (
     <>
@@ -126,7 +116,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    // fontWeight: 'bold',
     fontFamily:fonts.bold,
     fontSize:fontSize.regular.size,
     lineHeight:fontSize.regular.lineHeight

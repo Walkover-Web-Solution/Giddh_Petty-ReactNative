@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Feather from '@react-native-vector-icons/feather';
-import DateTimePickerModal from 'react-native-modal-datetime-picker'; // Import DateTimePickerModal
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../components/Header/Header';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
@@ -36,7 +36,6 @@ const NewExpense = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isYesterdayFirst, setIsYesterdayFirst] = useState(true);
-  const [description, setDescription] = useState('');
   const [selectedItems, setSelectedItems] = useState({});
   const bottomSheetModalRef = useRef(null);
   const bottomSheetModalRefExpense = useRef(null);
@@ -62,7 +61,6 @@ const NewExpense = () => {
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
-  // console.log(selectedItems,'selectedItems')
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
@@ -186,7 +184,6 @@ const NewExpense = () => {
   };
 
   return (
-    // <View style={styles.container}>
       <ScrollView style={styles.container}>
         <CustomStatusBar backgroundColor={theme.colors.black} />
         <Header title={'New ' + name + ' Claim'} />
@@ -369,7 +366,6 @@ const NewExpense = () => {
           onCancel={hideDatePicker}
         />
       </ScrollView>
-    // </View>
   );
 };
 
@@ -377,7 +373,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    // height:770,
     backgroundColor: theme.colors.black,
   },
   header: {
@@ -423,7 +418,6 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: 'white',
-    // height: '75%',
     borderRadius: 16,
     marginHorizontal: 16,
     overflow: 'hidden',
@@ -501,9 +495,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.LightGray,
   },
   closeButtonText: {
-    // position: 'absolute',
-    // right: -4.5,
-    // top:2,
     color: theme.colors.black,
     fontFamily: fonts.bold,
     fontSize: fontSize.xSmall.size
@@ -528,7 +519,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   dateRow: {
-    // borderWidth:2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -536,16 +526,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   iconContainer: {
-    // marginRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
   dateButton: {
-    // paddingHorizontal: 10,
-    // paddingVertical: 5,
-    // borderRadius: 5,
-    // borderWidth:3
-    // marginHorizontal: 5,
   },
   dateButtonText: {
     fontSize: fontSize.regular.size,
@@ -591,9 +575,6 @@ const styles = StyleSheet.create({
   closeBtnIcon: {
     backgroundColor: theme.colors.gray2,
     flex: 1,
-    // position: 'absolute',
-    // top: 3.5,
-    // right: -8.5,
     borderRadius: 10,
     width: 15,
     height: 15,
@@ -625,7 +606,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.LightGray,
     borderRadius: 5,
     paddingHorizontal: 10,
-    // paddingVertical:5,
     justifyContent: 'center',
     maxHeight: 85,
     marginTop: 5,
@@ -652,7 +632,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.black,
     width: '100%',
     marginTop: 20,
-    // position: 'absolute',
   },
   buttonText: {
     color: 'black',

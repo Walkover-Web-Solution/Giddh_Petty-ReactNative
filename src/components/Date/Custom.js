@@ -23,7 +23,6 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef, setSel
 
     const handleStartDateConfirm = (date) => {
         setStartDateLocal(date);
-        // setStartDate(formatDate(date));
         hideStartDatePickerModal();
     };
 
@@ -37,7 +36,6 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef, setSel
 
     const handleEndDateConfirm = (date) => {
         setEndDateLocal(date);
-        // setEndDate(formatDate(date));
         hideEndDatePickerModal();
     };
 
@@ -123,7 +121,6 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        // paddingHorizontal: 10,
         elevation: 5,
         marginVertical:10,
         marginHorizontal:20,

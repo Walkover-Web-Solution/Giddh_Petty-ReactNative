@@ -34,11 +34,6 @@ const AddTransactionModal = ({ bottomSheetModalRef, navigation, dispatch }) => {
         <Text style={styles.buttonText}>Expense</Text>
       </View>
     </View>
-    {/* <View style={{alignItems:'center'}}>
-    <TouchableOpacity style={styles.closeButton} onPress={() => bottomSheetModalRef?.current?.dismiss()}>
-      <Feather name="x-circle" size={25} color={theme.colors.black} />
-    </TouchableOpacity>
-    </View> */}
     </View>
   );
 };
@@ -52,18 +47,13 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    // marginHorizontal:20,
     marginTop: 10,
     flexDirection:'row',
     padding:spacing.small,
-    // height:140,
-    // borderWidth:2
   },
   button: {
     paddingVertical: spacing.large,
     paddingHorizontal: spacing.large,
-    // width:100,
-    // height:25,
     width: 60,
     height: 60,
     backgroundColor:theme.colors.black,
@@ -75,8 +65,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 1,
-    // marginHorizontal: 10,
-    // backgroundColor: 'white',
   },
   buttonView : {
     alignItems:'center'
@@ -90,19 +78,11 @@ const styles = StyleSheet.create({
   closeButton: {
     marginTop: 0,
     alignItems:'center',
-
-    //  position: 'absolute',
-    // bottom: '7%',
-    // right: '50%',
-    // transform: [{ translateX: 30 }, { translateY: 30 }],
     width: 60,
     height: 60,
     borderRadius: 30,
     backgroundColor: theme.colors.black,
-    // alignItems: 'center',
     justifyContent: 'center',
-    // elevation: 5,
-    // marginBottom: 20,
   },
   icon : {
     width:60,

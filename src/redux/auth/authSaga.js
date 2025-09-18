@@ -3,8 +3,8 @@
 import { put, takeLatest, call, select } from 'redux-saga/effects';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import api, { loginInstance } from '../../../interceptor'; // Import the axios interceptor instance
-import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInStart, twoFactorAuthenticationStarted, VERIFY_OTP, verifyOTPFailed } from './authSlice';
-import { Alert, AsyncStorage } from 'react-native';
+import { signInSuccess, signInFailure, signInStart, twoFactorAuthenticationStarted, VERIFY_OTP, verifyOTPFailed } from './authSlice';
+import { Alert } from 'react-native';
 import LogRocket from '@logrocket/react-native';
 
 const addUserDeatilsToLogRocket = (userName, userEmail) => {

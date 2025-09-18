@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
 import FastImage from 'react-native-fast-image';
 import { activeOpacity } from "../../theme/theme";
 import LoaderKit from 'react-native-loader-kit'

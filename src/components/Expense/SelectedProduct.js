@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Swipeable } from 'react-native-gesture-handler'; // Import Swipeable
+import { Swipeable } from 'react-native-gesture-handler';
 import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import { useSelector } from 'react-redux';
@@ -16,13 +16,11 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
   const renderRightActions = (progress, dragX, key) => {
     return (
       <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => handleDelete(key)} style={styles.rightAction}>
-        {/* <Text style={styles.actionText}>Delete</Text> */}
         <AntDesign name="delete" size={20} color="black" />
       </TouchableOpacity>
     );
   };
   return (
-    // <ScrollView style={styles.container} nestedScrollEnabled={true}>
     <View>
       {Object.entries(selectedItems).map(([key, value]) => (
         <Swipeable key={key} renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, key)}>
@@ -37,7 +35,6 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
         </Swipeable>
       ))}
       </View>
-    // </ScrollView>
   );
 };
 
@@ -53,7 +50,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
-    // marginTop: 3,
   },
   item: {
     justifyContent: 'space-between',

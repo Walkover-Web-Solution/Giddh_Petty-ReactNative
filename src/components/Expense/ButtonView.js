@@ -78,13 +78,6 @@ const modalClose = ()=>{
   return (
     <>
     <View style={styles.container}>
-      {/* <TouchableOpacity
-        style={styles.button}
-        activeOpacity={activeOpacity.regular}
-        onPress={() => navigation.navigate(ScreenNames.ADD_EXPENSE, { selectedItem: selectedItem, getBack: getBack, name: name })}
-      >
-        <Text style={styles.buttonText}>Add {name}</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity
         style={[styles.button, isSubmittingRef.current && styles.disabledButton]}
         activeOpacity={activeOpacity.regular}
@@ -100,7 +93,6 @@ const modalClose = ()=>{
         transparent={true}
         visible={showModal}
         statusBarTranslucent={true}
-        // presentationStyle="overFullScreen"
         navigationBarTranslucent={false}
       >
         <View style={styles.centeredView}>
@@ -125,26 +117,16 @@ const modalClose = ()=>{
 
 const styles = StyleSheet.create({
   container: {
-    // flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 20
   },
   button: {
-    // width: 150,
-    // height: 50,
-    // borderRadius: 60,
     backgroundColor: theme.colors.white,
     justifyContent: 'center',
     alignItems: 'center',
-    // paddingVertical:15,
     width:'100%',
     height:50,
-    // backgroundColor:theme.colors.black,
-    // justifyContent:'center',
-    // alignItems:'center',
-    // alignSelf:'center',
-    // marginVertical:20,
     borderRadius:100
   },
   buttonText: {

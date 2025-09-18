@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar, SafeAreaView, RefreshControl, Dimensions } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, RefreshControl, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import  Header  from '../components/Header/Header';
 import { resetBranch } from '../redux/company/BranchSlice';
@@ -22,7 +22,6 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   const selectedCompany = useSelector((state: any) => state?.company?.selectedCompany);
   const companies = useSelector((state: any) => state?.company?.companies);
   const user = useSelector((state: any) => state?.auth?.user);
-  const userSession = useSelector((state:any)=>state?.auth?.user?.session?.id)
   const [isRefreshing, setIsRefreshing] = useState(false);
   const bottomSheetModalRef=useRef(null);
   const photo=useSelector((state)=>state?.auth?.photo);
@@ -31,19 +30,6 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
     if(companies.length == 0 && selectedCompany == null)
       dispatch({ type: 'company/FETCH_COMPANY_LIST', payload: { uniqueName: user?.user?.uniqueName, sessionToken: user?.session?.id } });
   }, []);
-
-  // useEffect(() => {
-  //   const backAction = () => {
-  //     if (navigation.canGoBack()) {
-  //       navigation.goBack();
-  //     } else {
-  //       BackHandler.exitApp();
-  //     }
-  //     return true;
-  //   };
-  //   const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () => backHandler.remove();
-  // }, [navigation]);
 
   const handleClose=()=>{
     bottomSheetModalRef?.current?.dismiss();
@@ -116,7 +102,7 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
         />
       </View>
       <TouchableOpacity style={styles.logoutButton} activeOpacity={activeOpacity.regular} onPress={()=>bottomSheetModalRef.current?.present()}>
-        <View style={{flexDirection:'row', alignItems:'center', paddingVertical: 7}}>
+        <View style={styles.logoutButtonText}>
           <AntDesign name="logout" size={25} color={theme.colors.black} />
           <Text style={[styles.switchCompanyButtonText,{fontFamily:fonts.medium}]}>Logout</Text>
         </View>
@@ -185,6 +171,11 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large.size,
     paddingHorizontal:20,
     fontFamily:fonts.regular
+  },
+  logoutButtonText: {
+    flexDirection:'row',
+    alignItems:'center',
+    paddingVertical: 7
   }
 });
 

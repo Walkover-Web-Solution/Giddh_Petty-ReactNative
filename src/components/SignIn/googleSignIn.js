@@ -3,17 +3,14 @@ import React,{useState} from 'react'
 import SVGImg from '../../../assets/images/icons8-google-20.svg'
 import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import SVGMsg from '../../../assets/images/msg.svg'
-import { useDispatch } from 'react-redux';
 import { OTPVerification } from '@msg91comm/react-native-sendotp';
 const SignInButton = (props) => {
-   const dispatch = useDispatch();
    const [isModalVisible, setModalVisible] = useState(false);
 
    const handleOtpSignIn=()=>{
     setModalVisible(true);
    }
    const handleSignIn = () => {
-    //  dispatch({type: 'SIGN_IN'});
    };
 
   return (

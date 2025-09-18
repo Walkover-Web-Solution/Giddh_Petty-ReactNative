@@ -204,15 +204,9 @@ const Home = () => {
       <MyBottomSheetModal
         bottomSheetModalRef={bottomSheetModalExpenseRef}
         children={<AddTransactionModal bottomSheetModalRef={bottomSheetModalExpenseRef} navigation={navigation} dispatch={dispatch} />}
-        // intialSnap='21%'
-        // snapArr={['21%']}
         drag={false}
-        // modalStyle={modalStyle}
       />
       <Animated.View style={[styles.animationView,{top : (65+headerHeight.top), transform: [{translateY : animatedHeaderHeight}]}]}>
-        {/* <View>
-        <DynamicHeader animHeaderValue={scrollOffsetY}/>
-        </View> */}
         <RenderChart />   
         <View style={styles.buttonScroll}>
           <FlatList
@@ -231,7 +225,6 @@ const Home = () => {
               onPress={handleFilterPress}>
               <Feather name="calendar" size={18} color={'#808080'} />
               <Text style={styles.dateText}>
-                {/* {startDate}<Text style={styles.dateBoldText}> | </Text>{endDate} */}
                 {moment(startDate, 'DD-MM-YYYY').format('DD MMM YY') +
                   ' - ' +
                   moment(endDate, 'DD-MM-YYYY').format('DD MMM YY')}
@@ -246,7 +239,6 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: theme.colors.white,
     backgroundColor: theme.colors.black,
   },
   subContainer: {
