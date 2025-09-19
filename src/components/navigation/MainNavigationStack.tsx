@@ -9,6 +9,7 @@ import TransactionDetails from '../../Screens/TransactionDetails';
 import { useSelector } from 'react-redux';
 import { HeaderOptions, ScreenNames } from '../../constants/NavigationConstants';
 import EditExpenseScreen from '../../Screens/EditExpenseScreen';
+import ContactUsScreen from '../../Screens/ContactUs/ContactUsScreen';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ const MainNavigationStack: React.FC = () => {
       <Stack.Screen name={ScreenNames.BRANCH} component={Branch} options={HeaderOptions} />
       <Stack.Screen name={ScreenNames.NEW_EXPENSE} component={NewExpenseClaimScreen} options={HeaderOptions} />
       <Stack.Screen name={ScreenNames.ADD_EXPENSE} component={AddExpenseScreen} options={HeaderOptions} />
+      <Stack.Screen name={ScreenNames.CONTACT_US} component={ContactUsScreen} options={HeaderOptions} />
     </Stack.Navigator>
   );
 };

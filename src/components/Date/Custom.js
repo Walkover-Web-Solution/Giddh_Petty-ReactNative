@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fonts, fontSize, theme } from '../../theme/theme';
 import { errorToast } from '../customToast/CustomToast';
 import { useDispatch } from 'react-redux';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
@@ -23,7 +23,6 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef, setSel
 
     const handleStartDateConfirm = (date) => {
         setStartDateLocal(date);
-        // setStartDate(formatDate(date));
         hideStartDatePickerModal();
     };
 
@@ -37,7 +36,6 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef, setSel
 
     const handleEndDateConfirm = (date) => {
         setEndDateLocal(date);
-        // setEndDate(formatDate(date));
         hideEndDatePickerModal();
     };
 
@@ -85,12 +83,14 @@ const DateRangePicker = ({ setStartDate, setEndDate, bottomSheetModalRef, setSel
             <DateTimePickerModal
                 isVisible={showStartDatePicker}
                 mode="date"
+                pickerComponentStyleIOS={{height: 250}}
                 onConfirm={handleStartDateConfirm}
                 onCancel={hideStartDatePickerModal}
             />
             <DateTimePickerModal
                 isVisible={showEndDatePicker}
                 mode="date"
+                pickerComponentStyleIOS={{height: 250}}
                 onConfirm={handleEndDateConfirm}
                 onCancel={hideEndDatePickerModal}
             />
@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        // paddingHorizontal: 10,
         elevation: 5,
         marginVertical:10,
         marginHorizontal:20,
@@ -131,8 +130,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#333',
         fontSize: fontSize.regular.size,
-        fontFamily: fonts.regular,
-        lineHeight: fontSize.regular.lineHeight
+        fontFamily: fonts.regular
     },
     doneButtonText: {
         color: 'white',

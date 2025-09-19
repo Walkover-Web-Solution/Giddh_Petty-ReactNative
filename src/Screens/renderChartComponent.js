@@ -67,13 +67,11 @@ const styles = StyleSheet.create({
   },
   totalAmount: {
     fontSize: fontSize.xLargeV1.size,
-    lineHeight: fontSize.xLargeV1.lineHeight,
     color: theme.colors.black,
     fontFamily:fonts.bold,
   },
   spending: {
     fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight,
     color: theme.colors.gray1,
     fontFamily:fonts.bold,
   },

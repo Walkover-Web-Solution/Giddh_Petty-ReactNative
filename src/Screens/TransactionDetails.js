@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
 import { useSelector } from 'react-redux';
 import { capitalizeFirstLetter } from '../utils/capitalise';
@@ -14,6 +14,7 @@ import { infoToast } from '../components/customToast/CustomToast';
 import FastImage from 'react-native-fast-image';
 import api from '../../interceptor';
 import ImageView from "react-native-image-viewing";
+import CustomStatusBar from '../components/Header/CustomStatusBar';
 
 const TransactionDetails = ({route}) => {
   const selectedExpense = useSelector(state => state?.expenses?.selectedExpense);
@@ -31,18 +32,9 @@ const TransactionDetails = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
-      <StatusBar backgroundColor="black" />
-      {/* <AnimatedLoader
-        visible={true}
-        overlayColor="rgba(255,255,255)"
-        source={require("./progessBar.json")}
-        animationStyle={styles.lottie}
-        speed={1}>
-      
-      </AnimatedLoader> */}
-      {/* <ProgressBar indeterminate visible={true} color={theme.colors.primary}/> */}
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <View style={styles.blackBackground}>
         <Header title='Transaction Details'/>
       </View>
@@ -89,16 +81,16 @@ const TransactionDetails = ({route}) => {
           </View>
         </View>
       </View>
-      {/* <ReturnButton text={'Edit'} color={theme.colors.black}/> */}
       </View>
       <ImageView
         images={fileNames}
         imageIndex={visible?.index}
         visible={visible?.isVisible}
         onRequestClose={() => setIsVisible(false)}
+        presentationStyle="overFullScreen"
       />
       <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} intialSnap={'60%'} children={<ImageViewer bottomSheetModalRef={bottomSheetModalRef} fileNames={fileNames} setIsVisible={setIsVisible} />} horizontal={false} parentScrollEnable={false} snapArr={['35%']}/>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -114,8 +106,6 @@ const styles = StyleSheet.create({
   blackBackground: {
     backgroundColor: theme.colors.black,
     height: '100%',
-    // borderBottomLeftRadius: 50,
-    // borderBottomRightRadius: 50,
   },
   whiteSheet: {
     backgroundColor: theme.colors.white,
@@ -144,7 +134,6 @@ const styles = StyleSheet.create({
   currency: {
     fontFamily:fonts.bold,
     fontSize: fontSize.xxLarge.size,
-    lineHeight:fontSize.xxLarge.lineHeight,
     paddingTop: 3,
     paddingRight: 3,
   },
@@ -185,7 +174,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginTop: 18,
     fontSize: fontSize.large.size,
-    lineHeight:fontSize.large.lineHeight,
     fontFamily:fonts.bold
   },
   detailRow: {
@@ -280,10 +268,6 @@ const styles = StyleSheet.create({
     height:'100%',
     borderRadius:50
   },
-  // lottie: {
-  //   width: 100,
-  //   height: 100
-  // }
   txnIdContainer : {
     flexDirection:'row', 
     alignSelf:'center',

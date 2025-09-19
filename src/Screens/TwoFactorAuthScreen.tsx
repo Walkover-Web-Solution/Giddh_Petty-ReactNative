@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { unMountingTwoFactorAuthScreen, VERIFY_OTP } from "../redux/auth/authSlice";
-import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { fonts, fontSize, theme } from "../theme/theme";
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import LoaderKit from 'react-native-loader-kit'
@@ -39,7 +39,7 @@ const TwoFactorAuthScreen = () => {
         };
     }, []);
     return (
-        <SafeAreaView style={{flex:1}}>
+        <View style={{flex:1}}>
             <View style={style.container}>
                 <View style={style.upperContainer}>
                     <Image style={style.logoStyle} source={GidhhLogo} resizeMode="contain" />
@@ -61,7 +61,6 @@ const TwoFactorAuthScreen = () => {
                     code={code} // You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
                     onCodeChanged={code => {
                       setCode(code);
-                      // dispatch(clearOTPError())
                     }}
                     autoFocusOnLoad
                     codeInputFieldStyle={style.underlineStyleBase}
@@ -88,7 +87,7 @@ const TwoFactorAuthScreen = () => {
                     />
                 </View>}
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 

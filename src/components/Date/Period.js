@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fonts, fontSize, theme } from '../../theme/theme';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../../../interceptor';
@@ -82,7 +82,6 @@ const PeriodListComponent = ({ setStartDate, setEndDate,bottomSheetModalRef,sele
 
 const calculateLastQuarterEndDate = () => {
   const lastQuarterStartDate = calculateLastQuarterStartDate();
-  // const endDate = new Date(lastQuarterStartDate);
   const reverseDate = reverseDateFormat(lastQuarterStartDate)
   const endDate = new Date(reverseDate);
   endDate.setMonth(endDate.getMonth() + 3);
@@ -161,8 +160,7 @@ const calculateFinancialYearEndDate = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin:10,
-    marginBottom: 10,
+    marginHorizontal:10
   },
   item: {
     paddingHorizontal: 20,

@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { ScrollView, Swipeable } from 'react-native-gesture-handler'; // Import Swipeable
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome6';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Swipeable } from 'react-native-gesture-handler';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
+import AntDesign from '@react-native-vector-icons/ant-design';
 import { useSelector } from 'react-redux';
 const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSelectedProduct,setSelectedItems}) => {
   const handleDelete = (key) => {
@@ -17,13 +16,11 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
   const renderRightActions = (progress, dragX, key) => {
     return (
       <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => handleDelete(key)} style={styles.rightAction}>
-        {/* <Text style={styles.actionText}>Delete</Text> */}
         <AntDesign name="delete" size={20} color="black" />
       </TouchableOpacity>
     );
   };
   return (
-    // <ScrollView style={styles.container} nestedScrollEnabled={true}>
     <View>
       {Object.entries(selectedItems).map(([key, value]) => (
         <Swipeable key={key} renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, key)}>
@@ -38,7 +35,6 @@ const ProductServicesList = ({ selectedItems, bottomSheetModalRefExpense, setSel
         </Swipeable>
       ))}
       </View>
-    // </ScrollView>
   );
 };
 
@@ -54,12 +50,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
-    // marginTop: 3,
-  },
-  title: {
-    fontSize: fontSize.large.size,
-    fontFamily: fonts.medium,
-    lineHeight: fontSize.large.lineHeight
   },
   item: {
     justifyContent: 'space-between',
@@ -72,8 +62,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: fontSize.large.size,
-    fontFamily:fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily:fonts.regular
   },
   itemSubtitle: {
     fontSize: fontSize.regular.size,
@@ -87,13 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
     width: 75,
     marginBottom: 7,
-  },
-  actionText: {
-    color: 'white',
-    fontFamily: fonts.medium,
-    fontSize: 16,
-    lineHeight: lineHeight.large
-  },
+  }
 });
 
 export default ProductServicesList;

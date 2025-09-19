@@ -1,13 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.EdgeToEdge.Material3.Light">
         <!-- Customize your theme here. -->
         <item name="android:textColor">#000000</item>
         <item name="android:statusBarColor">@color/white</item> 
         <item name="android:forceDarkAllowed">false</item>
         <item name="android:windowDisablePreview">true</item>
-
+        <item name="enforceNavigationBarContrast">false</item>
     </style>
 
 </resources>

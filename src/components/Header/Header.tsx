@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fonts, fontSize, theme } from '../../theme/theme';
 import ArrBack from '../../../assets/images/back-arrow-navigation-svgrepo-com.svg';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
@@ -37,9 +37,7 @@ const styles = StyleSheet.create({
     color: theme.colors.white,
     fontSize: fontSize.large.size,
     fontFamily: fonts.bold,
-    marginLeft: 20,
-    marginBottom: 4,
-    lineHeight: fontSize.large.lineHeight
+    marginLeft: 20
   },
 });
 

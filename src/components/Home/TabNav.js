@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, FlatList, Image } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
-import axios from 'axios';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import { useSelector, useDispatch } from 'react-redux';
 const Tab = ({ title, isActive, onPress }) => {
   return (

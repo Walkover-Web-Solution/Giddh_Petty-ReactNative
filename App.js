@@ -7,10 +7,13 @@ import Navigation from './src/navigation/Navigation';
 import SplashScreen from 'react-native-splash-screen';
 import { environment } from './src/environments/environment.prod';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import { store,persistor } from './src/redux/index';
-import Toast,{BaseToast} from 'react-native-toast-message';
-import {View,Text, StatusBar, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+import { persistor, store } from './src/redux/index';
+import Toast from 'react-native-toast-message';
+import {Text, StyleSheet} from 'react-native';
 import { fontSize, fonts, theme } from './src/theme/theme';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SystemBars } from "react-native-edge-to-edge"
+import { KeyboardAvoidingView, KeyboardProvider } from 'react-native-keyboard-controller';
 
 const toastConfig = {
   tomatoToast: ({ text1 }) => (
@@ -21,8 +24,6 @@ const toastConfig = {
 const App = () => {
   useEffect(() => {
     SplashScreen.hide();
-    Platform.OS === 'android' ? StatusBar.setBackgroundColor(theme.colors.black):null;
-    StatusBar.setBarStyle('light-content');
     GoogleSignin.configure({
       webClientId: environment.google_client_id,
     });
@@ -31,12 +32,19 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <GestureHandlerRootView style={styles.container}>
-          <BottomSheetModalProvider>
-              <Navigation />
-          </BottomSheetModalProvider>
-          <Toast config={toastConfig} />
-        </GestureHandlerRootView>
+        <SafeAreaProvider>
+          <KeyboardProvider>
+            <KeyboardAvoidingView style={{flex:1}} behavior={"padding"}>
+              <GestureHandlerRootView style={styles.container}>
+                <BottomSheetModalProvider>
+                  <SystemBars style="light"/>
+                  <Navigation />
+                </BottomSheetModalProvider>
+                <Toast config={toastConfig} />
+              </GestureHandlerRootView>
+            </KeyboardAvoidingView>
+          </KeyboardProvider>
+        </SafeAreaProvider>
       </PersistGate>
     </Provider>
   );
@@ -47,7 +55,6 @@ const styles  = StyleSheet.create({
     color:'black',
     fontFamily:fonts.medium,
     fontSize:fontSize.regular.size,
-    lineHeight:fontSize.regular.lineHeight,
     marginBottom:40
   },
   container : {

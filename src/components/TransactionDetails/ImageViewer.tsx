@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
 import FastImage from 'react-native-fast-image';
 import { activeOpacity } from "../../theme/theme";
 import LoaderKit from 'react-native-loader-kit'
@@ -7,7 +7,7 @@ import LoaderKit from 'react-native-loader-kit'
 const ImageViewer = ({bottomSheetModalRef, fileNames, setIsVisible})=>{
 	  const [loading, setLoading] = useState(true);
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
           <FlatList
             contentContainerStyle={{flexGrow: 1}}
             data={fileNames}
@@ -40,7 +40,7 @@ const ImageViewer = ({bottomSheetModalRef, fileNames, setIsVisible})=>{
             )}
             keyExtractor={(item, index) => index.toString()}
           />
-      </SafeAreaView>
+      </View>
     );
   };
     

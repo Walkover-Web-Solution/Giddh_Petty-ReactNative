@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, BackHandler, StatusBar, SafeAreaView, RefreshControl, Dimensions } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, RefreshControl, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import  Header  from '../components/Header/Header';
 import { resetBranch } from '../redux/company/BranchSlice';
 import { resetCompany, setSelectedCompany } from '../redux/company/CompanySlice';
 import { resetExpenses } from '../redux/expense/ExpenseSlice';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../theme/theme';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { activeOpacity, fontSize, fonts, theme } from '../theme/theme';
+import AntDesign from '@react-native-vector-icons/ant-design';
 import MyBottomSheetModal from '../components/modalSheet/ModalSheet';
 import ConfirmationComponent from '../components/Drawer/ConfirmButton';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signOut } from '../redux/auth/authSlice';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const {height,width} = Dimensions.get('window');
 const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
@@ -20,27 +22,14 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   const selectedCompany = useSelector((state: any) => state?.company?.selectedCompany);
   const companies = useSelector((state: any) => state?.company?.companies);
   const user = useSelector((state: any) => state?.auth?.user);
-  const userSession = useSelector((state:any)=>state?.auth?.user?.session?.id)
   const [isRefreshing, setIsRefreshing] = useState(false);
   const bottomSheetModalRef=useRef(null);
   const photo=useSelector((state)=>state?.auth?.photo);
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     if(companies.length == 0 && selectedCompany == null)
       dispatch({ type: 'company/FETCH_COMPANY_LIST', payload: { uniqueName: user?.user?.uniqueName, sessionToken: user?.session?.id } });
   }, []);
-
-  // useEffect(() => {
-  //   const backAction = () => {
-  //     if (navigation.canGoBack()) {
-  //       navigation.goBack();
-  //     } else {
-  //       BackHandler.exitApp();
-  //     }
-  //     return true;
-  //   };
-  //   const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () => backHandler.remove();
-  // }, [navigation]);
 
   const handleClose=()=>{
     bottomSheetModalRef?.current?.dismiss();
@@ -86,9 +75,9 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
-      <StatusBar backgroundColor={theme.colors.black} />
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <Header title={"Select a Company"} />
       <View style={styles.listView}>
         <FlatList
@@ -113,12 +102,15 @@ const Company: React.FC<{ navigation: any }> = React.memo(({ navigation }) => {
         />
       </View>
       <TouchableOpacity style={styles.logoutButton} activeOpacity={activeOpacity.regular} onPress={()=>bottomSheetModalRef.current?.present()}>
+        <View style={styles.logoutButtonText}>
           <AntDesign name="logout" size={25} color={theme.colors.black} />
           <Text style={[styles.switchCompanyButtonText,{fontFamily:fonts.medium}]}>Logout</Text>
+        </View>
+        <View style={{height:insets.bottom}}></View>
       </TouchableOpacity>
       <MyBottomSheetModal snapArr={['20%']} bottomSheetModalRef={bottomSheetModalRef} intialSnap={'17%'} children={<ConfirmationComponent handleClose={handleClose} handleLogout={handleLogout}/>}/>
       </View>
-    </SafeAreaView>
+    </View>
   );
 });
 
@@ -145,15 +137,13 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: fontSize.regular.size,
     fontFamily: fonts.regular,
-    textDecorationLine: 'none',
-    lineHeight: fontSize.regular.lineHeight
+    textDecorationLine: 'none'
   },
   tickIcon: {
     fontSize: fontSize.large.size,
     color: theme.colors.secondary,
     paddingRight: 40,
-    fontFamily: fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily: fonts.regular
   },
   modalCancelView :{
     height: height * 0.3, 
@@ -173,19 +163,19 @@ const styles = StyleSheet.create({
   logoutButton: {
     backgroundColor:theme.colors.LightGray,
     justifyContent:'center',
-    flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
     paddingHorizontal: 20,
   },
   switchCompanyButtonText: {
     color: 'black',
-    // fontWeight: '400',
     fontSize: fontSize.large.size,
     paddingHorizontal:20,
-    // paddingBottom:3,
-    fontFamily:fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily:fonts.regular
+  },
+  logoutButtonText: {
+    flexDirection:'row',
+    alignItems:'center',
+    paddingVertical: 7
   }
 });
 

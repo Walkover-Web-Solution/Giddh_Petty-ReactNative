@@ -8,7 +8,8 @@ export const ScreenNames = {
   DATE_SCREEN: 'DateScreen',
   SIGN_IN: 'SignIn',
   EDIT_EXPENSE: 'EditExpenseScreen',
-  TWO_FACTOR_AUTH: 'TwoFactorAuthScreen'
+  TWO_FACTOR_AUTH: 'TwoFactorAuthScreen',
+  CONTACT_US: 'ContactUsScreen'
 };
 
 export const HeaderOptions = {

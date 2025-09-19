@@ -1,29 +1,26 @@
-import React,{useState,useRef} from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet ,Linking,DeviceEventEmitter, SafeAreaView, Pressable} from 'react-native';
-import LogOutIcon from '../../../assets/images/power.svg';
+import React,{useRef} from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet ,Linking, Pressable} from 'react-native';
 import {useSelector,useDispatch} from 'react-redux';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
-import { useNavigation } from '@react-navigation/native';
-import { signInSuccess, signOut } from '../../redux/auth/authSlice';
-import { fetchCompanyListSuccess, resetCompany, setSelectedCompany } from '../../redux/company/CompanySlice';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
+import { signOut } from '../../redux/auth/authSlice';
+import { resetCompany } from '../../redux/company/CompanySlice';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { resetBranch, setSelectedBranch } from '../../redux/company/BranchSlice';
+import { resetBranch } from '../../redux/company/BranchSlice';
 import Clipboard from '@react-native-clipboard/clipboard';
 import CompanySvg from '../../..//assets/images/nocompany-ico.svg';
 import CopySVG from '../../../assets/images/copy.svg'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import AntDesign from '@react-native-vector-icons/ant-design';
+import Feather from '@react-native-vector-icons/feather';
 import { capitalizeFirstLetter } from '../../utils/capitalise';
-import { showToast } from '../../utils/toast';
 import ConfirmationComponent from './ConfirmButton';
 import MyBottomSheetModal from '../modalSheet/ModalSheet';
-import PaymentModeSelector from '../Expense/ModalComponent';
 import { resetExpenses } from '../../redux/expense/ExpenseSlice';
-import ScheduleMeet from '../scheduleMeet/scheduleMeet';
 import { infoToast } from '../customToast/CustomToast';
 import appleAuth from '@invertase/react-native-apple-authentication';
+import CustomStatusBar from '../Header/CustomStatusBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const CustomDrawer = ({setVisible,navigation}) => {
   const openGmail = (email) => {
     const gmailUrl = `mailto:${email}`;
@@ -39,6 +36,7 @@ const CustomDrawer = ({setVisible,navigation}) => {
   const user=useSelector((state)=>state?.auth?.user);
   const photo=useSelector((state)=>state?.auth?.photo);
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
   const handleClose=()=>{
     bottomSheetModalRef.current.dismiss();
   }
@@ -60,7 +58,8 @@ const CustomDrawer = ({setVisible,navigation}) => {
   }
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <View style={styles.subContainer}>
       <View style={styles.drawerHeader}>
         <View>
@@ -82,7 +81,7 @@ const CustomDrawer = ({setVisible,navigation}) => {
           <Feather name="git-merge" size={20} color={theme.colors.black}/>
           <Text style={[styles.switchCompanyButtonText]}>{capitalizeFirstLetter(branch?.alias)}</Text>
         </TouchableOpacity>}
-        <TouchableOpacity style={styles.switchCompanyButton} activeOpacity={activeOpacity.regular} onPress={() => DeviceEventEmitter.emit("showHelloWidget", { status: true })}>
+        <TouchableOpacity style={styles.switchCompanyButton} activeOpacity={activeOpacity.regular} onPress={() => navigation.navigate('ContactUsScreen')}>
           <MaterialIcons name="support-agent" size={20} color={theme.colors.black} />
           <Text style={[styles.switchCompanyButtonText]}>{'Chat with us'}</Text>
         </TouchableOpacity>
@@ -101,14 +100,18 @@ const CustomDrawer = ({setVisible,navigation}) => {
         <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{copyToClipboard('support@giddh.com');infoToast('Copied...','','bottom');}}><CopySVG width={17} height={17} paddingLeft={40} marginTop={3}/></TouchableOpacity>
         </View>
       </View>
+
       <TouchableOpacity style={styles.logoutButton} activeOpacity={activeOpacity.regular} onPress={()=>bottomSheetModalRef.current?.present()}>
+        <View style={{flexDirection:'row', alignItems:'center', paddingVertical: 7}}>
           <AntDesign name="logout" size={25} color={theme.colors.black} />
           <Text style={[styles.switchCompanyButtonText,{fontFamily:fonts.medium}]}>Logout</Text>
+        </View>
+        <View style={{height:insets.bottom}}></View>
       </TouchableOpacity>
-      <MyBottomSheetModal snapArr={['20%']} bottomSheetModalRef={bottomSheetModalRef} intialSnap={'17%'} children={<ConfirmationComponent handleClose={handleClose} handleLogout={handleLogout}/>}/>
+      <MyBottomSheetModal bottomSheetModalRef={bottomSheetModalRef} children={<ConfirmationComponent handleClose={handleClose} handleLogout={handleLogout}/>}/>
       </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -145,28 +148,25 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large.size,
     marginBottom: 3,
     color: theme.colors.white,
-    fontFamily:fonts.regular,
-    lineHeight: fontSize.large.lineHeight
+    fontFamily:fonts.regular
   },
   buttonsContainer: {
     flex: 1,
-    marginTop:25,
+    marginTop:15,
     backgroundColor:theme.colors.white
   },
   switchCompanyButton: {
     flexDirection: 'row',
     backgroundColor: theme.colors.white,
     paddingHorizontal: 20,
+    alignItems:'center',
     paddingVertical:10
   },
   switchCompanyButtonText: {
     color: 'black',
-    // fontWeight: '400',
     fontSize: fontSize.large.size,
     paddingHorizontal:20,
-    // paddingBottom:3,
     fontFamily:fonts.regular,
-    lineHeight: fontSize.large.lineHeight
   },
   contactContainer : {
     flex:1,
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     fontSize:fontSize.xLarge.size,
     paddingLeft:20,
     fontFamily:fonts.bold,
-    lineHeight: fontSize.xLarge.lineHeight
   },
   contactDetail : {
     flexDirection:'row',
@@ -188,32 +187,14 @@ const styles = StyleSheet.create({
   mailText : {
     fontSize:fontSize.regular.size,
     paddingLeft:20,
-    fontFamily:fonts.medium,
-    lineHeight: fontSize.regular.lineHeight
+    fontFamily:fonts.medium
   },
   logoutButton: {
     backgroundColor:theme.colors.LightGray,
     justifyContent:'center',
-    flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
     paddingHorizontal: 20,
-  },
-  logoutTextContainer: {
-    marginLeft: 10,
-  },
-  logoutText: {
-    color: 'black',
-    fontSize:17,
-    fontFamily:fonts.regular,
-    lineHeight: lineHeight.large
-  },
-  logoutSubText: {
-    color: 'black',
-    fontSize: 15,
-    fontFamily:fonts.regular,
-    lineHeight: lineHeight.large
-  },
+  }
 });
 
 export default CustomDrawer;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet ,TextInput, Platform} from 'react-native';
-import { activeOpacity, fontSize, fonts, lineHeight, spacing, theme } from '../../theme/theme';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { activeOpacity, fontSize, fonts, spacing, theme } from '../../theme/theme';
 
 const ConfirmationComponent = ({handleLogout,handleClose}) => {
 
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.xLarge.size,
     marginBottom: 10,
     fontFamily:fonts.medium,
-    lineHeight: fontSize.xLarge.lineHeight
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -40,11 +39,8 @@ const styles = StyleSheet.create({
   button: {
     flex:1,
     marginHorizontal:7,
-    // width:'50%',
     height:50,
     padding:spacing.small,
-    // paddingVertical: 10,
-    // marginLeft: 25,
     alignItems: 'center',
     justifyContent:'center',
     elevation:1,
@@ -59,7 +55,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.LightGray
   },
   buttonText: {
-    // borderWidth:3,
     color: theme.colors.black,
     fontSize: fontSize.large.size,
     lineHeight: fontSize.large.lineHeight,

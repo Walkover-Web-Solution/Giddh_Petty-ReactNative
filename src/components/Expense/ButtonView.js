@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter, Modal, Pressable } from 'react-native';
-import { activeOpacity, fontSize, fonts, lineHeight, theme } from '../../theme/theme';
+import { activeOpacity, fontSize, fonts, theme } from '../../theme/theme';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 import { ScreenNames } from '../../constants/NavigationConstants';
 import axios from 'axios'; 
 import {useSelector} from 'react-redux';
 import { errorToast } from '../customToast/CustomToast';
-const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepareRequestBody }) => {
+import AntDesign from '@react-native-vector-icons/ant-design';
+
+const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepareRequestBody, isSubmittingRef }) => {
   const navigation = useNavigation();
   const user = useSelector(state => state?.auth?.user);
   const [showModal,setShowModal] = useState(false);
   const [isSuccess,setIsSuccess] = useState(false);
   const [apiResponse,setApiResponse] = useState('');
-  const selectedMode = useSelector((state)=>state?.payment?.selectedMode);
   const handleSaveButton = async () => {
+    if(isSubmittingRef.current){
+      return;
+    }
     const requestBody = prepareRequestBody();
     console.log("enter",requestBody);
     if(!requestBody?.baseAccount?.uniqueName){
@@ -31,6 +34,7 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
       return;
     }
     const entryType = name === 'Income' ? 'Sales' : name;
+    isSubmittingRef.current = true;
     try {
       const response = await axios.post(`https://api.giddh.com/company/${companyUniqueName}/pettycash-manager/generate?entryType=${entryType.toLowerCase()}`, requestBody, {
         headers: {
@@ -64,6 +68,7 @@ const RowWithButtons = ({ name, selectedItem, getBack,companyUniqueName, prepare
   };
 const modalClose = ()=>{
   setShowModal(!showModal);
+  isSubmittingRef.current = false;
   if(isSuccess){
     DeviceEventEmitter.emit('successResponse');
     navigation.navigate(ScreenNames.DRAWER);
@@ -71,31 +76,30 @@ const modalClose = ()=>{
 }
 
   return (
+    <>
     <View style={styles.container}>
-      {/* <TouchableOpacity
-        style={styles.button}
-        activeOpacity={activeOpacity.regular}
-        onPress={() => navigation.navigate(ScreenNames.ADD_EXPENSE, { selectedItem: selectedItem, getBack: getBack, name: name })}
-      >
-        <Text style={styles.buttonText}>Add {name}</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, isSubmittingRef.current && styles.disabledButton]}
         activeOpacity={activeOpacity.regular}
         onPress={handleSaveButton}
       >
-        <Text style={styles.buttonText}>Save</Text>
+        <Text style={[styles.buttonText, isSubmittingRef.current && styles.disabledButtonText]}>
+          {isSubmittingRef.current ? 'Saving...' : 'Save'}
+        </Text>
       </TouchableOpacity>
+    </View>
       <Modal 
         animationType="fade"
         transparent={true}
         visible={showModal}
+        statusBarTranslucent={true}
+        navigationBarTranslucent={false}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {isSuccess 
-              ? <Icon name='file-circle-check' size={100} color={theme.colors.black} style={styles.icon}/>
-              : <Icon name='file-circle-exclamation' size={100} color={theme.colors.black} style={styles.icon}/>
+              ? <AntDesign name='file-done' size={90} color={theme.colors.black} style={styles.icon}/>
+              : <AntDesign name='file-exclamation' size={90} color={theme.colors.black} style={styles.icon}/>
               }
             {isSuccess ? <Text style={styles.buttonText}>{apiResponse}</Text>
             : <Text style={styles.buttonText}>{apiResponse}</Text>}
@@ -107,34 +111,22 @@ const modalClose = ()=>{
           </View>
         </View>
       </Modal>
-    </View>
+      </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical:20,
-    marginTop: 10,
+    paddingHorizontal: 20
   },
   button: {
-    // width: 150,
-    // height: 50,
-    // borderRadius: 60,
     backgroundColor: theme.colors.white,
     justifyContent: 'center',
     alignItems: 'center',
-    // paddingVertical:15,
     width:'100%',
     height:50,
-    // backgroundColor:theme.colors.black,
-    // justifyContent:'center',
-    // alignItems:'center',
-    // alignSelf:'center',
-    // marginVertical:20,
     borderRadius:100
   },
   buttonText: {
@@ -187,6 +179,12 @@ const styles = StyleSheet.create({
   },
   icon : {
     padding : 10
+  },
+  disabledButton: {
+    opacity: 0.6,
+  },
+  disabledButtonText: {
+    opacity: 0.8,
   }
 });
 

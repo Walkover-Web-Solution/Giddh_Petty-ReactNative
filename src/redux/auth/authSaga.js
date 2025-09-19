@@ -3,8 +3,8 @@
 import { put, takeLatest, call, select } from 'redux-saga/effects';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import api, { loginInstance } from '../../../interceptor'; // Import the axios interceptor instance
-import { signInSuccess, signInFailure, signOutSuccess, signOutFailure, signInStart, twoFactorAuthenticationStarted, VERIFY_OTP, verifyOTPFailed } from './authSlice';
-import { Alert, AsyncStorage } from 'react-native';
+import { signInSuccess, signInFailure, signInStart, twoFactorAuthenticationStarted, VERIFY_OTP, verifyOTPFailed } from './authSlice';
+import { Alert } from 'react-native';
 import LogRocket from '@logrocket/react-native';
 
 const addUserDeatilsToLogRocket = (userName, userEmail) => {
@@ -90,7 +90,7 @@ function* signInWithApple({ payload }) {
       state: payload.state,
       user: payload.user
   });
-    yield addUserDeatilsToLogRocket(response?.body?.user?.name, response?.body?.user?.email);
+    yield addUserDeatilsToLogRocket(response?.data?.body?.user?.name, response?.data?.body?.user?.email);
     if (response?.data && response?.data?.body && response?.data?.body?.session && response?.data?.body?.session?.id) {
       yield put(signInSuccess({ user: response.data.body, photo: null }));
     }else if (

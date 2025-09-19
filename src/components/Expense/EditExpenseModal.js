@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { activeOpacity, fontSize, fonts, lineHeight } from '../../theme/theme';
-import { BottomSheetScrollView, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
-import { ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { activeOpacity, fontSize, fonts } from '../../theme/theme';
 
 const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomSheetModalRef }) => {
   const [rate, setRate] = useState('');
@@ -32,15 +30,6 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.label}>Rate:</Text>
-        {Platform.OS === 'ios' ? <BottomSheetTextInput 
-          style={styles.input}
-          placeholder={'Enter Amount'}
-          keyboardType="numeric"
-          value={rate}
-          autoFocus={true}
-          onChangeText={handleRateChange}
-          /> 
-          : 
           <TextInput
           style={styles.input}
           placeholder={'Enter Amount'}
@@ -49,7 +38,6 @@ const EditExpense = ({ selectedProduct, selectedItems, setSelectedItems, bottomS
           autoFocus={true}
           onChangeText={handleRateChange}
         />
-        }
       </View>
 
       <View style={styles.row}>
@@ -79,7 +67,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: fontSize.large.size,
     fontFamily: fonts.medium,
-    lineHeight: fontSize.large.lineHeight
   },
   input: {
     flex: 1,
@@ -96,7 +83,6 @@ const styles = StyleSheet.create({
   totalAmount: {
     fontSize: fontSize.regular.size,
     fontFamily: fonts.medium,
-    lineHeight: fontSize.regular.lineHeight
   },
   doneButton: {
     backgroundColor: 'black',
@@ -114,7 +100,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large.size,
     fontWeight: 'bold',
     fontFamily:fonts.bold,
-    lineHeight: fontSize.large.lineHeight
   },
 });
 

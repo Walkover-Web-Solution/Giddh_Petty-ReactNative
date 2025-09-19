@@ -1,5 +1,4 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authReducer from './auth/authSlice';
@@ -20,8 +19,8 @@ const rootReducer = combineReducers({
   addExpense:addExpenseReducer,
 });
 
+const createSagaMiddleware = require('redux-saga').default;
 const sagaMiddleware = createSagaMiddleware();
-const createDebugger = require('redux-flipper').default;
 const middleware = [sagaMiddleware];
 
 const persistConfig = {
@@ -31,7 +30,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(persistedReducer, applyMiddleware(...middleware,createDebugger()));
+export const store = createStore(persistedReducer, applyMiddleware(...middleware));
 sagaMiddleware.run(rootSaga);
 
 

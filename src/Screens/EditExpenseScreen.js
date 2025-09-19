@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Header } from '../components/Header/Header';
-import { activeOpacity, fontSize, fonts, lineHeight } from '../theme/theme';
+import { activeOpacity, fontSize, fonts } from '../theme/theme';
 
 const EditExpenseScreen = () => {
   const [rate, setRate] = useState('');
   const [amount, setAmount] = useState('');
   const [discount, setDiscount] = useState('');
   const [fixedDiscount, setFixedDiscount] = useState('');
-  const [selectedButton, setSelectedButton] = useState('HSN');
   const [description, setDescription] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
-
-  const handleButtonSelection = (buttonName) => {
-    setSelectedButton(buttonName);
-  };
-
-  const calculateTotalAmount = () => {
-    const calculatedAmount = // Your calculation logic here using rate, amount, discount, fixedDiscount
-    setTotalAmount(calculatedAmount);
-  };
 
   return (
     <>
@@ -127,7 +116,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    // fontWeight: 'bold',
     fontFamily:fonts.bold,
     fontSize:fontSize.regular.size,
     lineHeight:fontSize.regular.lineHeight

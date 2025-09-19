@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, Modal, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Platform, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeOpacity, fonts, fontSize, fontSizes, theme } from '../theme/theme';
 import Header from '../components/SignIn/Header';
@@ -13,6 +13,7 @@ import LoaderKit from 'react-native-loader-kit'
 import appleAuth from '@invertase/react-native-apple-authentication';
 import { useNavigation } from '@react-navigation/native';
 import { ScreenNames } from '../constants/NavigationConstants';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
 
 interface SignInData {
   message: string;
@@ -22,19 +23,14 @@ const SignIn: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const navigation = useNavigation();
-  // const isAuthenticated = useSelector((state:any)=>state.auth.isAuthenticated);
   const isLoading = useSelector((state:any)=>state?.auth?.loading);
   const TFA_Start = useSelector(state => state?.auth?.tfaStart)
-  // const [data, setData] = useState<SignInData | null>(null);
-  // const [loading,setLoading] = useState(false);
   const handleOtpSignIn = () => {
     dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_OTP' } });
     setModalVisible(true);
   };
-  // useEffect(()=>{},[isLoading])
   const handleSignIn = () => {
     dispatch({ type: 'SIGN_START', payload: { type : 'SIGN_IN_GOOGLE' } });
-    // setLoading(true);
   };
 
   async function onAppleButtonPress() {
@@ -65,7 +61,6 @@ const SignIn: React.FC = () => {
   const handleOtpCompletion = async (data: string) => {
     const response: SignInData = JSON.parse(data);
     dispatch({type:'SIGN_IN_OTP',payload:response});
-    // setLoading(true);
     setModalVisible(false);
   };
 
@@ -76,8 +71,8 @@ const SignIn: React.FC = () => {
   }, [TFA_Start]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={theme.colors.black} />
+    <View style={styles.container}>
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
       <View style={styles.logoContainer}>
         <GidhhSvg />
       </View>
@@ -113,7 +108,7 @@ const SignIn: React.FC = () => {
           authToken={environment.authToken}
         />
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -170,8 +165,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     color: 'white',
     fontFamily: fonts.medium,
-    fontSize: fontSize.regular.size,
-    lineHeight: fontSize.regular.lineHeight,
+    fontSize: fontSize.regular.size
   },
 });
 

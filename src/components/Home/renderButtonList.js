@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity ,View} from 'react-native'
 import React,{memo} from 'react'
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../../theme/theme'
+import { activeOpacity, fonts, fontSize, theme } from '../../theme/theme'
 
 const ThreeDDot = ({ color }) => {
   return (
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: theme.colors.black,
     fontFamily: fonts.bold,
-    lineHeight:19,
     fontSize:fontSize.regular.size,
     lineHeight: fontSize.regular.lineHeight
   },

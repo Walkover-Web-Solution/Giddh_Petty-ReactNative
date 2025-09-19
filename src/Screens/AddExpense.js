@@ -1,13 +1,14 @@
-import React, { useState,useEffect, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList, Keyboard, SafeAreaView } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Entypo from 'react-native-vector-icons/Entypo';
-import { activeOpacity, fonts, fontSize, fontSizes, lineHeight, theme } from '../theme/theme';
+import React, { useState,useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native';
+import Feather from '@react-native-vector-icons/feather';
+import { activeOpacity, fonts, fontSize, theme } from '../theme/theme';
 import ArrBack from '../../assets/images/back-arrow-navigation-svgrepo-com.svg';
 import { useNavigation } from '@react-navigation/native';
 import {useDispatch,useSelector} from 'react-redux';
 import { useRoute } from '@react-navigation/native';
 import { environment } from '../environments/environment.prod';
+import CustomStatusBar from '../components/Header/CustomStatusBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AddExpenseScreen = () => {
   const navigation = useNavigation();
@@ -19,6 +20,7 @@ const AddExpenseScreen = () => {
   const addExpenseData = useSelector((state) => state?.addExpense?.data)
   const [addExpense,setAddExpense] = useState(addExpenseData);
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     dispatch({type:'ADD_EXPENSE',uniqueName:selectedCompany,groups:environment[name]});
   }, []);
@@ -33,9 +35,6 @@ const AddExpenseScreen = () => {
   }
   const handleSearchExpand = () => {
     setSearchExpanded(!isSearchExpanded);
-    // if(!isSearchExpanded){
-    //   setAddExpense(addExpenseData);
-    // }
   };
   const filterSearch = (text) => {
     let filterData = addExpenseData.filter((item)=>item?.name?.toLowerCase().includes(text.toLowerCase()));
@@ -73,7 +72,6 @@ const AddExpenseScreen = () => {
           style={[styles.selectButton, { backgroundColor: isSelected ? 'red' : theme.colors.black,flexDirection:'row' }]}
           activeOpacity={activeOpacity.regular}
           onPress={isSelected ? handleDeleteButton : handleSelectButton}>
-          {/* {isSelected ? <Entypo name="cross" paddingTop={3} size={18} color={'white'}/> : null} */}
           <Text style={[styles.selectButtonText, { color: theme.colors.white }]}>
             {isSelected ? 'Remove' : 'Select'}
           </Text>
@@ -87,50 +85,51 @@ const AddExpenseScreen = () => {
 
 
   return (
-    <SafeAreaView style={styles.super}>
-      {/* <View style={{flex:1,backgroundColor:theme.colors.LightGray}}></View> */}
-    <View style={styles.container}>
-      {isSearchExpanded ? (
-        <View style={styles.header}>
-          <View style={styles.expandedSearch}>
-            <AntDesign name="search1" size={20} color={theme.colors.black} style={styles.searchIcon} />
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search Product"
-              placeholderTextColor={theme.colors.black}
-              onChangeText={(text)=>filterSearch(text)}
-              autoFocus={true}
-            />
-            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleOnClose}>
-              <AntDesign name="close" size={20} color={theme.colors.black} />
+    <View style={styles.super}>
+      <CustomStatusBar backgroundColor={theme.colors.black}/>
+      <View style={styles.container}>
+        {isSearchExpanded ? (
+          <View style={styles.header}>
+            <View style={styles.expandedSearch}>
+              <Feather name="search" size={20} color={theme.colors.black} style={styles.searchIcon} />
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search Product"
+                placeholderTextColor={theme.colors.black}
+                onChangeText={(text)=>filterSearch(text)}
+                autoFocus={true}
+              />
+              <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleOnClose}>
+                <Feather name="x" size={20} color={theme.colors.black} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : (
+          <View style={styles.header}>
+            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => {navigation.goBack();getBack(selectedItems)}}>
+              <ArrBack height={25} width={30} paddingTop={3} />
+            </TouchableOpacity>
+            <Text style={styles.title}>Add Expense</Text>
+            <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleSearchExpand}>
+              <Feather name="search" size={24} color={theme.colors.white} paddingTop={3} />
             </TouchableOpacity>
           </View>
-        </View>
-      ) : (
-        <View style={styles.header}>
-          <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={() => {navigation.goBack();getBack(selectedItems)}}>
-            <ArrBack height={25} width={30} paddingTop={3} />
-          </TouchableOpacity>
-          <Text style={styles.title}>Add Expense</Text>
-          <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={handleSearchExpand}>
-            <AntDesign name="search1" size={24} color={theme.colors.white} paddingTop={3} />
-          </TouchableOpacity>
-        </View>
-      )}
-      <FlatList
-        data={addExpense}
-        renderItem={renderItem}
-        keyExtractor={(item) => item?.uniqueName}
-        style={styles.list}
-      />
-      <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{
-        navigation.goBack();
-        getBack(selectedItems);
-      }} style={styles.doneBtn}>
-        <Text style={[styles.text,{color:theme.colors.white}]}>Done</Text>
-      </TouchableOpacity>
+        )}
+        <FlatList
+          data={addExpense}
+          renderItem={renderItem}
+          keyExtractor={(item) => item?.uniqueName}
+          style={styles.list}
+        />
+        <TouchableOpacity activeOpacity={activeOpacity.regular} onPress={()=>{
+          navigation.goBack();
+          getBack(selectedItems);
+        }} style={styles.doneBtn}>
+          <Text style={[styles.text,{color:theme.colors.white}]}>Done</Text>
+        </TouchableOpacity>
+        <View style={{height:insets.bottom}}></View>
+      </View>
     </View>
-    </SafeAreaView>
   );
 };
 
@@ -156,7 +155,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize.large.size,
     fontFamily: fonts.bold,
     color: theme.colors.white,
-    lineHeight:19,
     paddingLeft:20,
     lineHeight: fontSize.large.lineHeight
   },
@@ -212,23 +210,20 @@ const styles = StyleSheet.create({
   subtitle: {
     fontFamily: fonts.medium,
     fontSize: fontSize.regular.size,
-    color: theme.colors.black,
-    lineHeight: fontSize.regular.lineHeight
+    color: theme.colors.black
   },
   text : { 
     fontFamily: fonts.medium,
-    fontSize:fontSize.regular.size,
-    lineHeight:fontSize.regular.lineHeight 
+    fontSize:fontSize.regular.size 
   },
   doneBtn : {
-    paddingVertical:15,
     width:'80%',
     height:50,
     backgroundColor:theme.colors.black,
     justifyContent:'center',
     alignItems:'center',
     alignSelf:'center',
-    marginVertical:20,
+    marginTop:10,
     borderRadius:100
   }
 });

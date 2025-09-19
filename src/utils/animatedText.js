@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, View, Text, StyleSheet } from 'react-native';
+import { Animated, View, StyleSheet } from 'react-native';
 import { fontSize, fonts, theme } from '../theme/theme';
 
 const AnimatedTextLines = ({ lines }) => {
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     opacity: animatedValues[lineIndex][index],
     fontFamily: fonts.bold,
     fontSize: fontSize.max.size,
-    lineHeight:fontSize.max.lineHeight,
     color: index === 0? '#001f8b' : theme.colors.black,
   }
 })

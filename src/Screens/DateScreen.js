@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, StatusBar, Dimensions } from 'react-native';
-import { PanGestureHandler, ScrollView, State } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Dimensions } from 'react-native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import DateRangePicker from '../components/Date/Custom';
 import PeriodListComponent from '../components/Date/Period';
-import { activeOpacity, borderRadius, fonts, fontSize, fontSizes, lineHeight, spacing, theme } from '../theme/theme';
+import { activeOpacity, fonts, fontSize, lineHeight, theme } from '../theme/theme';
 
 const {height,width} = Dimensions.get('window');
 const Item = ({ item, selectedIndex,setStartDate,setEndDate,bottomSheetModalRef,selectedDateRange,setSelectedDateRange,prevStartDate,prevEndDate }) => {
@@ -44,7 +44,6 @@ const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef,selectedDateRan
 
     return (
         <View style={styles.container}>
-        <StatusBar backgroundColor={theme.colors.black} />
             <View style={styles.tabBarContainer}>
                 {routes.map((route, i) => (
                     <TouchableOpacity
@@ -57,41 +56,26 @@ const DateScreen = ({setStartDate,setEndDate,bottomSheetModalRef,selectedDateRan
                     </TouchableOpacity>
                 ))}
             </View>
-            <PanGestureHandler
-                onHandlerStateChange={handleGestureStateChange}
-
-            >
-                {/* <ScrollView
-                    horizontal={true} 
-                    style={styles.sceneContainer}
+            <PanGestureHandler onHandlerStateChange={handleGestureStateChange}>
+                <FlatList
+                    ref={flatListRef}
+                    data={routes}
+                    horizontal={true}
+                    renderItem={({ item }) => <Item 
+                        bottomSheetModalRef={bottomSheetModalRef} 
+                        setStartDate={setStartDate} 
+                        setEndDate={setEndDate} 
+                        item={item} 
+                        selectedIndex={index} 
+                        selectedDateRange={selectedDateRange} 
+                        setSelectedDateRange={setSelectedDateRange}
+                        prevStartDate={prevStartDate}
+                        prevEndDate={prevEndDate}
+                    />}
+                    pagingEnabled
                     showsHorizontalScrollIndicator={false}
-                >
-                {
-                    routes.map((route,i)=>{
-                        return <Item key={route} bottomSheetModalRef={bottomSheetModalRef} setStartDate={setStartDate} setEndDate={setEndDate} item={route} selectedIndex={i} />
-                    })
-                }    
-                </ScrollView> */}
-                
-                    <FlatList
-                        ref={flatListRef}
-                        data={routes}
-                        horizontal={true}
-                        renderItem={({ item }) => <Item 
-                            bottomSheetModalRef={bottomSheetModalRef} 
-                            setStartDate={setStartDate} 
-                            setEndDate={setEndDate} 
-                            item={item} 
-                            selectedIndex={index} 
-                            selectedDateRange={selectedDateRange} 
-                            setSelectedDateRange={setSelectedDateRange}
-                            prevStartDate={prevStartDate}
-                            prevEndDate={prevEndDate}
-                        />}
-                        pagingEnabled
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item) => item}
-                    />
+                    keyExtractor={(item) => item}
+                />
             </PanGestureHandler>
         </View>
     );
