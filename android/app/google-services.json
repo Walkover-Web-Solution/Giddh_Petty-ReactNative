@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "451349469887",
     "project_id": "giddh-petty-cash",
-    "storage_bucket": "giddh-petty-cash.appspot.com"
+    "storage_bucket": "giddh-petty-cash.firebasestorage.app"
   },
   "client": [
     {
@@ -13,6 +13,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "451349469887-607ngmrmlnb8sfr3rohf5jdmojn22hha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giddh.petty.cash",
+            "certificate_hash": "e814d2f7712ab710a1f31c92c18fefcf6199e28a"
+          }
+        },
         {
           "client_id": "451349469887-f3jckqp8bbfe4nqeku00h3chmsct3739.apps.googleusercontent.com",
           "client_type": 1,
@@ -55,10 +63,10 @@
               "client_type": 3
             },
             {
-              "client_id": "451349469887-fuh93nhb6hub3jtfkfnjndlblffbrak1.apps.googleusercontent.com",
+              "client_id": "451349469887-kek3lmn2gj39q9sd807fob693mgkoa0l.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.giddh.pettycash"
+                "bundle_id": "com.giddh.petty.cash"
               }
             }
           ]
